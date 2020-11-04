@@ -19,17 +19,8 @@
               <div class="card-body">
                <form action="<?php echo base_url('narasumberseminar/simpan_perubahan'); ?>" method="post">
 
-                <input type="hidden" name="narasumber_id" value="<?php echo $list->ns_id ?>">
-                <div class="form-group">
-                 <label>Nama Seminar *</label>
-                 <select name="nama_seminar" class="form-control">
-                  <option value="">Pilih Salah satu</option>
-                  <?php foreach($seminar as $s) : ?>
-                    <option value="<?php echo $s->smr_id ?>" <?php if($s->smr_id == $list->ns_seminar) { echo 'selected'; } ?>  ><?php echo $s->smr_acara ?></option>
-                  <?php endforeach; ?>
-                </select>
-                <?php echo form_error('nama_seminar') ?>
-              </div>
+              <input type="hidden" name="seminar" value="<?php echo $list->ns_seminar ?>">
+              <input type="hidden" name="narasumber_id" value="<?php echo $list->ns_id ?>">
 
               <div class="form-group">
                <label>Nama Narasumber *</label>
@@ -50,7 +41,7 @@
              </div>
 
              <button class="btn btn-success" type="submit">Ubah</button>
-             <a href="<?php echo base_url('narasumberseminar') ?>" class="btn btn-danger">Kembali</a>
+             <a href="<?php echo base_url('narasumberseminar/list_narasumber/' . $list->ns_seminar) ?>" class="btn btn-danger">Kembali</a>
            </form>
          </div>
          <!-- /.card-body -->

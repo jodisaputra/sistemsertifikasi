@@ -47,6 +47,8 @@
 
                          <a href="<?php echo base_url('seminar/delete/' . $s->smr_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger btn-sm">Hapus</a>
                          
+                         <a href="<?php echo base_url('narasumberseminar/list_narasumber/' . $s->smr_id); ?>" class="btn btn-secondary btn-sm btn-block mt-2">Input Narasumber</a>
+
                          <a href="<?php echo base_url('absen_seminar/absen_mahasiswa/' . $s->smr_id); ?>" class="btn btn-primary btn-sm btn-block mt-2">Absen Mahasiswa</a>
                          
                          <a href="<?php echo base_url('absen_seminar/absen_umum/' . $s->smr_id); ?>" class="btn btn-primary btn-sm btn-block mt-2">Absen Umum</a>

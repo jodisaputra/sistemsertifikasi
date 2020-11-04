@@ -6,9 +6,10 @@ class Narasumberseminar_model extends CI_Model {
 	public $table = 'ssc_narasumber_seminar';
 	public $id    = 'ns_id';
 	
-	function list()
+	function list($seminar)
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_narasumber_seminar.ns_seminar');
+		$this->db->where('ns_seminar', $seminar);
 		return $this->db->get($this->table)->result();
 	}
 

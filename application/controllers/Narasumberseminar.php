@@ -17,21 +17,23 @@ class Narasumberseminar extends CI_Controller {
 		}
 	}
 
-	public function index()
+	public function list_narasumber($seminar)
 	{
 		$data = [
 			'title'	=> 'Narasumber',
-			'list'      => $this->narasumberseminar_model->list(),
+			'seminar'	=> $seminar,
+			'list'      => $this->narasumberseminar_model->list($seminar),
 			'view'	=> 'admin/narasumber_seminar/index'
 		];
 
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
-	public function tambah()
+	public function tambah($seminar)
 	{
 		$data = [
 			'title'	=> 'Modul',
+			'seminarid' => $seminar,
 			'seminar'   => $this->seminar_model->listseminar(),
 			'view'	=> 'admin/narasumber_seminar/tambah'
 		];
@@ -40,7 +42,6 @@ class Narasumberseminar extends CI_Controller {
 
 	public function simpan()
 	{
-		$this->form_validation->set_rules('nama_seminar', 'Nama Seminar', 'required');
 		$this->form_validation->set_rules('nama_narasumber', 'Nama Narasumber', 'required|trim');
 		$this->form_validation->set_rules('asal_institusi', 'Asal Institusi', 'required|trim');
 		$this->form_validation->set_rules('sebagai', 'Narasumber sebagai', 'required|trim');
@@ -52,12 +53,12 @@ class Narasumberseminar extends CI_Controller {
 		{
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
-			$this->tambah();
+			$this->tambah($this->input->post('seminar'));
 		}
 		else
 		{
 			$data = [
-				'ns_seminar'            => $this->input->post('nama_seminar'),
+				'ns_seminar'            => $this->input->post('seminar'),
 				'ns_narasumber'         => $this->input->post('nama_narasumber'),
 				'ns_institusi'          => $this->input->post('asal_institusi'),
 				'ns_sebagai'            => $this->input->post('sebagai'),
@@ -69,13 +70,13 @@ class Narasumberseminar extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'Data berhasil ditambah');
 				$this->session->set_flashdata('tipe', 'success');
-				redirect(base_url('narasumberseminar'));
+				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Data gagal ditambah');
 				$this->session->set_flashdata('tipe', 'error');
-				redirect(base_url('narasumberseminar'));
+				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
 			}
 		}
 	}
@@ -88,7 +89,6 @@ class Narasumberseminar extends CI_Controller {
 		{
 			$data = [
 				'title'	=> 'Modul',
-				'seminar'   => $this->seminar_model->listseminar(),
 				'list'      => $row,
 				'view'	=> 'admin/narasumber_seminar/ubah'
 			];
@@ -98,14 +98,14 @@ class Narasumberseminar extends CI_Controller {
 		{
 			$this->session->set_flashdata('message', 'Data tidak ada');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect(site_url('narasumberseminar'));
+			redirect(base_url('narasumberseminar/list_narasumber/' . $this->uri->segment(3)));
+
 		}
 		
 	}
 
 	public function simpan_perubahan()
 	{
-		$this->form_validation->set_rules('nama_seminar', 'Nama Seminar', 'required');
 		$this->form_validation->set_rules('nama_narasumber', 'Nama Narasumber', 'required|trim');
 		$this->form_validation->set_rules('asal_institusi', 'Asal Institusi', 'required|trim');
 		$this->form_validation->set_rules('sebagai', 'Narasumber sebagai', 'required|trim');
@@ -122,7 +122,7 @@ class Narasumberseminar extends CI_Controller {
 		else
 		{
 			$data = [
-				'ns_seminar'            => $this->input->post('nama_seminar'),
+				'ns_seminar'            => $this->input->post('seminar'),
 				'ns_narasumber'         => $this->input->post('nama_narasumber'),
 				'ns_institusi'          => $this->input->post('asal_institusi'),
 				'ns_sebagai'            => $this->input->post('sebagai'),
@@ -134,13 +134,13 @@ class Narasumberseminar extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'Data berhasil diubah');
 				$this->session->set_flashdata('tipe', 'success');
-				redirect(base_url('narasumberseminar'));
+				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Data gagal diubah');
 				$this->session->set_flashdata('tipe', 'error');
-				redirect(base_url('narasumberseminar'));
+				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
 			}
 		}
 	}
@@ -151,13 +151,14 @@ class Narasumberseminar extends CI_Controller {
 		{
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
-			redirect(base_url('narasumberseminar'));
+			redirect(base_url('narasumberseminar/list_narasumber/' . $this->uri->segment(3)));
+
 		}
 		else
 		{
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect(base_url('narasumberseminar'));
+			redirect(base_url('narasumberseminar/list_narasumber/' . $this->uri->segment(3)));
 		}
 	}
 

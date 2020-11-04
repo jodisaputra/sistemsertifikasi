@@ -16,7 +16,8 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-header">
-                <a href="<?php echo base_url() ?>narasumberseminar/tambah" class="btn btn-success">Tambah Narasumber</a>
+                <a href="<?php echo base_url() ?>seminar" class="btn btn-danger">Kembali</a>
+                <a href="<?php echo base_url() ?>narasumberseminar/tambah/<?php echo $seminar ?>" class="btn btn-success">Tambah Narasumber</a>
               </div>
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
