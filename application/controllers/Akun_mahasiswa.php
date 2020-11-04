@@ -163,6 +163,17 @@ class Akun_mahasiswa extends CI_Controller {
 			];
 
 			$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
+			$this->load->library('pdf');
+			
+			$paper_size			= 'A4';
+			$orientation		= 'landscape';
+			$html               = $this->output->get_output();
+
+			$this->pdf->set_paper($paper_size, $orientation);
+			$this->pdf->load_html($html);
+			$this->pdf->render();
+			$this->pdf->stream( $npm . ".pdf", array('Attachment' => 0));
+
 		}
 		else
 		{

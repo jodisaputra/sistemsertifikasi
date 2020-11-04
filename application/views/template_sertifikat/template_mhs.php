@@ -66,11 +66,7 @@
         <p style="text-align: center; font-size: 15px; margin-top: 4px; margin-left: 40px; margin-bottom: 0px;">Mengetahui, </p>
 
         <hr width="45%" style="margin-left: 190px; margin-top: 45px;">
-        <p style="text-align: center; font-size: 15px; font-weight: bold; margin-top: 4px; margin-left: 40px; margin-bottom: 0px;">Yefta Christian S.Kom </p>
-
-
-
-
+        <p style="text-align: center; font-size: 15px; font-weight: bold; margin-top: 4px; margin-left: 40px; margin-bottom: 0px;">Nama narasumber </p>
 
   </section>
 
