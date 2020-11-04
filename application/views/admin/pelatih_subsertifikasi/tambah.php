@@ -19,17 +19,7 @@
               <div class="card-body">
                <form action="<?php echo base_url('pelatih_subsertifikasi/simpan'); ?>" method="post">
 
-                 <div class="form-group">
-                  <label>Batch Sertifikasi</label>
-                  <select name="batch" class="form-control">
-                    <option value="">Pilih Salah Satu</option>
-                    <?php foreach($list as $l) : ?>
-                      <option value="<?php echo $l->bs_id ?>" <?php echo set_value('batch') == $l->bs_id ? 'selected' : null ?>><?php echo $l->scert_subsertifikasi ?></option>
-                    <?php endforeach ?>
-                  </select>
-                  <?php echo form_error('batch') ?>
-                </div>
-
+                <input type="hidden" name="batch_id" value="<?php echo $batch  ?>">
                 <div class="form-group">
                   <label>Email</label>
                   <input type="text" class="form-control" name="email" value="<?php echo set_value('email') ?>">
@@ -53,7 +43,7 @@
                 </div>
 
                 <button class="btn btn-success" type="submit">Tambah</button>
-                <a href="<?php echo base_url('pelatih_subsertifikasi') ?>" class="btn btn-danger">Kembali</a>
+                <a href="<?php echo base_url('pelatih_subsertifikasi/list_pelatih/' . $batch) ?>" class="btn btn-danger">Kembali</a>
               </form>
             </div>
             <!-- /.card-body -->

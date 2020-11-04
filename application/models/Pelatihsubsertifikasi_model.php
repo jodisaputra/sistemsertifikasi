@@ -6,10 +6,11 @@ class Pelatihsubsertifikasi_model extends CI_Model {
 
     public $table = 'ssc_pelatih_subsertifikasi';
 
-    function listpelatihsubsertifikasi()
+    function listpelatihsubsertifikasi($batch)
     {
         $this->db->join('ssc_batch_sertifikasi', 'ssc_batch_sertifikasi.bs_id = ssc_pelatih_subsertifikasi.ps_batch');
         $this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
+        $this->db->where('ssc_pelatih_subsertifikasi.ps_batch', $batch);
         return $this->db->get($this->table)->result();
     }
 

@@ -16,22 +16,23 @@ class Pelatih_subsertifikasi extends CI_Controller {
 		}
 	}
 
-	public function index()
+	public function list_pelatih($batch)
 	{
 		$data = [
 			'title'	=> 'Pelatih Sertifikasi',
-			'list'     => $this->pelatihsubsertifikasi_model->listpelatihsubsertifikasi(),
+			'batch'	=> $batch,
+			'list'     => $this->pelatihsubsertifikasi_model->listpelatihsubsertifikasi($batch),
 			'view'	=> 'admin/pelatih_subsertifikasi/index'
 		];
 
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
-	public function tambah()
+	public function tambah($batch)
 	{
 		$data = [
 			'title'	=> 'Pelatih Sertifikasi',
-			'list'     => $this->batchsertifikasi_model->listbatch(),
+			'batch'	=> $batch,
 			'view'	=> 'admin/pelatih_subsertifikasi/tambah'
 		];
 
@@ -40,7 +41,6 @@ class Pelatih_subsertifikasi extends CI_Controller {
 
 	public function simpan()
 	{
-		$this->form_validation->set_rules('batch', 'Batch Subsertifikasi', 'required|is_unique[ssc_pelatih_subsertifikasi.ps_batch]');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|is_unique[ssc_pelatih_subsertifikasi.ps_email]');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 
@@ -57,7 +57,7 @@ class Pelatih_subsertifikasi extends CI_Controller {
 		else
 		{
 			$data = [
-				'ps_batch'      => $this->input->post('batch'),
+				'ps_batch'      => $this->input->post('batch_id'),
 				'ps_email'      => $this->input->post('email'),
 				'ps_nama'       => $this->input->post('nama'),
 				'ps_institusi'  => $this->input->post('asal_institusi'),
@@ -70,13 +70,14 @@ class Pelatih_subsertifikasi extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'Data berhasil disimpan');
 				$this->session->set_flashdata('tipe', 'success');
-				redirect(base_url('pelatih_subsertifikasi'));
+				redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $this->input->post('batch_id')));
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Data gagal disimpan');
 				$this->session->set_flashdata('tipe', 'error');
-				redirect(base_url('pelatih_subsertifikasi'));
+				redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $this->input->post('batch_id')));
+
 			}
 		}
 	}
@@ -130,13 +131,13 @@ class Pelatih_subsertifikasi extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'Data berhasil diubah');
 				$this->session->set_flashdata('tipe', 'success');
-				redirect(base_url('pelatih_subsertifikasi'));
+				redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $this->input->post('batch_id')));
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Data gagal diubah');
 				$this->session->set_flashdata('tipe', 'error');
-				redirect(base_url('pelatih_subsertifikasi'));
+				redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $this->input->post('batch_id')));
 			}
 		}
 	}
@@ -147,13 +148,13 @@ class Pelatih_subsertifikasi extends CI_Controller {
 		{
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
-			redirect(base_url('pelatih_subsertifikasi'));
+			redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $id_batch));
 		}
 		else
 		{
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect(base_url('pelatih_subsertifikasi'));
+			redirect(base_url('pelatih_subsertifikasi/list_pelatih/' . $id_batch));
 		}
 	}
 
