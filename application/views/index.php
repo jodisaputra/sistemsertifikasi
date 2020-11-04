@@ -69,52 +69,50 @@
 
     <!-- Seminar -->
 
+    <section class="blog_part section_padding" id="seminar">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <p>Batch Seminar</p>
+                        <h2>Seminar</h2>
+                    </div>
+                </div>
+            </div>
     <?php  
 
     foreach($seminar as $s)
     {
         ?>
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-lg-4 col-xl-4">
+                    <div class="single-home-blog">
+                        <div class="card">
+                            <img src="<?php echo base_url('assets/banner_seminar/' . $s->smr_banner) ?>" class="card-img-top" alt="blog">
+                            <div class="card-body">
+                                <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>" class="btn_4">Seminar</a>
+                                <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>">
+                                    <h5 class="card-title"><?php echo $s->smr_acara ?></h5>
+                                </a>
+                                <p style="margin-bottom: 0px;" class="text-dark">Biaya:</p>
 
-        <section class="blog_part section_padding" id="seminar">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-5">
-                        <div class="section_tittle text-center">
-                            <p>Batch Seminar</p>
-                            <h2>Seminar</h2>
-                        </div>
-                    </div>
-                </div>
+                                <p class="text-dark" style="margin-bottom: 0px;">Mahasiswa : <?php echo 'Rp.' . number_format($s->smr_biaya_mhs, 2, ',','.') ?></p>
 
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-lg-4 col-xl-4">
-                        <div class="single-home-blog">
-                            <div class="card">
-                                <img src="<?php echo base_url('assets/banner_seminar/' . $s->smr_banner) ?>" class="card-img-top" alt="blog">
-                                <div class="card-body">
-                                    <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>" class="btn_4">Seminar</a>
-                                    <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>">
-                                        <h5 class="card-title"><?php echo $s->smr_acara ?></h5>
-                                    </a>
-                                    <p style="margin-bottom: 0px;" class="text-dark">Biaya:</p>
+                                <p class="text-dark">Umum : <?php echo 'Rp.' . number_format($s->smr_biaya_umum, 2, ',','.') ?></p>
 
-                                    <p class="text-dark" style="margin-bottom: 0px;">Mahasiswa : <?php echo 'Rp.' . number_format($s->smr_biaya_mhs, 2, ',','.') ?></p>
-
-                                    <p class="text-dark">Umum : <?php echo 'Rp.' . number_format($s->smr_biaya_umum, 2, ',','.') ?></p>
-
-                                    <p class="text-dark"><b>Tanggal Seminar : <?php echo date('d M Y',strtotime($s->smr_tanggal)) ?></b></p>
-                                    
-                                </div>
+                                <p class="text-dark"><b>Tanggal Seminar : <?php echo date('d M Y',strtotime($s->smr_tanggal)) ?></b></p>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- End Seminar -->
+        </div>
+    <!-- End Seminar -->
 
         <?php
 
     }
-    
+
     ?>
+</section>
