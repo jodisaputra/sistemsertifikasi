@@ -432,7 +432,7 @@ class Batch_sertifikasi extends CI_Controller {
 						$this->batchsertifikasi_model->insert_subsertifikasiumum($data2);
 						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
 						$this->session->set_flashdata('tipe', 'success');
-						redirect(base_url('akun'));
+						redirect(base_url('akun_umum/akun'));
 					}
 					else
 					{
