@@ -83,4 +83,10 @@
   'denk one' => array(
     'normal' => $fontDir . '/denk-one-normal_485f873e5b92c1e856f8063c9d4939de',
   ),
+  'graduate' => array(
+    'normal' => $fontDir . '/graduate-normal_5aae18aa09fe538e78afbb2eefeaaa27',
+  ),
+  'lusitana' => array(
+    'normal' => $fontDir . '/lusitana-normal_67b8593623b499c53fffb8ec41d3c8e0',
+  ),
 ) ?>
