@@ -182,6 +182,13 @@ class Seminar_model extends CI_Model {
 		return $this->db->get('ssc_seminar_mahasiswa')->row();
 	}
 
+	public function get_ttd_narasumber($id_seminar)
+	{
+		$this->db->where('ns_seminar', $id_seminar);
+		$this->db->where('ns_set_tandatangan', 'y');
+		return $this->db->get('ssc_narasumber_seminar')->row();
+	}
+
 	public function cetaksertifikatseminarumum($id_seminar, $peserta)
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar_umum.su_seminar = ssc_seminar.smr_id');

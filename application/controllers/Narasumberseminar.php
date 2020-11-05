@@ -63,9 +63,9 @@ class Narasumberseminar extends CI_Controller {
 		}
 		else
 		{
-			$cektandatangan = $this->narasumberseminar_model->cek_ttdsertifikatseminar($this->input->post('seminar'))->num_rows();
+			$cektandatangan = $this->narasumberseminar_model->cek_ttdsertifikatseminar($this->input->post('seminar'))->row();
 
-			if($cektandatangan > 0)
+			if($cektandatangan->ns_set_tandatangan == $this->input->post('set_ttd'))
 			{
 				$this->session->set_flashdata('message', 'Tanda tangan untuk sertifikat tidak boleh lebih dari 1 !!');
 				$this->session->set_flashdata('tipe', 'error');
@@ -78,7 +78,6 @@ class Narasumberseminar extends CI_Controller {
 					$config['upload_path']          = './assets/tanda_tangan/';
 					$config['allowed_types']        = 'jpeg|jpg|png';
 					$config['overwrite']            = true;
-					$config['file_name']			= $this->upload->data('file_name');
 		
 					$this->load->library('upload', $config);
 					$this->upload->initialize($config);
@@ -99,11 +98,15 @@ class Narasumberseminar extends CI_Controller {
 							'ns_institusi'          => $this->input->post('asal_institusi'),
 							'ns_sebagai'            => $this->input->post('sebagai'),
 							'ns_set_tandatangan'	=> $this->input->post('set_ttd'),
-							'ns_tandatangan'		=> $namafile,
+							'ns_tandatangan'		=> $this->upload->data('file_name'),
 							'ns_userupdate'         => $this->session->userdata('username'),
 							'ns_lastupdate'         => date('Y-m-d H:i:s')
 						];
 						
+						// header('content-type: application/json');
+						// echo json_encode($data);
+						// die;
+
 						if($this->narasumberseminar_model->insert($data))
 						{
 							$this->session->set_flashdata('message', 'Data berhasil ditambah');

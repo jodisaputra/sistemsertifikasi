@@ -419,7 +419,8 @@ class Akun_umum extends CI_Controller {
 		if($row)
 		{
 			$data = [
-				'list'         => $row
+				'list'         => $row,
+				'ttd'	   => $this->seminar_model->get_ttd_narasumber($seminar)
 			];
 			
 			$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);

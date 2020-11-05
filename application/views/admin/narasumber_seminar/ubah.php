@@ -40,6 +40,27 @@
                <?php echo form_error('sebagai') ?>
              </div>
 
+             <div class="form-group">
+                <label>Set Tanda tangan untuk sertifikat ?</label>
+                <br>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input ya" type="radio" name="set_ttd" value="y" <?php echo $list->ns_set_tandatangan == 'y' ? "checked='checked'" : null ?>  id="y" onchange="show()">
+                  <label class="form-check-label">Ya</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input tidak" type="radio" name="set_ttd" value="t" <?php echo $list->ns_set_tandatangan == 't' ? "checked='checked'" : null ?> id="t" onchange="hide()">
+                  <label class="form-check-label">Tidak</label>
+                </div>
+                <br>
+                <?php echo form_error('set_ttd') ?>
+              </div>
+
+              <div class="form-group" <?php if($list->ns_set_tandatangan == 'y') { echo 'style="display: block;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
+                <label>Upload Tanda Tangan</label>
+                <input type="file" name="gambar" class="form-control">
+                <?php echo form_error('gambar') ?>
+              </div>
+
              <button class="btn btn-success" type="submit">Ubah</button>
              <a href="<?php echo base_url('narasumberseminar/list_narasumber/' . $list->ns_seminar) ?>" class="btn btn-danger">Kembali</a>
            </form>
@@ -53,3 +74,14 @@
    <!-- /.row -->
  </section>
   <!-- /.content -->
+
+  <script src="<?php echo base_url() ?>/assets/frontend/js/jquery-1.12.1.min.js"></script>
+  <script>
+    function show() {
+      document.getElementById('tanda_tangan').style.display = "block";
+    }
+
+    function hide() {
+      document.getElementById('tanda_tangan').style.display = "none";
+    }
+  </script>

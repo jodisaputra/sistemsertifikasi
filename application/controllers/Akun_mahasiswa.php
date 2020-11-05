@@ -159,9 +159,13 @@ class Akun_mahasiswa extends CI_Controller {
 
 			$data = [
 				'list'     => $row,
-				'profil'   => $mahasiswa
+				'profil'   => $mahasiswa,
+				'ttd'	   => $this->seminar_model->get_ttd_narasumber($seminar)
 			];
 
+			// header('content-type: application/json');
+			// echo json_encode($data);
+			// die;
 			$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
 			
 			$this->load->library('pdf');

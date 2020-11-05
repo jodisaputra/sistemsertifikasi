@@ -54,7 +54,7 @@
                   <?php echo form_error('set_ttd') ?>
                </div>
 
-               <div class="form-group" <?php if($this->input->post('set_ttd') == 'y') { echo 'style="display: block;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
+               <div class="form-group" <?php if($this->input->post('set_ttd') == 'y') { echo 'style="display: block;"'; } elseif($this->input->post('set_ttd') == 't') { echo 'style="display: none;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
                   <label>Upload Tanda Tangan</label>
                   <input type="file" name="gambar" class="form-control">
                   <?php echo form_error('gambar') ?>
