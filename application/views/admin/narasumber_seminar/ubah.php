@@ -17,7 +17,7 @@
               <!-- /.card-header -->
 
               <div class="card-body">
-               <form action="<?php echo base_url('narasumberseminar/simpan_perubahan'); ?>" method="post">
+               <form action="<?php echo base_url('narasumberseminar/simpan_perubahan'); ?>" method="post" enctype="multipart/form-data">
 
               <input type="hidden" name="seminar" value="<?php echo $list->ns_seminar ?>">
               <input type="hidden" name="narasumber_id" value="<?php echo $list->ns_id ?>">
@@ -48,16 +48,21 @@
                   <label class="form-check-label">Ya</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input tidak" type="radio" name="set_ttd" value="t" <?php echo $list->ns_set_tandatangan == 't' ? "checked='checked'" : null ?> id="t" onchange="hide()">
+                  <input class="form-check-input tidak" type="radio" name="set_ttd" value="n" <?php echo $list->ns_set_tandatangan == 'n' ? "checked='checked'" : null ?> id="t" onchange="hide()">
                   <label class="form-check-label">Tidak</label>
                 </div>
                 <br>
                 <?php echo form_error('set_ttd') ?>
               </div>
 
-              <div class="form-group" <?php if($list->ns_set_tandatangan == 'y') { echo 'style="display: block;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
+              <div class="form-group" <?php if($list->ns_set_tandatangan == 'y') { echo 'style="display: block;"'; } elseif($list->ns_set_tandatangan == 'n') { echo 'style="display: none;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
                 <label>Upload Tanda Tangan</label>
+                <br>
+                <img width="20%" src="<?php echo base_url('assets/tanda_tangan/' . $list->ns_tandatangan) ?>" alt="">
+                <br>
+                <br>
                 <input type="file" name="gambar" class="form-control">
+                <input type="hidden" name="gambar_old" value="<?php echo $list->ns_tandatangan ?>">
                 <?php echo form_error('gambar') ?>
               </div>
 

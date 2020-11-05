@@ -502,7 +502,7 @@ class Batch_sertifikasi extends CI_Controller {
 			// echo json_encode($cek);
 			// die;
 
-			if ($cek->sm_status == 'Lulus' || $cek->sm_status == 'Sedang Mengikuti') 
+			if ($cek->sm_status == 'Lulus' || $cek)
 			{
                 //jika sudah pernah daftar
 				$this->session->set_flashdata('message', 'Anda sudah mendaftar');
@@ -556,7 +556,6 @@ class Batch_sertifikasi extends CI_Controller {
 						'sm_sertifikasi'          => $this->uri->segment(5),
 						'sm_mahasiswa'            => $this->session->userdata('npm'),
 						'sm_tanggal_daftar'       => date('Y-m-d H:i:s'),
-						'sm_status'				  => "Sedang Mengikuti",
 						'sm_userupdate'           => $this->session->userdata('npm'),
 						'sm_lastupdate'           => date('Y-m-d H:i:s')
 					];

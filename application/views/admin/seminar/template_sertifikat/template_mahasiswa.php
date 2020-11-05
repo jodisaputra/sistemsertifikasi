@@ -25,23 +25,23 @@
 <!-- Set also "landscape" if you need -->
 <body>
 
-    <h1 align="center" style="font-size: 30px !important; text-align: center; margin-top: 38px;">Sertifikat</h1>
+    <h1 align="center" style="font-size: 30px !important; text-align: center; margin-top: 28px;">Sertifikat</h1>
         
-    <p align="center" style="text-align: center; font-size: 19px; margin-top: -3px; font-style: italic; margin-bottom: 0px;">Diberikan Kepada</p>
+    <p align="center" style="text-align: center; font-size: 19px; margin-top: -15px; font-style: italic; margin-bottom: 0px;">Diberikan Kepada</p>
     
     <p align="center" style="text-align: center; font-size: 25px; font-weight: bold; margin-top: 14px;"><?php echo $profil->name ?></p>
     
     <hr align="center" width="60%" style="margin-top: -10px;">
 
-    <p align="center" style="text-align: center; font-size: 17px; margin-top: 5px; margin-bottom: 0px;">Atas Partisipasinya Sebagai</p>
+    <p align="center" style="text-align: center; font-size: 17px; margin-top: -8px; margin-bottom: 0px;">Atas Partisipasinya Sebagai</p>
 
     <h1 align="center" style="font-size: 30px !important; text-align: center; margin-top: 0px;">Peserta</h1>
 
-    <p align="center" style="font-size: 17px; margin-top: -8px; margin-bottom: 0px;">Dalam Kegiatan</p>
+    <p align="center" style="font-size: 17px; margin-top: -15px; margin-bottom: 0px;">Dalam Kegiatan</p>
 
     <h1 align="center" style="font-size: 25px !important; text-align: center; margin-top: 8px;"><?php echo $list->smr_acara ?></h1>
 
-    <p align="center" style="text-align: center; font-size: 15px; margin-top: -6px; margin-bottom: 0px;">Batam, <?php echo date('d M Y',strtotime($list->smr_tanggal)) ?> </p>
+    <p align="center" style="text-align: center; font-size: 15px; margin-top: -18px; margin-bottom: 0px;">Batam, <?php echo date('d M Y',strtotime($list->smr_tanggal)) ?> </p>
 
     <p align="center" style="font-size: 15px; margin-top: 2px; margin-bottom: 0px;">Mengetahui, </p>
       

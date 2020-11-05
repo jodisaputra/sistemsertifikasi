@@ -47,14 +47,14 @@
                     <label class="form-check-label">Ya</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input tidak" type="radio" name="set_ttd" value="t" <?php echo set_value('set_ttd') == 't' ? "checked='checked'" : null ?> id="t" onchange="hide()">
+                    <input class="form-check-input tidak" type="radio" name="set_ttd" value="n" <?php echo set_value('set_ttd') == 't' ? "checked='checked'" : null ?> id="n" onchange="hide()">
                     <label class="form-check-label">Tidak</label>
                   </div>
                   <br>
                   <?php echo form_error('set_ttd') ?>
                </div>
 
-               <div class="form-group" <?php if($this->input->post('set_ttd') == 'y') { echo 'style="display: block;"'; } elseif($this->input->post('set_ttd') == 't') { echo 'style="display: none;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
+               <div class="form-group" <?php if($this->input->post('set_ttd') == 'y') { echo 'style="display: block;"'; } elseif($this->input->post('set_ttd') == 'n') { echo 'style="display: none;"'; } else { echo 'style="display: none;"'; } ?> id="tanda_tangan">
                   <label>Upload Tanda Tangan</label>
                   <input type="file" name="gambar" class="form-control">
                   <?php echo form_error('gambar') ?>

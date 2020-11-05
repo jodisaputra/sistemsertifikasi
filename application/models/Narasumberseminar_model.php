@@ -44,6 +44,14 @@ class Narasumberseminar_model extends CI_Model {
 		return $this->db->get($this->table);
 	}
 
+	function cek_ttdsertifikatseminarsamaid($narasumber, $seminar)
+	{
+		$this->db->where('ns_id !=', $narasumber );
+		$this->db->where('ns_seminar', $seminar);
+		$this->db->where('ns_set_tandatangan', 'y');
+		return $this->db->get($this->table);
+	}
+
 }
 
 /* End of file Narasumberseminar_model.php */

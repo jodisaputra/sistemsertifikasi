@@ -32,7 +32,7 @@ class Narasumberseminar extends CI_Controller {
 	public function tambah($seminar)
 	{
 		$data = [
-			'title'	=> 'Modul',
+			'title'	=> 'Narasumber',
 			'seminarid' => $seminar,
 			'seminar'   => $this->seminar_model->listseminar(),
 			'view'	=> 'admin/narasumber_seminar/tambah'
@@ -90,8 +90,6 @@ class Narasumberseminar extends CI_Controller {
 					}
 					else
 					{
-						$namafile = $this->upload->data('file_name');
-	
 						$data = [
 							'ns_seminar'            => $this->input->post('seminar'),
 							'ns_narasumber'         => $this->input->post('nama_narasumber'),
@@ -102,10 +100,6 @@ class Narasumberseminar extends CI_Controller {
 							'ns_userupdate'         => $this->session->userdata('username'),
 							'ns_lastupdate'         => date('Y-m-d H:i:s')
 						];
-						
-						// header('content-type: application/json');
-						// echo json_encode($data);
-						// die;
 
 						if($this->narasumberseminar_model->insert($data))
 						{
@@ -132,7 +126,7 @@ class Narasumberseminar extends CI_Controller {
 						'ns_userupdate'         => $this->session->userdata('username'),
 						'ns_lastupdate'         => date('Y-m-d H:i:s')
 					];
-						
+					
 					if($this->narasumberseminar_model->insert($data))
 					{
 						$this->session->set_flashdata('message', 'Data berhasil ditambah');
@@ -157,7 +151,7 @@ class Narasumberseminar extends CI_Controller {
 		if($row)
 		{
 			$data = [
-				'title'	=> 'Modul',
+				'title'	=> 'Narasumber',
 				'list'      => $row,
 				'view'	=> 'admin/narasumber_seminar/ubah'
 			];
@@ -168,7 +162,6 @@ class Narasumberseminar extends CI_Controller {
 			$this->session->set_flashdata('message', 'Data tidak ada');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('narasumberseminar/list_narasumber/' . $this->uri->segment(3)));
-
 		}
 		
 	}
@@ -178,6 +171,12 @@ class Narasumberseminar extends CI_Controller {
 		$this->form_validation->set_rules('nama_narasumber', 'Nama Narasumber', 'required|trim');
 		$this->form_validation->set_rules('asal_institusi', 'Asal Institusi', 'required|trim');
 		$this->form_validation->set_rules('sebagai', 'Narasumber sebagai', 'required|trim');
+		$this->form_validation->set_rules('set_ttd', 'Set Tanda Tangan', 'required');
+		
+		// if($this->input->post('set_ttd') == 'y' && empty($_FILES['gambar']['name']))
+		// {
+		// 	$this->form_validation->set_rules('gambar', 'Gambar Tanda Tangan', 'required');
+		// }
 
 		$this->form_validation->set_message('required', '{field} harus diisi');
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
@@ -190,26 +189,109 @@ class Narasumberseminar extends CI_Controller {
 		}
 		else
 		{
-			$data = [
-				'ns_seminar'            => $this->input->post('seminar'),
-				'ns_narasumber'         => $this->input->post('nama_narasumber'),
-				'ns_institusi'          => $this->input->post('asal_institusi'),
-				'ns_sebagai'            => $this->input->post('sebagai'),
-				'ns_userupdate'         => $this->session->userdata('email'),
-				'ns_lastupdate'         => date('Y-m-d H:i:s')
-			];
+			$cektandatangan = $this->narasumberseminar_model->cek_ttdsertifikatseminarsamaid($this->input->post('narasumber_id'), $this->input->post('seminar'))->row();
 
-			if($this->narasumberseminar_model->update($this->input->post('narasumber_id'), $data))
+			if($cektandatangan->ns_set_tandatangan == $this->input->post('set_ttd'))
 			{
-				$this->session->set_flashdata('message', 'Data berhasil diubah');
-				$this->session->set_flashdata('tipe', 'success');
+				$this->session->set_flashdata('message', 'Tanda tangan untuk sertifikat tidak boleh lebih dari 1 !!');
+				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'Data gagal diubah');
-				$this->session->set_flashdata('tipe', 'error');
-				redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+				if (!empty($_FILES['gambar']['name']))
+				{
+					$config['upload_path']          = './assets/tanda_tangan/';
+					$config['allowed_types']        = 'jpeg|jpg|png';
+					$config['overwrite']            = true;
+		
+					$this->load->library('upload', $config);
+					$this->upload->initialize($config);
+		
+					if (!$this->upload->do_upload('gambar'))
+					{
+						$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
+						$this->session->set_flashdata('tipe', 'warning');
+						$this->ubah($this->input->post('narasumber_id'));
+					}
+					else
+					{
+						$data = [
+							'ns_seminar'            => $this->input->post('seminar'),
+							'ns_narasumber'         => $this->input->post('nama_narasumber'),
+							'ns_institusi'          => $this->input->post('asal_institusi'),
+							'ns_sebagai'            => $this->input->post('sebagai'),
+							'ns_set_tandatangan'	=> $this->input->post('set_ttd'),
+							'ns_tandatangan'		=> $this->upload->data('file_name'),
+							'ns_userupdate'         => $this->session->userdata('username'),
+							'ns_lastupdate'         => date('Y-m-d H:i:s')
+						];
+
+						if($this->narasumberseminar_model->update($this->input->post('narasumber_id'), $data))
+						{
+							$this->session->set_flashdata('message', 'Data berhasil diubah');
+							$this->session->set_flashdata('tipe', 'success');
+							redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+						}
+						else
+						{
+							$this->session->set_flashdata('message', 'Data gagal diubah');
+							$this->session->set_flashdata('tipe', 'error');
+							redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+						}
+					}
+				}
+				elseif(empty($_FILES['gambar']['name']) && $this->input->post('set_ttd') == 'y')
+				{
+					$data = [
+						'ns_seminar'            => $this->input->post('seminar'),
+						'ns_narasumber'         => $this->input->post('nama_narasumber'),
+						'ns_institusi'          => $this->input->post('asal_institusi'),
+						'ns_sebagai'            => $this->input->post('sebagai'),
+						'ns_set_tandatangan'	=> $this->input->post('set_ttd'),
+						'ns_tandatangan'		=> $this->input->post('gambar_old'),
+						'ns_userupdate'         => $this->session->userdata('username'),
+						'ns_lastupdate'         => date('Y-m-d H:i:s')
+					];
+					
+					if($this->narasumberseminar_model->update($this->input->post('narasumber_id'), $data))
+					{
+						$this->session->set_flashdata('message', 'Data berhasil diubah');
+						$this->session->set_flashdata('tipe', 'success');
+						redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Data gagal diubah');
+						$this->session->set_flashdata('tipe', 'error');
+						redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+					}
+				}
+				elseif(empty($_FILES['gambar']['name']) && $this->input->post('set_ttd') == 'n')
+				{
+					$data = [
+						'ns_seminar'            => $this->input->post('seminar'),
+						'ns_narasumber'         => $this->input->post('nama_narasumber'),
+						'ns_institusi'          => $this->input->post('asal_institusi'),
+						'ns_sebagai'            => $this->input->post('sebagai'),
+						'ns_set_tandatangan'	=> $this->input->post('set_ttd'),
+						'ns_userupdate'         => $this->session->userdata('username'),
+						'ns_lastupdate'         => date('Y-m-d H:i:s')
+					];
+					
+					if($this->narasumberseminar_model->update($this->input->post('narasumber_id'), $data))
+					{
+						$this->session->set_flashdata('message', 'Data berhasil diubah');
+						$this->session->set_flashdata('tipe', 'success');
+						redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Data gagal diubah');
+						$this->session->set_flashdata('tipe', 'error');
+						redirect(base_url('narasumberseminar/list_narasumber/' . $this->input->post('seminar')));
+					}
+				}
 			}
 		}
 	}
