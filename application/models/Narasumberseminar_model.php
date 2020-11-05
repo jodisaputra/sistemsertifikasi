@@ -37,6 +37,13 @@ class Narasumberseminar_model extends CI_Model {
 		return $this->db->delete($this->table);
 	}
 
+	function cek_ttdsertifikatseminar($seminar)
+	{
+		$this->db->where('ns_seminar', $seminar);
+		$this->db->where('ns_set_tandatangan', 'y');
+		return $this->db->get($this->table);
+	}
+
 }
 
 /* End of file Narasumberseminar_model.php */

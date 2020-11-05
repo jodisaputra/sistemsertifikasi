@@ -339,7 +339,6 @@ class Batch_sertifikasi extends CI_Controller {
 		{
 			$cek = $this->batchsertifikasi_model->cek($id_subser,$id_sertifikasi)->row();
 
-
 			if ($cek->srtu_status == '' || $cek->srtu_status == NULL || $cek->srtu_status == 'Lulus') 
 			{
                 //jika sudah pernah daftar
@@ -497,9 +496,13 @@ class Batch_sertifikasi extends CI_Controller {
 		} 
 		else 
 		{
-			$cek = $this->batchsertifikasi_model->cekmahasiswa($id_subser, $id_sertifikasi)->row();
+			$cek = $this->batchsertifikasi_model->cekmahasiswa($id_batch, $id_subser, $id_sertifikasi)->row();
 
-			if ($cek->sm_status == '' || $cek->sm_status == NULL || $cek->sm_status == 'Lulus') 
+			// header('content-type: application/json');
+			// echo json_encode($cek);
+			// die;
+
+			if ($cek->sm_status == 'Lulus' || $cek->sm_status == 'Sedang Mengikuti') 
 			{
                 //jika sudah pernah daftar
 				$this->session->set_flashdata('message', 'Anda sudah mendaftar');
@@ -553,6 +556,7 @@ class Batch_sertifikasi extends CI_Controller {
 						'sm_sertifikasi'          => $this->uri->segment(5),
 						'sm_mahasiswa'            => $this->session->userdata('npm'),
 						'sm_tanggal_daftar'       => date('Y-m-d H:i:s'),
+						'sm_status'				  => "Sedang Mengikuti",
 						'sm_userupdate'           => $this->session->userdata('npm'),
 						'sm_lastupdate'           => date('Y-m-d H:i:s')
 					];

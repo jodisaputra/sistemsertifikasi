@@ -126,9 +126,10 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->update('ssc_sertifikasi_mahasiswa', $update);
     }
 
-    function cekmahasiswa($id_subsertifikasi, $id_sertifikasi)
+    function cekmahasiswa($id_batch, $id_subsertifikasi, $id_sertifikasi)
     {
         $this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+        $this->db->where('ssm_batch', $id_batch);
         $this->db->where('ssm_subsertifikasi', $id_subsertifikasi);
         $this->db->where('ssc_sertifikasi_mahasiswa.sm_mahasiswa', $this->session->userdata('npm'));
         $this->db->where('ssc_sertifikasi_mahasiswa.sm_sertifikasi', $id_sertifikasi);
