@@ -19,6 +19,10 @@ class Home extends CI_Controller {
 			'view'	=> 'index'
 		];
 
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
+
 		$this->load->view('template/wrapper', $data);
 	}
 

@@ -337,12 +337,12 @@ class Batch_sertifikasi extends CI_Controller {
 		} 
 		else 
 		{
-			$cek = $this->batchsertifikasi_model->cek($id_subser,$id_sertifikasi)->row();
+			$cek = $this->batchsertifikasi_model->cek($id_batch, $id_subser,$id_sertifikasi)->row();
 
-			if ($cek->srtu_status == '' || $cek->srtu_status == NULL || $cek->srtu_status == 'Lulus') 
+			if ($cek->srtu_status == 'Lulus' || $cek) 
 			{
                 //jika sudah pernah daftar
-				$this->session->set_flashdata('message', 'Anda sudah mendaftar atau sudah lulus Sertifikasi ini !');
+				$this->session->set_flashdata('message', 'Anda sudah mendaftar!');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('home/detail_sertifikasi/' . $id_batch));
 			} 
