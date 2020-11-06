@@ -25,6 +25,13 @@ class Sertifikasi_model extends CI_Model {
 		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi')->result();
 	}
+
+	function get_all_sub_sertifikasibystatus() {
+		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+		$this->db->where('scert_isaktif', 'y');
+		return $this->db->get('ssc_subsertifikasi')->result();
+	}
+
 	function get_sub_sertifikasi_by_main($idsertifikasi) {
 		$this->db->where('scert_sertifikasi',$idsertifikasi);
 		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');

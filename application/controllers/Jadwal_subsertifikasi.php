@@ -31,9 +31,13 @@ class Jadwal_subsertifikasi extends CI_Controller {
 	{
 		$data = [
 			'title'	=> 'Jadwal Ujian Sertifikasi',
-			'batch'     => $this->batchsertifikasi_model->listbatch(),
+			'batch'     => $this->batchsertifikasi_model->listbatchbysertifikasistatus(),
 			'view'	=> 'admin/jadwal_subsertifikasi/tambah'
 		];
+
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 
 		$this->load->view('admin/template/wrapper', $data);
 	}
@@ -105,7 +109,7 @@ class Jadwal_subsertifikasi extends CI_Controller {
 		{
 			$data = [
 				'title'	=> 'Jadwal Ujian Sertifikasi',
-				'batch'     => $this->batchsertifikasi_model->listbatch(),
+				'batch'     => $this->batchsertifikasi_model->listbatchbysertifikasistatus(),
 				'list'      => $row,
 				'view'	=> 'admin/jadwal_subsertifikasi/ubah'
 			];

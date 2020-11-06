@@ -57,7 +57,7 @@ class Batch_sertifikasi extends CI_Controller {
 
 		$data = [
 			'title'	=> 'Batch Sertifikasi',
-			'subsertifikasi'     => $this->sertifikasi_model->get_all_sub_sertifikasi(),
+			'subsertifikasi'     => $this ->sertifikasi_model->get_all_sub_sertifikasibystatus(),
 			'view'	=> 'admin/batchsertifikasi/tambah'
 		];
 
@@ -169,7 +169,7 @@ class Batch_sertifikasi extends CI_Controller {
 		{
 			$data = [
 				'title'	=> 'Batch Sertifikasi',
-				'subsertifikasi'     => $this->sertifikasi_model->get_all_sub_sertifikasi(),
+				'subsertifikasi'     => $this->sertifikasi_model->get_all_sub_sertifikasibystatus(),
 				'list'               => $row,
 				'view'	=> 'admin/batchsertifikasi/ubah'
 			];
