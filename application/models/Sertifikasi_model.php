@@ -33,6 +33,7 @@ class Sertifikasi_model extends CI_Model {
 
 	function totalsubsertifikasi($idsertifikasi) {
 		$this->db->where('scert_sertifikasi',$idsertifikasi);
+		$this->db->where('scert_isaktif', 'y');
 		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi');
 	}

@@ -498,10 +498,6 @@ class Batch_sertifikasi extends CI_Controller {
 		{
 			$cek = $this->batchsertifikasi_model->cekmahasiswa($id_batch, $id_subser, $id_sertifikasi)->row();
 
-			// header('content-type: application/json');
-			// echo json_encode($cek);
-			// die;
-
 			if ($cek->sm_status == 'Lulus' || $cek)
 			{
                 //jika sudah pernah daftar

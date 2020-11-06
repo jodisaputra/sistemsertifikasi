@@ -22,6 +22,8 @@ class Jadwalsubsertifikasi_model extends CI_Model {
 		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
 		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		$this->db->join('ssc_pelatih_subsertifikasi', 'ssc_pelatih_subsertifikasi.ps_batch = ssc_batch_sertifikasi.bs_id');
+		$this->db->where('ssc_sertifikasi.cert_isaktif', 'y');
+		$this->db->where('ssc_subsertifikasi.scert_isaktif', 'y');
 		$this->db->where('ssc_batch_sertifikasi.bs_mulai_daftar <= ', $tgl);
 		$this->db->where('ssc_batch_sertifikasi.bs_terakhir_daftar >= ', $tgl);
 		return $this->db->get($this->table)->result();

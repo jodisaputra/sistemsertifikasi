@@ -18,7 +18,7 @@ class Home extends CI_Controller {
 			'seminar'   => $this->seminar_model->jadwal_seminar(),
 			'view'	=> 'index'
 		];
-
+		
 		$this->load->view('template/wrapper', $data);
 	}
 

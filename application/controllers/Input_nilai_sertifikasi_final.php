@@ -231,6 +231,9 @@ class Input_nilai_sertifikasi_final extends CI_Controller {
 
 		$totalsubsertifikasi = $this->sertifikasi_model->totalsubsertifikasi($id_sertifikat)->num_rows();
 
+		header('content-type: application/json');
+		echo json_encode($totalsubsertifikasi);
+		die;
 		// Cek jika tidak mengikuti semua subsertifikasi (dengan syarat ada lebih dari 1 subsertifikasi);
 
 		if($sub < $totalsubsertifikasi)
