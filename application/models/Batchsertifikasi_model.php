@@ -51,6 +51,18 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->delete($this->table);
     }
 
+    function cek_sub_mahasiswa($id_sertifikasi_mahasiswa) 
+    {
+        $this->db->where('ssm_sertifikasi_mahasiswa', $id_sertifikasi_mahasiswa);
+        return $this->db->get('ssc_subsertifikasi_mahasiswa')->result();
+    }
+
+     function cek_sub_umum($id_sertifikasi_umum) 
+    {
+        $this->db->where('ssu_sertifikasi_umum', $id_sertifikasi_umum);
+        return $this->db->get('ssc_subsertifikasi_umum')->result();
+    }
+
     function batchsertifikasikode()
     {
         $this->db->select_max('bs_id');
@@ -103,12 +115,10 @@ class Batchsertifikasi_model extends CI_Model
         return $result->sm_id; 
     }
 
-    function cek($id_batch, $id_subsertifikasi,$id_sertifikasi)
+    function cek($email, $id_sertifikasi)
     {
         $this->db->join('ssc_sertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
-        $this->db->where('ssu_batch', $id_batch);
-        $this->db->where('ssu_subsertifikasi', $id_subsertifikasi);
-        $this->db->where('ssc_sertifikasi_umum.srtu_peserta', $this->session->userdata('email'));
+        $this->db->where('ssc_sertifikasi_umum.srtu_peserta', $email);
         $this->db->where('ssc_sertifikasi_umum.srtu_sertifikasi', $id_sertifikasi);
         return $this->db->get('ssc_subsertifikasi_umum');
     }
@@ -129,13 +139,13 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->update('ssc_sertifikasi_mahasiswa', $update);
     }
 
-    function cekmahasiswa($npm)
+    function cekmahasiswa($npm, $id_sertifikasi)
     {
         $this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
         // $this->db->where('ssm_batch', $id_batch);
         // $this->db->where('ssm_subsertifikasi', $id_subsertifikasi);
         $this->db->where('ssc_sertifikasi_mahasiswa.sm_mahasiswa', $npm);
-        // $this->db->where('ssc_sertifikasi_mahasiswa.sm_sertifikasi', $id_sertifikasi);
+        $this->db->where('ssc_sertifikasi_mahasiswa.sm_sertifikasi', $id_sertifikasi);
         return $this->db->get('ssc_subsertifikasi_mahasiswa');
     }
 

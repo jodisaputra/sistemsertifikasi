@@ -337,113 +337,79 @@ class Batch_sertifikasi extends CI_Controller {
 		} 
 		else 
 		{
-			$cek = $this->batchsertifikasi_model->cek($id_batch, $id_subser,$id_sertifikasi)->row();
+			$cek = $this->batchsertifikasi_model->cek($this->session->userdata['email'], $id_sertifikasi)->row_array();
 			
-			header('content-type: application/json');
-			echo json_encode($cek);
-			die;
-			
-			if ($cek->srtu_status == 'Lulus' || $cek) 
+			// header('content-type: application/json');
+			// echo json_encode($cek);
+			// die;
+
+			if ($cek['srtu_status'] == 'Lulus') 
 			{
-                //jika sudah pernah daftar
-				$this->session->set_flashdata('message', 'Anda sudah mendaftar!');
+                //jika sudah pernah daftar dan Lulus
+				$this->session->set_flashdata('message', 'Anda sudah Lulus sertifikasi ini!');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('home/detail_sertifikasi/' . $id_batch));
 			} 
 			else 
 			{
-                 // Jika Sudah pernah daftar tapi belum lulus
-				if($cek->srtu_status == 'Tidak Lulus' )
-				{
-					$data_blm = $cek;
-					$update = [
-						'srtu_status' => NULL,
-						'srtu_grade' => NULL,
-						'srtu_penghargaan' => NULL,
-						'srtu_lembagasertifikasi' => NULL,
-						'srtu_catatan'	=> NULL
-					];
-					$this->batchsertifikasi_model->updatetidaklulusumum($data_blm->srtu_id, $data_blm->srtu_sertifikasi, $this->session->userdata('email'), $update);
+			   if($cek['srtu_sertifikasi'] == $id_sertifikasi && $cek['ssu_batch'] == $id_batch &&  $cek['srtu_sertifikasi'] == $id_subser && $cek['srtu_status'] == '' || $cek['srtu_status'] == NULL)
+			   {
+				   	$status = 'y';
 
-					$this->daftar_umum_tidaklulus($data_blm->ssu_sertifikasi_umum,$data_blm->ssu_subsertifikasi, $data_blm->ssu_batch);
-				}
-				else
-				{
-					$kode = "U".$this->session->userdata('ktp')."-";
-					$count = $this->batchsertifikasi_model->generateidsertifikasiumum($kode);
-					$totalcount = intval($count->total);
-					$no = $totalcount + 1;
-
-					if($no < 10)
+					$data_sub = $this->batchsertifikasi_model->cek_sub_umum($cek['srtu_id']);
+					
+					foreach($data_sub as $ds) 
 					{
-						$no = "00" . $no;
-					}
-					elseif($no >= 10 && $no < 100)
-					{
-						$no = "0" . $no;
-					}
-					elseif ($no >= 100 && $no < 1000)
-					{
-						$no = $no;
+						if($ds->ssu_subsertifikasi == $id_subser)
+						{
+							$status = 'n';
+						}
 					}
 
-					$id = $kode . $no;
-
-					$data = [
-						'srtu_id'                 => $id,
-						'srtu_sertifikasi'        => $this->uri->segment(5),
-						'srtu_peserta'            => $this->session->userdata('email'),
-						'srtu_tanggal_daftar'     => date('Y-m-d H:i:s'),
-						'srtu_userupdate'         => $this->session->userdata('email'),
-						'srtu_lastupdate'         => date('Y-m-d H:i:s')
-					];
-
-					$ceksertifikasi = $this->sertifikasi_model->ceksertifikasi($this->uri->segment(5), $this->session->userdata('email'));
-
-					if($ceksertifikasi->num_rows() > 0)
+					if($status == 'n')
 					{
-                        //Insert ke tabel untuk detail pembayaran sertifikasi Umum
-                        // Generate ID
-						$id_subsertifikasi_umum = $this->batchsertifikasi_model->getidsertifikasiumum()."-";
-
-						$count = $this->batchsertifikasi_model->generateIDsubsertifikasiumum($id_subsertifikasi_umum);
+						//jika sudah pernah daftar
+						$this->session->set_flashdata('message', 'Anda sudah mendaftar sertifikasi ini!');
+						$this->session->set_flashdata('tipe', 'error');
+						redirect(base_url('home/detail_sertifikasi/' . $id_batch));
+					}
+					else
+					{
+						$kode = "U".$this->session->userdata('ktp')."-";
+						$count = $this->batchsertifikasi_model->generateidsertifikasiumum($kode);
 						$totalcount = intval($count->total);
 						$no = $totalcount + 1;
 
 						if($no < 10)
 						{
+							$no = "00" . $no;
+						}
+						elseif($no >= 10 && $no < 100)
+						{
 							$no = "0" . $no;
 						}
-						else
+						elseif ($no >= 100 && $no < 1000)
 						{
 							$no = $no;
 						}
 
-						$id_subsertifikasiumum = $id_subsertifikasi_umum.$no;
-						$subsertifikasi = $this->uri->segment(4);
+						$id = $kode . $no;
 
-						$data2 = [
-							'ssu_id'                     => $id_subsertifikasiumum,
-							'ssu_sertifikasi_umum'       => $this->batchsertifikasi_model->getidsertifikasiumum(),
-							'ssu_subsertifikasi'         => $subsertifikasi,
-							'ssu_batch'                  => $id_batch,
-							'ssu_tanggaldaftar'          => date('Y-m-d H:i:s'),
-							'ssu_status'                 => "Menunggu Pembayaran",
-							'ssu_userupdate'             => $this->session->userdata('email'),
-							'ssu_lastupdate'             => date('Y-m-d H:i:s')
+						$data = [
+							'srtu_id'                 => $id,
+							'srtu_sertifikasi'        => $this->uri->segment(5),
+							'srtu_peserta'            => $this->session->userdata('email'),
+							'srtu_tanggal_daftar'     => date('Y-m-d H:i:s'),
+							'srtu_userupdate'         => $this->session->userdata('email'),
+							'srtu_lastupdate'         => date('Y-m-d H:i:s')
 						];
 
-						$this->batchsertifikasi_model->insert_subsertifikasiumum($data2);
-						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
-						$this->session->set_flashdata('tipe', 'success');
-						redirect(base_url('akun_umum/akun'));
-					}
-					else
-					{
-						if ($this->batchsertifikasi_model->daftar_sertifikasi_umum($data)) 
+						$ceksertifikasi = $this->sertifikasi_model->ceksertifikasi($this->uri->segment(5), $this->session->userdata('email'));
+
+						if($ceksertifikasi->num_rows() > 0)
 						{
-                            //Insert ke tabel untuk detail pembayaran sertifikasi Umum
-                            // Generate ID
+							//Insert ke tabel untuk detail pembayaran sertifikasi Umum
+							// Generate ID
 							$id_subsertifikasi_umum = $this->batchsertifikasi_model->getidsertifikasiumum()."-";
 
 							$count = $this->batchsertifikasi_model->generateIDsubsertifikasiumum($id_subsertifikasi_umum);
@@ -477,15 +443,195 @@ class Batch_sertifikasi extends CI_Controller {
 							$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
 							$this->session->set_flashdata('tipe', 'success');
 							redirect(base_url('akun_umum/akun'));
-						} 
-						else 
+						}
+						else
 						{
-							$this->session->set_flashdata('message', 'Anda gagal mendaftar');
-							$this->session->set_flashdata('tipe', 'error');
-							redirect(base_url('home'));
+							if ($this->batchsertifikasi_model->daftar_sertifikasi_umum($data)) 
+							{
+								//Insert ke tabel untuk detail pembayaran sertifikasi Umum
+								// Generate ID
+								$id_subsertifikasi_umum = $this->batchsertifikasi_model->getidsertifikasiumum()."-";
+
+								$count = $this->batchsertifikasi_model->generateIDsubsertifikasiumum($id_subsertifikasi_umum);
+								$totalcount = intval($count->total);
+								$no = $totalcount + 1;
+
+								if($no < 10)
+								{
+									$no = "0" . $no;
+								}
+								else
+								{
+									$no = $no;
+								}
+
+								$id_subsertifikasiumum = $id_subsertifikasi_umum.$no;
+								$subsertifikasi = $this->uri->segment(4);
+
+								$data2 = [
+									'ssu_id'                     => $id_subsertifikasiumum,
+									'ssu_sertifikasi_umum'       => $this->batchsertifikasi_model->getidsertifikasiumum(),
+									'ssu_subsertifikasi'         => $subsertifikasi,
+									'ssu_batch'                  => $id_batch,
+									'ssu_tanggaldaftar'          => date('Y-m-d H:i:s'),
+									'ssu_status'                 => "Menunggu Pembayaran",
+									'ssu_userupdate'             => $this->session->userdata('email'),
+									'ssu_lastupdate'             => date('Y-m-d H:i:s')
+								];
+
+								$this->batchsertifikasi_model->insert_subsertifikasiumum($data2);
+								$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+								$this->session->set_flashdata('tipe', 'success');
+								redirect(base_url('akun_umum/akun'));
+							} 
+							else 
+							{
+								$this->session->set_flashdata('message', 'Anda gagal mendaftar');
+								$this->session->set_flashdata('tipe', 'error');
+								redirect(base_url('home'));
+							}
 						}
 					}
-				}
+			   }
+			   else
+			   {
+				   echo 'daftar baru';
+				   die;
+					// Jika Sudah pernah daftar tapi belum lulus
+					if($cek['srtu_status'] == 'Tidak Lulus' )
+					{
+						$data_blm = $cek;
+						$update = [
+							'srtu_status' => NULL,
+							'srtu_grade' => NULL,
+							'srtu_penghargaan' => NULL,
+							'srtu_lembagasertifikasi' => NULL,
+							'srtu_catatan'	=> NULL
+						];
+						$this->batchsertifikasi_model->updatetidaklulusumum($data_blm['srtu_id'], $data_blm['srtu_sertifikasi'], $this->session->userdata('email'), $update);
+
+						$this->daftar_umum_tidaklulus($data_blm['ssu_sertifikasi_umum'],$data_blm['ssu_subsertifikasi'], $data_blm['ssu_batch']);
+					}
+					else
+					{
+						$kode = "U".$this->session->userdata('ktp')."-";
+						$count = $this->batchsertifikasi_model->generateidsertifikasiumum($kode);
+						$totalcount = intval($count->total);
+						$no = $totalcount + 1;
+
+						if($no < 10)
+						{
+							$no = "00" . $no;
+						}
+						elseif($no >= 10 && $no < 100)
+						{
+							$no = "0" . $no;
+						}
+						elseif ($no >= 100 && $no < 1000)
+						{
+							$no = $no;
+						}
+
+						$id = $kode . $no;
+
+						$data = [
+							'srtu_id'                 => $id,
+							'srtu_sertifikasi'        => $this->uri->segment(5),
+							'srtu_peserta'            => $this->session->userdata('email'),
+							'srtu_tanggal_daftar'     => date('Y-m-d H:i:s'),
+							'srtu_userupdate'         => $this->session->userdata('email'),
+							'srtu_lastupdate'         => date('Y-m-d H:i:s')
+						];
+
+						$ceksertifikasi = $this->sertifikasi_model->ceksertifikasi($this->uri->segment(5), $this->session->userdata('email'));
+
+						if($ceksertifikasi->num_rows() > 0)
+						{
+							//Insert ke tabel untuk detail pembayaran sertifikasi Umum
+							// Generate ID
+							$id_subsertifikasi_umum = $this->batchsertifikasi_model->getidsertifikasiumum()."-";
+
+							$count = $this->batchsertifikasi_model->generateIDsubsertifikasiumum($id_subsertifikasi_umum);
+							$totalcount = intval($count->total);
+							$no = $totalcount + 1;
+
+							if($no < 10)
+							{
+								$no = "0" . $no;
+							}
+							else
+							{
+								$no = $no;
+							}
+
+							$id_subsertifikasiumum = $id_subsertifikasi_umum.$no;
+							$subsertifikasi = $this->uri->segment(4);
+
+							$data2 = [
+								'ssu_id'                     => $id_subsertifikasiumum,
+								'ssu_sertifikasi_umum'       => $this->batchsertifikasi_model->getidsertifikasiumum(),
+								'ssu_subsertifikasi'         => $subsertifikasi,
+								'ssu_batch'                  => $id_batch,
+								'ssu_tanggaldaftar'          => date('Y-m-d H:i:s'),
+								'ssu_status'                 => "Menunggu Pembayaran",
+								'ssu_userupdate'             => $this->session->userdata('email'),
+								'ssu_lastupdate'             => date('Y-m-d H:i:s')
+							];
+
+							$this->batchsertifikasi_model->insert_subsertifikasiumum($data2);
+							$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+							$this->session->set_flashdata('tipe', 'success');
+							redirect(base_url('akun_umum/akun'));
+						}
+						else
+						{
+							if ($this->batchsertifikasi_model->daftar_sertifikasi_umum($data)) 
+							{
+								//Insert ke tabel untuk detail pembayaran sertifikasi Umum
+								// Generate ID
+								$id_subsertifikasi_umum = $this->batchsertifikasi_model->getidsertifikasiumum()."-";
+
+								$count = $this->batchsertifikasi_model->generateIDsubsertifikasiumum($id_subsertifikasi_umum);
+								$totalcount = intval($count->total);
+								$no = $totalcount + 1;
+
+								if($no < 10)
+								{
+									$no = "0" . $no;
+								}
+								else
+								{
+									$no = $no;
+								}
+
+								$id_subsertifikasiumum = $id_subsertifikasi_umum.$no;
+								$subsertifikasi = $this->uri->segment(4);
+
+								$data2 = [
+									'ssu_id'                     => $id_subsertifikasiumum,
+									'ssu_sertifikasi_umum'       => $this->batchsertifikasi_model->getidsertifikasiumum(),
+									'ssu_subsertifikasi'         => $subsertifikasi,
+									'ssu_batch'                  => $id_batch,
+									'ssu_tanggaldaftar'          => date('Y-m-d H:i:s'),
+									'ssu_status'                 => "Menunggu Pembayaran",
+									'ssu_userupdate'             => $this->session->userdata('email'),
+									'ssu_lastupdate'             => date('Y-m-d H:i:s')
+								];
+
+								$this->batchsertifikasi_model->insert_subsertifikasiumum($data2);
+								$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+								$this->session->set_flashdata('tipe', 'success');
+								redirect(base_url('akun_umum/akun'));
+							} 
+							else 
+							{
+								$this->session->set_flashdata('message', 'Anda gagal mendaftar');
+								$this->session->set_flashdata('tipe', 'error');
+								redirect(base_url('home'));
+							}
+						}
+					}
+			   }
 			}
 		}
 	}
@@ -500,11 +646,8 @@ class Batch_sertifikasi extends CI_Controller {
 		} 
 		else 
 		{
-			$cek = $this->batchsertifikasi_model->cekmahasiswa($this->session->userdata('npm'))->row_array();
-			// header('content-type: application/json');
-			// echo json_encode($cek);
-			// die;
-
+			$cek = $this->batchsertifikasi_model->cekmahasiswa($this->session->userdata('npm'), $id_sertifikasi)->row_array();
+			
 			if ($cek['sm_status'] == 'Lulus')
 			{
                 //jika sudah pernah daftar dan lulus
@@ -516,18 +659,152 @@ class Batch_sertifikasi extends CI_Controller {
 			{
 				if($cek['sm_sertifikasi'] == $id_sertifikasi && $cek['ssm_batch'] == $id_batch &&  $cek['ssm_subsertifikasi'] == $id_subser && $cek['sm_status'] == '' || $cek['sm_status'] == NULL)
 				{
-					//jika sudah pernah daftar
-					$this->session->set_flashdata('message', 'Anda sudah pernah mendaftar sertifikasi ini');
-					$this->session->set_flashdata('tipe', 'error');
-					redirect(base_url('home/detail_sertifikasi/' . $id_batch));
+					$status = 'y';
+
+					$data_sub = $this->batchsertifikasi_model->cek_sub_mahasiswa($cek['sm_id']);
+					
+					foreach($data_sub as $ds) 
+					{
+						if($ds->ssm_subsertifikasi == $id_subser)
+						{
+							$status = 'n';
+						}
+					}
+
+					if($status == 'n') 
+					{
+						//jika sudah pernah daftar
+						$this->session->set_flashdata('message', 'Anda sudah mendaftar sertifikasi ini');
+						$this->session->set_flashdata('tipe', 'error');
+						redirect(base_url('home/detail_sertifikasi/' . $id_batch));
+					}
+					else 
+					{
+						//Generate Kode
+						$npm = $this->session->userdata('npm');
+						$count = $this->batchsertifikasi_model->generateID($npm);
+						$totalcount = intval($count->total);
+						$no = $totalcount + 1;
+
+						if($no < 10)
+						{
+							$no = "00" . $no;
+						}
+						elseif($no >= 10 && $no < 100)
+						{
+							$no = "0" . $no;
+						}
+						else
+						{
+							$no = $no;
+						}
+
+						$id_sertifikasi_mhs = $npm.$no;
+						//Jika Baru daftar pertama kali
+						$data = [
+							'sm_id'                   => $id_sertifikasi_mhs,
+							'sm_sertifikasi'          => $this->uri->segment(5),
+							'sm_mahasiswa'            => $this->session->userdata('npm'),
+							'sm_tanggal_daftar'       => date('Y-m-d H:i:s'),
+							'sm_userupdate'           => $this->session->userdata('npm'),
+							'sm_lastupdate'           => date('Y-m-d H:i:s')
+						];
+
+						$ceksertifikasi = $this->sertifikasi_model->ceksertifikasimahasiswa($this->uri->segment(5), $this->session->userdata('npm'));
+
+						if($ceksertifikasi->num_rows() > 0)
+						{
+							//Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
+							// Generate ID
+							$id_subsertifikasi_mhs = $this->batchsertifikasi_model->getidsertifikasimahasiswa();
+							$count = $this->batchsertifikasi_model->generateIDsubsertifikasimhs($id_subsertifikasi_mhs);
+							$totalcount = intval($count->total);
+							$no = $totalcount + 1;
+
+							if($no < 10)
+							{
+								$no = "0" . $no;
+							}
+							else
+							{
+								$no = $no;
+							}
+
+							$id_subsertifikasimhs = $id_subsertifikasi_mhs.$no;
+							$subsertifikasi = $this->uri->segment(4);
+
+							$data2 = [
+								'ssm_id'                     => $id_subsertifikasimhs,
+								'ssm_sertifikasi_mahasiswa'  => $this->batchsertifikasi_model->getidsertifikasimahasiswa(),
+								'ssm_subsertifikasi'         => $subsertifikasi,
+								'ssm_batch'                  => $id_batch,
+								'ssm_tanggaldaftar'          => date('Y-m-d H:i:s'),
+								'ssm_status'                 => "Menunggu Pembayaran",
+								'ssm_userupdate'             => $this->session->userdata('npm'),
+								'ssm_lastupdate'             => date('Y-m-d H:i:s')
+							];
+
+							$this->batchsertifikasi_model->insert_subsertifikasimhs($data2);
+
+							$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+							$this->session->set_flashdata('tipe', 'success');
+							redirect(base_url('akun_mahasiswa/akun'));
+						}
+						else
+						{
+							if ($this->batchsertifikasi_model->daftar_sertifikasi_mhs($data)) 
+							{
+								//Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
+								// Generate ID
+								$id_subsertifikasi_mhs = $id_sertifikasi_mhs;
+								$count = $this->batchsertifikasi_model->generateIDsubsertifikasimhs($id_subsertifikasi_mhs);
+								$totalcount = intval($count->total);
+								$no = $totalcount + 1;
+
+								if($no < 10)
+								{
+									$no = "0" . $no;
+								}
+								else
+								{
+									$no = $no;
+								}
+
+								$id_subsertifikasimhs = $id_subsertifikasi_mhs.$no;
+								$subsertifikasi = $this->uri->segment(4);
+
+								$data2 = [
+									'ssm_id'                     => $id_subsertifikasimhs,
+									'ssm_sertifikasi_mahasiswa'  => $this->batchsertifikasi_model->getidsertifikasimahasiswa(),
+									'ssm_subsertifikasi'         => $subsertifikasi,
+									'ssm_batch'                  => $id_batch,
+									'ssm_tanggaldaftar'          => date('Y-m-d H:i:s'),
+									'ssm_status'                 => "Menunggu Pembayaran",
+									'ssm_userupdate'             => $this->session->userdata('npm'),
+									'ssm_lastupdate'             => date('Y-m-d H:i:s')
+								];
+
+								$this->batchsertifikasi_model->insert_subsertifikasimhs($data2);
+
+								$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+								$this->session->set_flashdata('tipe', 'success');
+								redirect(base_url('akun_mahasiswa/akun'));
+							} 
+							else 
+							{
+								$this->session->set_flashdata('message', 'Anda gagal mendaftar');
+								$this->session->set_flashdata('tipe', 'error');
+								redirect(base_url('home/detail_sertifikasi/' . $id));
+							}
+						}
+					}
 				}
 				else
 				{
 					// Jika Sudah pernah daftar tapi belum lulus
 					if($cek['sm_status'] == 'Tidak Lulus')
 					{
-						echo 'daftar tidak lulus';
-						die;
+
 						$data_blm = $cek;
 						$update = [
 							'sm_status' => NULL,

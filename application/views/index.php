@@ -17,7 +17,7 @@
 
 
     <!-- Sertifikasi -->
-   <section class="special_cource padding_top">
+   <section class="special_cource padding_top" id="sertifikasi">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-5">
