@@ -338,7 +338,11 @@ class Batch_sertifikasi extends CI_Controller {
 		else 
 		{
 			$cek = $this->batchsertifikasi_model->cek($id_batch, $id_subser,$id_sertifikasi)->row();
-
+			
+			header('content-type: application/json');
+			echo json_encode($cek);
+			die;
+			
 			if ($cek->srtu_status == 'Lulus' || $cek) 
 			{
                 //jika sudah pernah daftar
@@ -496,78 +500,60 @@ class Batch_sertifikasi extends CI_Controller {
 		} 
 		else 
 		{
-			$cek = $this->batchsertifikasi_model->cekmahasiswa($id_batch, $id_subser, $id_sertifikasi)->row();
+			$cek = $this->batchsertifikasi_model->cekmahasiswa($this->session->userdata('npm'))->row_array();
+			// header('content-type: application/json');
+			// echo json_encode($cek);
+			// die;
 
-			if ($cek->sm_status == 'Lulus' || $cek)
+			if ($cek['sm_status'] == 'Lulus')
 			{
-                //jika sudah pernah daftar
-				$this->session->set_flashdata('message', 'Anda sudah mendaftar');
+                //jika sudah pernah daftar dan lulus
+				$this->session->set_flashdata('message', 'Anda sudah Lulus sertifikasi ini');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('home/detail_sertifikasi/' . $id_batch));
 			} 
 			else 
 			{
-                 // Jika Sudah pernah daftar tapi belum lulus
-				if($cek->sm_status == 'Tidak Lulus')
+				if($cek['sm_sertifikasi'] == $id_sertifikasi && $cek['ssm_batch'] == $id_batch &&  $cek['ssm_subsertifikasi'] == $id_subser && $cek['sm_status'] == '' || $cek['sm_status'] == NULL)
 				{
-
-					$data_blm = $cek;
-					$update = [
-						'sm_status' => NULL,
-						'sm_grade' => NULL,
-						'sm_penghargaan' => NULL,
-						'sm_lembagasertifikasi' => NULL,
-						'sm_catatan'	=> NULL
-					];
-
-					$this->batchsertifikasi_model->updatetidaklulusmahasiswa($data_blm->sm_id, $data_blm->sm_sertifikasi, $this->session->userdata('npm'), $update);
-
-					$this->daftar_mhs_tidaklulus($data_blm->ssm_sertifikasi_mahasiswa,$data_blm->ssm_subsertifikasi, $data_blm->ssm_batch);
+					//jika sudah pernah daftar
+					$this->session->set_flashdata('message', 'Anda sudah pernah mendaftar sertifikasi ini');
+					$this->session->set_flashdata('tipe', 'error');
+					redirect(base_url('home/detail_sertifikasi/' . $id_batch));
 				}
 				else
 				{
-                    //Generate Kode
-					$npm = $this->session->userdata('npm');
-					$count = $this->batchsertifikasi_model->generateID($npm);
-					$totalcount = intval($count->total);
-					$no = $totalcount + 1;
+					// Jika Sudah pernah daftar tapi belum lulus
+					if($cek['sm_status'] == 'Tidak Lulus')
+					{
+						echo 'daftar tidak lulus';
+						die;
+						$data_blm = $cek;
+						$update = [
+							'sm_status' => NULL,
+							'sm_grade' => NULL,
+							'sm_penghargaan' => NULL,
+							'sm_lembagasertifikasi' => NULL,
+							'sm_catatan'	=> NULL
+						];
 
-					if($no < 10)
-					{
-						$no = "00" . $no;
-					}
-					elseif($no >= 10 && $no < 100)
-					{
-						$no = "0" . $no;
+						$this->batchsertifikasi_model->updatetidaklulusmahasiswa($data_blm['sm_id'], $data_blm['sm_sertifikasi'], $this->session->userdata('npm'), $update);
+
+						$this->daftar_mhs_tidaklulus($data_blm['ssm_sertifikasi_mahasiswa'],$data_blm['ssm_subsertifikasi'], $data_blm['ssm_batch']);
 					}
 					else
 					{
-						$no = $no;
-					}
-
-					$id_sertifikasi_mhs = $npm.$no;
-                    //Jika Baru daftar pertama kali
-					$data = [
-						'sm_id'                   => $id_sertifikasi_mhs,
-						'sm_sertifikasi'          => $this->uri->segment(5),
-						'sm_mahasiswa'            => $this->session->userdata('npm'),
-						'sm_tanggal_daftar'       => date('Y-m-d H:i:s'),
-						'sm_userupdate'           => $this->session->userdata('npm'),
-						'sm_lastupdate'           => date('Y-m-d H:i:s')
-					];
-
-					$ceksertifikasi = $this->sertifikasi_model->ceksertifikasimahasiswa($this->uri->segment(5), $this->session->userdata('npm'));
-
-					if($ceksertifikasi->num_rows() > 0)
-					{
-                         //Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
-                        // Generate ID
-						$id_subsertifikasi_mhs = $this->batchsertifikasi_model->getidsertifikasimahasiswa();
-						$count = $this->batchsertifikasi_model->generateIDsubsertifikasimhs($id_subsertifikasi_mhs);
+						//Generate Kode
+						$npm = $this->session->userdata('npm');
+						$count = $this->batchsertifikasi_model->generateID($npm);
 						$totalcount = intval($count->total);
 						$no = $totalcount + 1;
 
 						if($no < 10)
+						{
+							$no = "00" . $no;
+						}
+						elseif($no >= 10 && $no < 100)
 						{
 							$no = "0" . $no;
 						}
@@ -576,33 +562,24 @@ class Batch_sertifikasi extends CI_Controller {
 							$no = $no;
 						}
 
-						$id_subsertifikasimhs = $id_subsertifikasi_mhs.$no;
-						$subsertifikasi = $this->uri->segment(4);
-
-						$data2 = [
-							'ssm_id'                     => $id_subsertifikasimhs,
-							'ssm_sertifikasi_mahasiswa'  => $this->batchsertifikasi_model->getidsertifikasimahasiswa(),
-							'ssm_subsertifikasi'         => $subsertifikasi,
-							'ssm_batch'                  => $id_batch,
-							'ssm_tanggaldaftar'          => date('Y-m-d H:i:s'),
-							'ssm_status'                 => "Menunggu Pembayaran",
-							'ssm_userupdate'             => $this->session->userdata('npm'),
-							'ssm_lastupdate'             => date('Y-m-d H:i:s')
+						$id_sertifikasi_mhs = $npm.$no;
+						//Jika Baru daftar pertama kali
+						$data = [
+							'sm_id'                   => $id_sertifikasi_mhs,
+							'sm_sertifikasi'          => $this->uri->segment(5),
+							'sm_mahasiswa'            => $this->session->userdata('npm'),
+							'sm_tanggal_daftar'       => date('Y-m-d H:i:s'),
+							'sm_userupdate'           => $this->session->userdata('npm'),
+							'sm_lastupdate'           => date('Y-m-d H:i:s')
 						];
 
-						$this->batchsertifikasi_model->insert_subsertifikasimhs($data2);
+						$ceksertifikasi = $this->sertifikasi_model->ceksertifikasimahasiswa($this->uri->segment(5), $this->session->userdata('npm'));
 
-						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
-						$this->session->set_flashdata('tipe', 'success');
-						redirect(base_url('akun_mahasiswa/akun'));
-					}
-					else
-					{
-						if ($this->batchsertifikasi_model->daftar_sertifikasi_mhs($data)) 
+						if($ceksertifikasi->num_rows() > 0)
 						{
-                            //Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
-                            // Generate ID
-							$id_subsertifikasi_mhs = $id_sertifikasi_mhs;
+							//Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
+							// Generate ID
+							$id_subsertifikasi_mhs = $this->batchsertifikasi_model->getidsertifikasimahasiswa();
 							$count = $this->batchsertifikasi_model->generateIDsubsertifikasimhs($id_subsertifikasi_mhs);
 							$totalcount = intval($count->total);
 							$no = $totalcount + 1;
@@ -635,12 +612,53 @@ class Batch_sertifikasi extends CI_Controller {
 							$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
 							$this->session->set_flashdata('tipe', 'success');
 							redirect(base_url('akun_mahasiswa/akun'));
-						} 
-						else 
+						}
+						else
 						{
-							$this->session->set_flashdata('message', 'Anda gagal mendaftar');
-							$this->session->set_flashdata('tipe', 'error');
-							redirect(base_url('home/detail_sertifikasi/' . $id));
+							if ($this->batchsertifikasi_model->daftar_sertifikasi_mhs($data)) 
+							{
+								//Insert ke tabel untuk detail pembayaran sertifikasi mahasiswa
+								// Generate ID
+								$id_subsertifikasi_mhs = $id_sertifikasi_mhs;
+								$count = $this->batchsertifikasi_model->generateIDsubsertifikasimhs($id_subsertifikasi_mhs);
+								$totalcount = intval($count->total);
+								$no = $totalcount + 1;
+
+								if($no < 10)
+								{
+									$no = "0" . $no;
+								}
+								else
+								{
+									$no = $no;
+								}
+
+								$id_subsertifikasimhs = $id_subsertifikasi_mhs.$no;
+								$subsertifikasi = $this->uri->segment(4);
+
+								$data2 = [
+									'ssm_id'                     => $id_subsertifikasimhs,
+									'ssm_sertifikasi_mahasiswa'  => $this->batchsertifikasi_model->getidsertifikasimahasiswa(),
+									'ssm_subsertifikasi'         => $subsertifikasi,
+									'ssm_batch'                  => $id_batch,
+									'ssm_tanggaldaftar'          => date('Y-m-d H:i:s'),
+									'ssm_status'                 => "Menunggu Pembayaran",
+									'ssm_userupdate'             => $this->session->userdata('npm'),
+									'ssm_lastupdate'             => date('Y-m-d H:i:s')
+								];
+
+								$this->batchsertifikasi_model->insert_subsertifikasimhs($data2);
+
+								$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
+								$this->session->set_flashdata('tipe', 'success');
+								redirect(base_url('akun_mahasiswa/akun'));
+							} 
+							else 
+							{
+								$this->session->set_flashdata('message', 'Anda gagal mendaftar');
+								$this->session->set_flashdata('tipe', 'error');
+								redirect(base_url('home/detail_sertifikasi/' . $id));
+							}
 						}
 					}
 				}

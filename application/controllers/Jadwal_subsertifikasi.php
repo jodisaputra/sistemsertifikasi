@@ -24,6 +24,10 @@ class Jadwal_subsertifikasi extends CI_Controller {
 			'view'	=> 'admin/jadwal_subsertifikasi/index'
 		];
 
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
+
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
@@ -34,10 +38,6 @@ class Jadwal_subsertifikasi extends CI_Controller {
 			'batch'     => $this->batchsertifikasi_model->listbatchbysertifikasistatus(),
 			'view'	=> 'admin/jadwal_subsertifikasi/tambah'
 		];
-
-		// header('content-type: application/json');
-		// echo json_encode($data);
-		// die;
 
 		$this->load->view('admin/template/wrapper', $data);
 	}
@@ -137,7 +137,7 @@ class Jadwal_subsertifikasi extends CI_Controller {
 		{
 			$this->session->set_flashdata('message', 'Mohon Isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
-			$this->update($this->input->post('batch_id'));
+			$this->ubah($this->input->post('batch_id'));
 		}
 		else
 		{
