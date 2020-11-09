@@ -1,14 +1,14 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Validasipembayaranseminarumum extends CI_Controller {
+class Validasipembayaranseminarumum extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('validasipembayaranseminarumum_model');
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -16,7 +16,7 @@ class Validasipembayaranseminarumum extends CI_Controller {
 	}
 
 	public function index()
-	{	
+	{
 		$query = $this->validasipembayaranseminarumum_model->list()->row_array();
 		$data = [
 			'title'	=> 'Validasi Pembayaran Seminar Umum',
@@ -35,23 +35,23 @@ class Validasipembayaranseminarumum extends CI_Controller {
 			'list'      => $this->validasipembayaranseminarumum_model->listbyid($seminar, $email),
 			'view'	=> 'admin/validasipembayaran/pembayaranseminarumum/detail'
 		];
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
 	public function setLunas($seminar, $email)
 	{
-        //Cek status jika mahasiswa belum bayar tidak bisa set lunas atau tolak
+		//Cek status jika mahasiswa belum bayar tidak bisa set lunas atau tolak
 		$cekstatus = $this->validasipembayaranseminarumum_model->cekstatus($seminar, $email);
 
-		if($cekstatus)
-		{
+		if ($cekstatus) {
 			$this->session->set_flashdata('message', 'Peserta belum melakukan pembayaran!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('validasipembayaranseminarumum'));
-		}
-		else
-		{
+		} else {
 			$data = [
 				'su_keteranganpembayaran'     => 'Pembayaran Lunas',
 				'su_status'                   => 'Lunas',
@@ -59,35 +59,28 @@ class Validasipembayaranseminarumum extends CI_Controller {
 				'su_lastupdate'               => date('Y-m-d H:i:s')
 			];
 
-			if($this->validasipembayaranseminarumum_model->setLunas($seminar, $email, $data))
-			{
+			if ($this->validasipembayaranseminarumum_model->setLunas($seminar, $email, $data)) {
 				$this->session->set_flashdata('message', 'Data berhasil Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('validasipembayaranseminarumum'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal Diubah');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('validasipembayaranseminarumum'));
 			}
 		}
-
 	}
 
 	public function setTolak()
 	{
-        //Cek status jika mahasiswa belum bayar tidak bisa set lunas atau tolak
+		//Cek status jika mahasiswa belum bayar tidak bisa set lunas atau tolak
 		$cekstatus = $this->validasipembayaranseminarumum_model->cekstatus($this->input->post('seminar'), $this->input->post('idpeserta'));
 
-		if($cekstatus)
-		{
+		if ($cekstatus) {
 			$this->session->set_flashdata('message', 'Peserta belum melakukan pembayaran!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('validasipembayaranseminarumum'));
-		}
-		else
-		{
+		} else {
 			$data = [
 				'su_keteranganpembayaran'     => $this->input->post('keterangan'),
 				'su_status'                   => 'Tolak',
@@ -95,14 +88,11 @@ class Validasipembayaranseminarumum extends CI_Controller {
 				'su_lastupdate'               => date('Y-m-d H:i:s')
 			];
 
-			if($this->validasipembayaranseminarumum_model->setTolak($this->input->post('seminar'), $this->input->post('idpeserta'), $data))
-			{
+			if ($this->validasipembayaranseminarumum_model->setTolak($this->input->post('seminar'), $this->input->post('idpeserta'), $data)) {
 				$this->session->set_flashdata('message', 'Data berhasil Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('validasipembayaranseminarumum'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal Diubah');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('validasipembayaranseminarumum'));
@@ -114,19 +104,15 @@ class Validasipembayaranseminarumum extends CI_Controller {
 	{
 		$checkall = $this->input->post('umum');
 
-		if($checkall == NULL)
-		{
+		if ($checkall == NULL) {
 			$this->session->set_flashdata('message', 'Tidak ada data yang dipilih !');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('validasipembayaranseminarumum');
-		}
-		else
-		{
+		} else {
 			$umum = $this->input->post('umum');
 			$seminar = $this->input->post('seminar');
 
-			foreach($umum as $i)
-			{
+			foreach ($umum as $i) {
 				$data[$i] = [
 					'su_keteranganpembayaran'     => 'Pembayaran Lunas',
 					'su_status'                   => 'Lunas',
@@ -135,21 +121,17 @@ class Validasipembayaranseminarumum extends CI_Controller {
 				];
 			}
 
-			if($this->validasipembayaranseminarumum_model->update_collectiveumum($umum, $seminar, $data))
-			{
+			if ($this->validasipembayaranseminarumum_model->update_collectiveumum($umum, $seminar, $data)) {
 				$this->session->set_flashdata('message', 'Validasi Pembayaran Berhasil');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect('validasipembayaranseminarumum');
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Validasi Pembayaran Gagal');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect('validasipembayaranseminarumum');
 			}
 		}
 	}
-
 }
 
 /* End of file Validasipembayaranseminarumum.php */
