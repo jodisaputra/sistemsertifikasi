@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Seminar_model extends CI_Model {
+class Seminar_model extends CI_Model
+{
 
 	public $table = 'ssc_seminar';
 	public $id    = 'smr_id';
@@ -27,7 +28,7 @@ class Seminar_model extends CI_Model {
 
 	function jadwal_seminar()
 	{
-		$tgl = date("Y/m/d",now('Asia/Jakarta'));
+		$tgl = date("Y/m/d", now('Asia/Jakarta'));
 		$this->db->join('ssc_model_sertifikat', 'ssc_model_sertifikat.ms_id = ssc_seminar.smr_model_sertifikat');
 		$this->db->where('smr_tanggal >= ', $tgl);
 		return $this->db->get($this->table)->result();
@@ -224,7 +225,20 @@ class Seminar_model extends CI_Model {
 		curl_close($curl);
 		return $data_mahasiswa;
 	}
+	// ROP
+	function listseminarmahasiswa($id)
+	{
+		$this->db->where('smhs_seminar', $id);
+		$this->db->where('smhs_status', 'Lunas');
+		return $this->db->get('ssc_seminar_mahasiswa')->result();
+	}
 
+	function getdatarop($npm, $seminar)
+	{
+		$this->db->where('smhs_mahasiswa', $npm);
+		$this->db->where('smhs_seminar', $seminar);
+		return $this->db->get('ssc_seminar_mahasiswa')->row_array();
+	}
 }
 
 /* End of file Seminar_model.php */

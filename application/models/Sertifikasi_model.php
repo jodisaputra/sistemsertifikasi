@@ -1,64 +1,78 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Sertifikasi_model extends CI_Model {
+class Sertifikasi_model extends CI_Model
+{
 
-	function get_all_sertifikasi() {
+	function get_all_sertifikasi()
+	{
 		return $this->db->get('ssc_sertifikasi')->result();
 	}
-	function insert_sertifikasi($data) {
-		return $this->db->insert('ssc_sertifikasi',$data);
+	function insert_sertifikasi($data)
+	{
+		return $this->db->insert('ssc_sertifikasi', $data);
 	}
-	function get_sertifikasi($id) {
-		$this->db->where('cert_id',$id);
+	function get_sertifikasi($id)
+	{
+		$this->db->where('cert_id', $id);
 		return $this->db->get('ssc_sertifikasi')->row();
 	}
-	function update_sertifikasi($id,$data){
-		$this->db->where('cert_id',$id);
-		return $this->db->update('ssc_sertifikasi',$data);
+	function update_sertifikasi($id, $data)
+	{
+		$this->db->where('cert_id', $id);
+		return $this->db->update('ssc_sertifikasi', $data);
 	}
-	function delete_sertifikasi($id) {
-		$this->db->where('cert_id',$id);
+	function delete_sertifikasi($id)
+	{
+		$this->db->where('cert_id', $id);
 		return $this->db->delete('ssc_sertifikasi');
 	}
-	function get_all_sub_sertifikasi() {
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+	function get_all_sub_sertifikasi()
+	{
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi')->result();
 	}
 
-	function get_all_sub_sertifikasibystatus() {
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+	function get_all_sub_sertifikasibystatus()
+	{
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		$this->db->where('ssc_sertifikasi.cert_isaktif', 'y');
 		$this->db->where('scert_isaktif', 'y');
 		return $this->db->get('ssc_subsertifikasi')->result();
 	}
 
-	function get_sub_sertifikasi_by_main($idsertifikasi) {
-		$this->db->where('scert_sertifikasi',$idsertifikasi);
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+	function get_sub_sertifikasi_by_main($idsertifikasi)
+	{
+		$this->db->where('scert_sertifikasi', $idsertifikasi);
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi')->result();
 	}
 
-	function totalsubsertifikasi($idsertifikasi) {
-		$this->db->where('scert_sertifikasi',$idsertifikasi);
+	function totalsubsertifikasi($idsertifikasi)
+	{
+		$this->db->where('scert_sertifikasi', $idsertifikasi);
 		$this->db->where('scert_isaktif', 'y');
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi');
 	}
 
-	function insert_sub_sertifikasi($data) {
-		return $this->db->insert('ssc_subsertifikasi',$data);
-	}	
-	function get_sub_sertifikasi($id) {
-		$this->db->where('scert_id',$id);
+	function insert_sub_sertifikasi($data)
+	{
+		return $this->db->insert('ssc_subsertifikasi', $data);
+	}
+	function get_sub_sertifikasi($id)
+	{
+		$this->db->where('scert_id', $id);
 		return $this->db->get('ssc_subsertifikasi')->row();
 	}
-	function update_sub_sertifikasi($id,$data) {
-		$this->db->where('scert_id',$id);
-		return $this->db->update('ssc_subsertifikasi',$data);
+	function update_sub_sertifikasi($id, $data)
+	{
+		$this->db->where('scert_id', $id);
+		return $this->db->update('ssc_subsertifikasi', $data);
 	}
-	function delete_sub_sertifikasi($id) {
-		$this->db->where('scert_id',$id);
+	function delete_sub_sertifikasi($id)
+	{
+		$this->db->where('scert_id', $id);
 		return $this->db->delete('ssc_subsertifikasi');
 	}
 
@@ -134,7 +148,7 @@ class Sertifikasi_model extends CI_Model {
 		$this->db->group_by('ssc_sertifikasi_mahasiswa.sm_sertifikasi');
 		return $this->db->get('ssc_sertifikasi_mahasiswa')->result();
 	}
-	
+
 	function getdatasebelumbayarmhs($id_subsertifikasi, $id_sertifikasi, $npm)
 	{
 		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
@@ -164,8 +178,52 @@ class Sertifikasi_model extends CI_Model {
 		$this->db->where('sm_sertifikasi', $id_sertifikasi);
 		$this->db->where('sm_mahasiswa', $npm);
 		return $this->db->get('ssc_sertifikasi_mahasiswa');
-	}	
+	}
 
+	// ROP
+	function listmahasiswarop($subsertifikasi)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		$this->db->where('ssm_subsertifikasi', $subsertifikasi);
+		return $this->db->get('ssc_subsertifikasi_mahasiswa')->result();
+	}
+
+	function getnama($npm)
+	{
+		$data_mhs = [
+			'npm'  => $npm,
+		];
+
+		$data_json = json_encode($data_mhs);
+		$curl = curl_init('http://apps.uib.ac.id/portal/api/v2/myprofile');
+
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+			'content-type:application/json',
+			'Content-Length: ' . strlen($data_json)
+		));
+
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data_json);
+
+		$result = curl_exec($curl);
+		$data_mahasiswa = json_decode($result);
+
+		curl_close($curl);
+		return $data_mahasiswa;
+	}
+
+	function getdatarop($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		$this->db->where('ssm_id', $id_subsertifikasimahasiswa);
+		$this->db->where('ssm_subsertifikasi', $subsertifikasi);
+		$this->db->where('ssm_sertifikasi_mahasiswa', $mahasiswa);
+		return $this->db->get('ssc_subsertifikasi_mahasiswa')->row_array();
+	}
 }
 
 /* End of file Sertifikasi_model.php */
