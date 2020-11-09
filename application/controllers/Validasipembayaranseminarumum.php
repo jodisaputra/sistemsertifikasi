@@ -162,9 +162,9 @@ class Validasipembayaranseminarumum extends CI_Controller
 		}
 	}
 
-	public function cetak_rop($npm, $seminar)
+	public function cetak_rop($peserta, $seminar)
 	{
-		$data_transfer = $this->validasipembayaranseminarumum_model->getdatarop($npm, $seminar);
+		$data_transfer = $this->validasipembayaranseminarumum_model->getdatarop($peserta, $seminar);
 		$dana = "Rp " . number_format($data_transfer['su_totalbayar'], 2, ',', '.');
 		$terbilang = terbilang(intval($data_transfer['su_totalbayar']));
 

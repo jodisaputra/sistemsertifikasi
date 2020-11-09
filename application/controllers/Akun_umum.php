@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Akun_umum extends CI_Controller {
+class Akun_umum extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -9,6 +10,9 @@ class Akun_umum extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('seminar_model');
 		$this->load->model('sertifikasi_model');
+		$this->load->model('validasipembayaransertifikasiumum_model');
+		$this->load->model('validasipembayaranseminarumum_model');
+		$this->load->helper('my_function_helper');
 		// Jika ada session user mahasiswa maka diblok
 
 		if (isset($this->session->userdata['npm'])) {
@@ -16,7 +20,6 @@ class Akun_umum extends CI_Controller {
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('home'));
 		}
-		
 	}
 
 	public function index()
@@ -34,8 +37,7 @@ class Akun_umum extends CI_Controller {
 
 	public function akun()
 	{
-		if (!isset($this->session->userdata['email'])) 
-		{
+		if (!isset($this->session->userdata['email'])) {
 			redirect(base_url('akun_umum'));
 		}
 
@@ -49,14 +51,16 @@ class Akun_umum extends CI_Controller {
 			'cert'          => $this->sertifikasi_model->listsertifikasibyuser2($this->session->userdata['email']),
 			'view'			=> 'akun/umum/profile'
 		];
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 
 		$this->load->view('template/wrapper', $data);
 	}
 
 	public function detailsertifikasi($id_sertifikasi)
 	{
-		if (!isset($this->session->userdata['email'])) 
-		{
+		if (!isset($this->session->userdata['email'])) {
 			redirect(base_url('akun_umum'));
 		}
 
@@ -69,7 +73,9 @@ class Akun_umum extends CI_Controller {
 			'sertifikasi'   => $this->sertifikasi_model->listsertifikasibyuserdetail($id_sertifikasi),
 			'view'			=> 'akun/umum/profile-detail'
 		];
-
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 		$this->load->view('template/wrapper', $data);
 	}
 
@@ -78,25 +84,19 @@ class Akun_umum extends CI_Controller {
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
-		if ($this->form_validation->run() == FALSE) 
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi dengan benar');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('akun_umum'));
-		} 
-		else 
-		{
+		} else {
 			$email          = $this->input->post('email');
 			$password       = md5($this->input->post('password'));
 
 			$checkuser      = $this->users_model->cek($email, $password);
 
-			if ($checkuser->num_rows() > 0) 
-			{
-				foreach ($checkuser->result() as $hasil) 
-				{
-					if ($hasil->pu_isaktif == "y") 
-					{
+			if ($checkuser->num_rows() > 0) {
+				foreach ($checkuser->result() as $hasil) {
+					if ($hasil->pu_isaktif == "y") {
 						$sess['email']      = $hasil->pu_email;
 						$sess['nama']       = $hasil->pu_nama;
 						$sess['ktp']        = $hasil->pu_ktp;
@@ -107,17 +107,13 @@ class Akun_umum extends CI_Controller {
 						$this->session->set_flashdata('message', 'Hello ' . ucfirst($hasil->pu_nama));
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('home'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Mohon untuk melakukan validasi akun pada email !');
 						$this->session->set_flashdata('tipe', 'error');
 						redirect(base_url('akun_umum'));
 					}
 				}
-			} 
-			else 
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Password atau email salah !');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('akun_umum'));
@@ -155,33 +151,24 @@ class Akun_umum extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if ($this->form_validation->run() == FALSE) 
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi data dengan benar!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->register();
-		} 
-		else 
-		{
+		} else {
 			$cek = $this->users_model->checkemail($this->input->post('email', TRUE));
 			$cek_ktp = $this->users_model->checkktp($this->input->post('no_ktp', TRUE));
 
-			if ($cek->num_rows() > 0) 
-			{
+			if ($cek->num_rows() > 0) {
 				$this->session->set_flashdata('message', 'Email sudah terdaftar!');
 				$this->session->set_flashdata('tipe', 'error');
 				$this->register();
-			} 
-			else 
-			{
-				if ($cek_ktp->num_rows() > 0) 
-				{
+			} else {
+				if ($cek_ktp->num_rows() > 0) {
 					$this->session->set_flashdata('message', 'KTP sudah terdaftar!');
 					$this->session->set_flashdata('tipe', 'error');
 					$this->register();
-				} 
-				else 
-				{
+				} else {
 					$data = [
 						'pu_email'          => $this->input->post('email'),
 						'pu_password'       => md5($this->input->post('password')),
@@ -194,8 +181,7 @@ class Akun_umum extends CI_Controller {
 
 					$hasil = $this->users_model->insert($data);
 
-					if ($hasil == TRUE) 
-					{
+					if ($hasil == TRUE) {
 						$guardcode = md5($this->input->post('email', TRUE));
 						$email = $this->input->post('email', TRUE);
 						$nama = $this->input->post('nama_lengkap', TRUE);
@@ -217,9 +203,7 @@ class Akun_umum extends CI_Controller {
 						$this->session->set_flashdata('message', 'Registrasi berhasil mohon untuk melakukan konfirmasi pada email !');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(site_url('home'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Terjadi kegagalan saat mendaftar !');
 						$this->session->set_flashdata('tipe', 'warning');
 						$this->register();
@@ -246,52 +230,39 @@ class Akun_umum extends CI_Controller {
 		$this->form_validation->set_rules('guardkode', 'Guard Code', 'required|trim');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim');
 
-		if ($this->form_validation->run() == FALSE) 
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format !');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->konfirmasi(trim($this->input->post('guardkode', TRUE)));
-		} 
-		else 
-		{
+		} else {
 			$check = $this->users_model->checkemail(trim($this->input->post('email', TRUE)));
 
-			if ($check->num_rows() > 0) 
-			{
-				foreach ($check->result() as $checkr) 
-				{
+			if ($check->num_rows() > 0) {
+				foreach ($check->result() as $checkr) {
 					$email = $checkr->pu_email;
 					$validasi = md5($checkr->pu_email);
 
-					if ($validasi == trim($this->input->post('guardkode', TRUE))) 
-					{
+					if ($validasi == trim($this->input->post('guardkode', TRUE))) {
 						$data = array(
 							'pu_isaktif' => 'y'
 						);
 
-						if ($this->users_model->update($email, $data) == TRUE) 
-						{
+						if ($this->users_model->update($email, $data) == TRUE) {
 							$this->session->set_flashdata('message', 'Akun berhasil diaktivasi !');
 							$this->session->set_flashdata('tipe', 'success');
 							redirect(site_url('akun_umum'));
-						} 
-						else 
-						{
+						} else {
 							$this->session->set_flashdata('message', 'Terjadi kegagalan saat mengkonfirmasi akun !');
 							$this->session->set_flashdata('tipe', 'error');
 							$this->konfirmasi(trim($this->input->post('guardkode', TRUE)));
 						}
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Email tidak terdaftar !');
 						$this->session->set_flashdata('tipe', 'error');
 						$this->konfirmasi(trim($this->input->post('guardkode', TRUE)));
 					}
 				}
-			} 
-			else 
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Email tidak terdaftar !');
 				$this->session->set_flashdata('tipe', 'error');
 				$this->konfirmasi(trim($this->input->post('guardkode', TRUE)));
@@ -317,32 +288,25 @@ class Akun_umum extends CI_Controller {
 	{
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format !');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->ganti_password();
-		}
-		else
-		{
+		} else {
 			$data = [
 				'pu_password' => md5($this->input->post('password'))
 			];
 
-			if($this->users_model->ubah_password($this->input->post('email'), $data))
-			{
+			if ($this->users_model->ubah_password($this->input->post('email'), $data)) {
 				$this->session->set_flashdata('message', 'Password berhasil diubah!');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('akun_umum/akun'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Password gagal diubah!');
 				$this->session->set_flashdata('tipe', 'error');
 				$this->ganti_password();
 			}
 		}
-		
 	}
 
 	public function lupa_password()
@@ -360,51 +324,40 @@ class Akun_umum extends CI_Controller {
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format !');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->lupa_password();
-		}
-		else
-		{
+		} else {
 			$check = $this->users_model->checkemail(trim($this->input->post('email', TRUE)));
 			$checkemail = $check->row();
 
-			if(!$checkemail)
-			{
+			if (!$checkemail) {
 				$this->session->set_flashdata('message', 'Email tidak terdaftar!');
 				$this->session->set_flashdata('tipe', 'error');
 				$this->lupa_password();
-			}
-			else
-			{
+			} else {
 				$data = [
 					'pu_email'    => $this->input->post('email'),
 					'pu_password' => md5($this->input->post('password'))
 				];
 
-				if($this->users_model->ubah_password($this->input->post('email'), $data))
-				{
+				if ($this->users_model->ubah_password($this->input->post('email'), $data)) {
 					$this->session->set_flashdata('message', 'Password berhasil direset!');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('akun_umum'));
-				}
-				else
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Password gagal direset!');
 					$this->session->set_flashdata('tipe', 'error');
 					$this->lupa_password();
 				}
 			}
-			
 		}
 	}
 
 	public function modelsertifikat()
 	{
-		if(!isset($this->session->userdata['email']))
-		{
+		if (!isset($this->session->userdata['email'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -416,13 +369,12 @@ class Akun_umum extends CI_Controller {
 		$row = $this->seminar_model->cetaksertifikatseminarumum($seminar, $peserta);
 
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'list'         => $row,
 				'ttd'	   => $this->seminar_model->get_ttd_narasumber($seminar)
 			];
-			
+
 			$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);
 
 			$this->load->library('pdf');
@@ -433,16 +385,83 @@ class Akun_umum extends CI_Controller {
 			$this->pdf->set_paper($paper_size, $orientation);
 			$this->pdf->load_html($html);
 			$this->pdf->render();
-			$this->pdf->stream( $peserta . ".pdf", array('Attachment' => 0));
-		}
-		else
-		{
+			$this->pdf->stream($peserta . ".pdf", array('Attachment' => 0));
+		} else {
 			$this->session->set_flashdata('message', 'User ini tidak ada atau belum pernah mendaftar!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('akun'));
 		}
 	}
 
+	public function cetak_struksertifikasi()
+	{
+		$ssu_id = $this->input->post('ssuid');
+		$subsertifikasi = $this->input->post('id_subsertifikasi');
+		$sertifikasi_umum = $this->input->post('sertifikasi_umum');
+
+		$data_transfer = $this->validasipembayaransertifikasiumum_model->getdatarop($ssu_id, $subsertifikasi, $sertifikasi_umum);
+
+		$dana = "Rp " . number_format($data_transfer['ssu_totalbayar'], 2, ',', '.');
+		$terbilang = terbilang(intval($data_transfer['ssu_totalbayar']));
+
+		$data = [
+			'id'			=> $data_transfer['ssu_subsertifikasi'],
+			'email'			=> $data_transfer['pu_email'],
+			'nama'			=> $data_transfer['pu_nama'],
+			'diterima_dari'	=> $data_transfer['ssu_namapemilik'],
+			'bank'			=> $data_transfer['ssu_bank'],
+			'total_dana'	=> $dana,
+			'terbilang'		=> $terbilang
+		];
+		// header('content-type: application/json');
+		// echo json_encode($sertifikasi_umum);
+		// die;
+		$this->load->view('akun/umum/format_ropumumsertifikasi', $data);
+		$this->load->library('pdf');
+
+		$paper_size         = 'A4';
+		$orientation        = 'potrait';
+		$html               = $this->output->get_output();
+
+		$this->pdf->set_paper($paper_size, $orientation);
+		$this->pdf->load_html($html);
+		$this->pdf->render();
+		$this->pdf->stream("ROP.pdf", array('Attachment' => 0));
+	}
+
+	public function cetak_strukseminar()
+	{
+		$peserta = $this->input->post('emailpeserta');
+		$seminar = $this->input->post('seminarumum');
+
+		$data_transfer = $this->validasipembayaranseminarumum_model->getdatarop($peserta, $seminar);
+		$dana = "Rp " . number_format($data_transfer['su_totalbayar'], 2, ',', '.');
+		$terbilang = terbilang(intval($data_transfer['su_totalbayar']));
+
+		$data = [
+			'id'			=> $data_transfer['su_seminar'],
+			'email'			=> $data_transfer['su_peserta'],
+			'nama'			=> $data_transfer['pu_nama'],
+			'diterima_dari'	=> $data_transfer['su_namapemilik'],
+			'bank'			=> $data_transfer['su_bank'],
+			'total_dana'	=> $dana,
+			'terbilang'		=> $terbilang
+		];
+		// header('content-type: application/json');
+		// echo json_encode($data_transfer);
+		// die;
+		$this->load->view('akun/umum/format_ropumumseminar', $data);
+		$this->load->library('pdf');
+
+		$paper_size         = 'A4';
+		$orientation        = 'potrait';
+		$html               = $this->output->get_output();
+
+		$this->pdf->set_paper($paper_size, $orientation);
+		$this->pdf->load_html($html);
+		$this->pdf->render();
+		$this->pdf->stream("ROP.pdf", array('Attachment' => 0));
+	}
 }
 
 /* End of file Akun_umum.php */
