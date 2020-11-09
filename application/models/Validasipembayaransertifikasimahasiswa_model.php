@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Validasipembayaransertifikasimahasiswa_model extends CI_Model {
+class Validasipembayaransertifikasimahasiswa_model extends CI_Model
+{
 
 	public $table = 'ssc_subsertifikasi_mahasiswa';
 
@@ -57,8 +58,7 @@ class Validasipembayaransertifikasimahasiswa_model extends CI_Model {
 
 	function update_collectivemahasiswa($mhs, $data)
 	{
-		foreach($mhs as $id)
-		{
+		foreach ($mhs as $id) {
 			$this->db->where('ssm_id', $id);
 			$this->db->update($this->table, $data[$id]);
 		}
@@ -91,6 +91,31 @@ class Validasipembayaransertifikasimahasiswa_model extends CI_Model {
 		return $data_mahasiswa;
 	}
 
+	function inputtotal($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa, $data)
+	{
+		$this->db->where('ssm_id', $id_subsertifikasimahasiswa);
+		$this->db->where('ssm_subsertifikasi', $subsertifikasi);
+		$this->db->where('ssm_sertifikasi_mahasiswa', $mahasiswa);
+		return $this->db->update($this->table, $data);
+	}
+
+	function getdatarop($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		$this->db->where('ssm_id', $id_subsertifikasimahasiswa);
+		$this->db->where('ssm_subsertifikasi', $subsertifikasi);
+		$this->db->where('ssm_sertifikasi_mahasiswa', $mahasiswa);
+		return $this->db->get($this->table)->row_array();
+	}
+
+	function listmahasiswarop($subsertifikasi)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		$this->db->where('ssm_subsertifikasi', $subsertifikasi);
+		return $this->db->get($this->table)->result();
+	}
 }
 
 /* End of file Validasipembayaransertifikasimahasiswa_model.php */

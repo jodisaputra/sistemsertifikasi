@@ -118,10 +118,17 @@
                               } else {
                                 ?>
                                  <a href="<?php echo base_url('Validasipembayaranseminarmahasiswa/detail/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-info">Detail</a>
-
                                <?php
                               }
                                 ?>
+
+                               <?php if ($l['smhs_status'] == 'Lunas' && $l['smhs_totalbayar'] == NULL) { ?>
+                                 <a href="javascript:;" data-id="<?php echo $l['smhs_mahasiswa'] ?>" data-seminar="<?php echo $l['smhs_seminar'] ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning">
+                                     <i class="fas fa-money-check-alt"></i> Isi Total Bayar
+                                   </button>
+                                 <?php } elseif ($l['smhs_status'] == 'Lunas' && $l['smhs_totalbayar'] != NULL) { ?>
+                                   <a href="<?php echo base_url('Validasipembayaranseminarmahasiswa/cetak_rop/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-primary" target="_BLANK"><i class="fas fa-print"></i> Cetak ROP</a>
+                                 <?php } ?>
                            </td>
                          </tr>
                        <?php } ?>
@@ -165,11 +172,50 @@
          </div>
        </div>
 
+       <!-- Input total Modal -->
+       <div class="modal fade" id="exampleModalTotal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Input Total</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <form action="<?php echo base_url('validasipembayaranseminarmahasiswa/inputtotal'); ?>" method="post">
+               <div class="modal-body">
+                 <input type="hidden" name="idmahasiswa" id="id" value="">
+                 <input type="hidden" name="seminar" id="seminar" value="">
+                 <label>Total Biaya yang ditransfer</label>
+                 <input type="text" name="total" class="form-control">
+               </div>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button type="submit" class="btn btn-primary">Simpan</button>
+               </div>
+             </form>
+           </div>
+         </div>
+       </div>
+
        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
        <script>
          $(document).ready(function() {
            // Untuk sunting
            $('#exampleModal').on('show.bs.modal', function(event) {
+             var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
+             var modal = $(this)
+
+             // Isi nilai pada field
+             modal.find('#id').attr("value", div.data('id'));
+             modal.find('#seminar').attr("value", div.data('seminar'));
+           });
+         });
+       </script>
+       <script>
+         $(document).ready(function() {
+           // Untuk sunting
+           $('#exampleModalTotal').on('show.bs.modal', function(event) {
              var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan
              var modal = $(this)
 

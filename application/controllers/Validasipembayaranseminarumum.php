@@ -8,6 +8,7 @@ class Validasipembayaranseminarumum extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('validasipembayaranseminarumum_model');
+		$this->load->helper('my_function_helper');
 		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
@@ -100,6 +101,34 @@ class Validasipembayaranseminarumum extends CI_Controller
 		}
 	}
 
+	public function inputtotal()
+	{
+		//Cek status jika mahasiswa belum bayar tidak bisa set lunas atau tolak
+		$cekstatus = $this->validasipembayaranseminarumum_model->cekstatus($this->input->post('seminar'), $this->input->post('idpeserta'));
+
+		if ($cekstatus) {
+			$this->session->set_flashdata('message', 'Peserta belum melakukan pembayaran!');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect(base_url('validasipembayaranseminarumum'));
+		} else {
+			$data = [
+				'su_totalbayar'			      => $this->input->post('total'),
+				'su_userupdate'               => $this->session->userdata('username'),
+				'su_lastupdate'               => date('Y-m-d H:i:s')
+			];
+
+			if ($this->validasipembayaranseminarumum_model->inputtotal($this->input->post('seminar'), $this->input->post('idpeserta'), $data)) {
+				$this->session->set_flashdata('message', 'Total biaya berhasil disimpan');
+				$this->session->set_flashdata('tipe', 'success');
+				redirect(base_url('validasipembayaranseminarumum'));
+			} else {
+				$this->session->set_flashdata('message', 'Total biaya gagal disimpan');
+				$this->session->set_flashdata('tipe', 'error');
+				redirect(base_url('validasipembayaranseminarumum'));
+			}
+		}
+	}
+
 	public function submit_checkall_setuju()
 	{
 		$checkall = $this->input->post('umum');
@@ -131,6 +160,37 @@ class Validasipembayaranseminarumum extends CI_Controller
 				redirect('validasipembayaranseminarumum');
 			}
 		}
+	}
+
+	public function cetak_rop($npm, $seminar)
+	{
+		$data_transfer = $this->validasipembayaranseminarumum_model->getdatarop($npm, $seminar);
+		$dana = "Rp " . number_format($data_transfer['su_totalbayar'], 2, ',', '.');
+		$terbilang = terbilang(intval($data_transfer['su_totalbayar']));
+
+		$data = [
+			'id'			=> $data_transfer['su_seminar'],
+			'email'			=> $data_transfer['su_peserta'],
+			'nama'			=> $data_transfer['pu_nama'],
+			'diterima_dari'	=> $data_transfer['su_namapemilik'],
+			'bank'			=> $data_transfer['su_bank'],
+			'total_dana'	=> $dana,
+			'terbilang'		=> $terbilang
+		];
+		// header('content-type: application/json');
+		// echo json_encode($data_transfer);
+		// die;
+		$this->load->view('admin/validasipembayaran/pembayaranseminarumum/format_ropumum', $data);
+		$this->load->library('pdf');
+
+		$paper_size         = 'A4';
+		$orientation        = 'potrait';
+		$html               = $this->output->get_output();
+
+		$this->pdf->set_paper($paper_size, $orientation);
+		$this->pdf->load_html($html);
+		$this->pdf->render();
+		$this->pdf->stream("ROP.pdf", array('Attachment' => 0));
 	}
 }
 

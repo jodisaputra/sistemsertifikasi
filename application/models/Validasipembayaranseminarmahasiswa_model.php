@@ -1,10 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Validasipembayaranseminarmahasiswa_model extends CI_Model {
+class Validasipembayaranseminarmahasiswa_model extends CI_Model
+{
 
 	public $table = 'ssc_seminar_mahasiswa';
-	
+
 	function list()
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_seminar_mahasiswa.smhs_seminar');
@@ -41,11 +42,17 @@ class Validasipembayaranseminarmahasiswa_model extends CI_Model {
 		return $this->db->update($this->table, $data);
 	}
 
+	function inputtotal($npm, $seminar, $data)
+	{
+		$this->db->where('smhs_mahasiswa', $npm);
+		$this->db->where('smhs_seminar', $seminar);
+		return $this->db->update($this->table, $data);
+	}
+
 	function update_collectivemahasiswa($mhs, $seminar, $data)
 	{
 		$this->db->where('smhs_seminar', $seminar);
-		foreach($mhs as $id)
-		{
+		foreach ($mhs as $id) {
 			$this->db->where('smhs_mahasiswa', $id);
 			$this->db->update($this->table, $data[$id]);
 		}
@@ -78,6 +85,19 @@ class Validasipembayaranseminarmahasiswa_model extends CI_Model {
 		return $data_mahasiswa;
 	}
 
+	function getdatarop($npm, $seminar)
+	{
+		$this->db->where('smhs_mahasiswa', $npm);
+		$this->db->where('smhs_seminar', $seminar);
+		return $this->db->get($this->table)->row_array();
+	}
+
+	function listseminarmahasiswa($id)
+	{
+		$this->db->where('smhs_seminar', $id);
+		$this->db->where('smhs_status', 'Lunas');
+		return $this->db->get('ssc_seminar_mahasiswa')->result();
+	}
 }
 
 /* End of file Validasipembayaranseminarmahasiswa_model.php */
