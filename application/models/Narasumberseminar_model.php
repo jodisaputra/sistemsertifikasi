@@ -1,11 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Narasumberseminar_model extends CI_Model {
-	
+class Narasumberseminar_model extends CI_Model
+{
+
 	public $table = 'ssc_narasumber_seminar';
 	public $id    = 'ns_id';
-	
+
 	function list($seminar)
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_narasumber_seminar.ns_seminar');
@@ -31,9 +32,10 @@ class Narasumberseminar_model extends CI_Model {
 		return $this->db->update($this->table, $data);
 	}
 
-	function delete($id)
+	function delete($id, $seminar)
 	{
 		$this->db->where($this->id, $id);
+		$this->db->where('ns_seminar', $seminar);
 		return $this->db->delete($this->table);
 	}
 
@@ -46,12 +48,17 @@ class Narasumberseminar_model extends CI_Model {
 
 	function cek_ttdsertifikatseminarsamaid($narasumber, $seminar)
 	{
-		$this->db->where('ns_id !=', $narasumber );
+		$this->db->where('ns_id !=', $narasumber);
 		$this->db->where('ns_seminar', $seminar);
 		$this->db->where('ns_set_tandatangan', 'y');
 		return $this->db->get($this->table);
 	}
 
+	function gettandatangan($narasumber_id)
+	{
+		$this->db->where('ns_id', $narasumber_id);
+		return $this->db->get($this->table)->row_array();
+	}
 }
 
 /* End of file Narasumberseminar_model.php */
