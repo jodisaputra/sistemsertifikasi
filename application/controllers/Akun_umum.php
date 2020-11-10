@@ -182,19 +182,26 @@ class Akun_umum extends CI_Controller
 					$hasil = $this->users_model->insert($data);
 
 					if ($hasil == TRUE) {
-						$guardcode = md5($this->input->post('email', TRUE));
-						$email = $this->input->post('email', TRUE);
-						$nama = $this->input->post('nama_lengkap', TRUE);
+						$guardcode = md5($this->input->post('email'));
+						$email = $this->input->post('email');
+						$nama = $this->input->post('nama_lengkap');
 
 						date_default_timezone_set('Asia/Jakarta');
 
-						$bodymsg = '<h4>Konfirmasi Registrasi Akun :</h4> Email : ' . $email . ' <br/> Nama : ' . ucfirst($nama) . '<br/> Registrasi pada tanggal ' . date("d F Y") . '<br/> <a style="display: block;width: 300px;height: auto;background: #2A3955;padding: 10px;margin:10px;text-align: center;border-radius: 5px; color: #F8B600;font-weight: bold; text-decoration: none;" href="http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">Klik Untuk Konfirmasi Registrasi</a> atau <br/> Akses pada link : <a href="http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '</a>';
+						$aktivasi = $nama . ', akun anda berhasil diregistrasi. Agar akun anda bisa digunakan, silahkan aktivasi dengan menggunakan link dibawah ini';
+						$link = '<a class="btn btn-primary" href="http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">Aktivasi</a>';
+
+						// template untuk email
+						$bodymsg = $this->load->view('admin/email/registrasi.html', '', TRUE);
+						$bodymsg = str_replace('%aktivasi%', $aktivasi, $bodymsg);
+						$bodymsg = str_replace('%link%', $link, $bodymsg);
 
 						$this->load->library('phpmailer_lib');
 						$mail = $this->phpmailer_lib->load();
 
 						$mail->setFrom('noreply@uib.ac.id', 'Universitas Internasional Batam');
 						$mail->addAddress($email, ucfirst($nama));
+						$mail->AddEmbeddedImage('assets/cetak/logo.jpg', 'logo');
 						$mail->Subject = 'Konfirmasi Registrasi Akun';
 						$mail->Body = $bodymsg;
 						$mail->IsHTML(true);
