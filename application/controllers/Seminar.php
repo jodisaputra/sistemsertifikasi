@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Seminar extends CI_Controller {
+class Seminar extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -12,8 +13,7 @@ class Seminar extends CI_Controller {
 
 	public function index()
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -30,8 +30,7 @@ class Seminar extends CI_Controller {
 
 	public function tambah()
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -57,8 +56,7 @@ class Seminar extends CI_Controller {
 		$this->form_validation->set_rules('model_sertifikat', 'Model sertifikat', 'required');
 		$this->form_validation->set_rules('jumlah_max_peserta', 'Jumlah Max Peserta', 'required|trim');
 
-		if($_FILES['gambar']['name'] == "")
-		{
+		if ($_FILES['gambar']['name'] == "") {
 			$this->form_validation->set_rules('gambar', 'Banner Seminar', 'required');
 		}
 
@@ -82,14 +80,11 @@ class Seminar extends CI_Controller {
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
 
-			if (!$this->upload->do_upload('gambar'))
-			{
+			if (!$this->upload->do_upload('gambar')) {
 				$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 				$this->session->set_flashdata('tipe', 'warning');
 				$this->tambah();
-			}
-			else
-			{
+			} else {
 
 				$data = [
 					'smr_acara'                => $this->input->post('nama_seminar'),
@@ -124,8 +119,7 @@ class Seminar extends CI_Controller {
 
 	public function ubah($id)
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -133,8 +127,7 @@ class Seminar extends CI_Controller {
 
 		$row = $this->seminar_model->listseminarbyid($id);
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'title'	=> 'Seminar',
 				'seminar'	=> $row,
@@ -143,14 +136,11 @@ class Seminar extends CI_Controller {
 			];
 
 			$this->load->view('admin/template/wrapper', $data);
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(site_url('seminar'));
 		}
-		
 	}
 
 	public function simpan_perubahan()
@@ -176,8 +166,7 @@ class Seminar extends CI_Controller {
 			$this->update($this->input->post('seminar_id'));
 		} else {
 
-			if($_FILES['gambar']['name'] != "")
-			{
+			if ($_FILES['gambar']['name'] != "") {
 				$namafile = $this->input->post('seminar_id') . '_' . "Banner";
 
 				$getid = $this->modelsertifikat_model->getid();
@@ -189,14 +178,11 @@ class Seminar extends CI_Controller {
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if (!$this->upload->do_upload('gambar'))
-				{
+				if (!$this->upload->do_upload('gambar')) {
 					$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->ubah($this->input->post('model_id'));
-				}
-				else
-				{
+				} else {
 					$data = [
 						'smr_acara'                => $this->input->post('nama_seminar'),
 						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
@@ -215,22 +201,17 @@ class Seminar extends CI_Controller {
 						'smr_lastupdate'           => date('Y-m-d H:i:s')
 					];
 
-					if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) 
-					{
+					if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) {
 						$this->session->set_flashdata('message', 'Data berhasil diubah');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('seminar'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Data gagal diubah');
 						$this->session->set_flashdata('tipe', 'error');
 						redirect(base_url('seminar'));
 					}
 				}
-			}
-			else
-			{
+			} else {
 				$data = [
 					'smr_acara'                => $this->input->post('nama_seminar'),
 					'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
@@ -249,14 +230,11 @@ class Seminar extends CI_Controller {
 					'smr_lastupdate'           => date('Y-m-d H:i:s')
 				];
 
-				if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) 
-				{
+				if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) {
 					$this->session->set_flashdata('message', 'Data berhasil diubah');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('seminar'));
-				} 
-				else 
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Data gagal diubah');
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('seminar'));
@@ -266,22 +244,18 @@ class Seminar extends CI_Controller {
 	}
 
 	function delete($id)
-	{	
-		if(!isset($this->session->userdata['username']))
-		{
+	{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
 		}
 
-		if ($this->seminar_model->delete($id)) 
-		{
+		if ($this->seminar_model->delete($id)) {
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('seminar'));
-		} 
-		else 
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('seminar'));
@@ -290,40 +264,31 @@ class Seminar extends CI_Controller {
 
 	public function daftar_umum($id)
 	{
-		if (!isset($this->session->userdata['email'])) 
-		{
+		if (!isset($this->session->userdata['email'])) {
 			$this->session->set_flashdata('message', 'Anda belum login! Silahkan login terlebih dahulu');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('home/detail_seminar/' . $id));
-		} 
-		else 
-		{
+		} else {
 			$cek = $this->seminar_model->cek($this->session->userdata['email']);
-			if ($cek->num_rows() > 0) 
-			{
+			if ($cek->num_rows() > 0) {
 				$this->session->set_flashdata('message', 'Anda sudah mendaftar');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('home/detail_seminar/' . $id));
-			} 
-			else 
-			{
+			} else {
 
-                //Total Jumlah Peserta
-				$umum           = $this->seminar_model->listseminarumum()->row(); 
+				//Total Jumlah Peserta
+				$umum           = $this->seminar_model->listseminarumum()->row();
 				$jumlah_mhs     = $this->seminar_model->jumlahpesertamhs($id);
 				$jumlah_umum    = $this->seminar_model->jumlahpesertaumum($umum->su_seminar);
 				$total          = $jumlah_mhs->jumlah_mahasiswa + $jumlah_umum->jumlah;
 				$seminar        = $this->seminar_model->getjumlahmaxseminar($id)->row();
 				$jumlahmax      = $seminar->smr_jumlahmax;
 
-				if($total >= $seminar->smr_jumlahmax )
-				{
+				if ($total >= $seminar->smr_jumlahmax) {
 					$this->session->set_flashdata('message', 'Maaf Pendaftaran sudah penuh!');
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('home/detail_seminar/' . $id));
-				}
-				else
-				{
+				} else {
 					$data = [
 						'su_seminar'        => $id,
 						'su_peserta'        => $this->session->userdata['email'],
@@ -333,14 +298,11 @@ class Seminar extends CI_Controller {
 						'su_lastupdate'     => date('Y-m-d H:i:s')
 					];
 
-					if ($this->seminar_model->daftar_seminar_umum($data)) 
-					{
+					if ($this->seminar_model->daftar_seminar_umum($data)) {
 						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_umum/akun'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Anda gagal mendaftar');
 						$this->session->set_flashdata('tipe', 'error');
 						redirect(base_url('seminar'));
@@ -352,39 +314,30 @@ class Seminar extends CI_Controller {
 
 	public function daftar_mahasiswa($id)
 	{
-		if (!isset($this->session->userdata['npm'])) 
-		{
+		if (!isset($this->session->userdata['npm'])) {
 			$this->session->set_flashdata('message', 'Anda belum login! Silahkan login terlebih dahulu');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('home/detail_seminar/' . $id));
-		} 
-		else 
-		{
+		} else {
 			$cek = $this->seminar_model->cekmahasiswa($id, $this->session->userdata['npm']);
-			if ($cek->num_rows() > 0) 
-			{
+			if ($cek->num_rows() > 0) {
 				$this->session->set_flashdata('message', 'Anda sudah mendaftar');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('home/detail_seminar/' . $id));
-			} 
-			else 
-			{
-                //Total Jumlah Peserta
-				$umum           = $this->seminar_model->listseminarumum()->row(); 
+			} else {
+				//Total Jumlah Peserta
+				$umum           = $this->seminar_model->listseminarumum()->row();
 				$jumlah_mhs     = $this->seminar_model->jumlahpesertamhs($id);
 				$jumlah_umum    = $this->seminar_model->jumlahpesertaumum($umum->su_seminar);
 				$total          = $jumlah_mhs->jumlah_mahasiswa + $jumlah_umum->jumlah;
 				$seminar        = $this->seminar_model->getjumlahmaxseminar($id)->row();
 				$jumlahmax      = $seminar->smr_jumlahmax;
 
-				if($total >= $seminar->smr_jumlahmax )
-				{
+				if ($total >= $seminar->smr_jumlahmax) {
 					$this->session->set_flashdata('message', 'Maaf Pendaftaran sudah penuh!');
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('home/detail_seminar/' . $id));
-				}
-				else
-				{
+				} else {
 					$data = [
 						'smhs_seminar'        => $id,
 						'smhs_mahasiswa'      => $this->session->userdata['npm'],
@@ -394,14 +347,11 @@ class Seminar extends CI_Controller {
 						'smhs_lastupdate'     => date('Y-m-d H:i:s')
 					];
 
-					if ($this->seminar_model->daftar_seminar_mahasiswa($data)) 
-					{
+					if ($this->seminar_model->daftar_seminar_mahasiswa($data)) {
 						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_mahasiswa/akun'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Anda gagal mendaftar');
 						$this->session->set_flashdata('tipe', 'error');
 						redirect(base_url('seminar'));
@@ -413,8 +363,7 @@ class Seminar extends CI_Controller {
 
 	public function buktibayarumum($id)
 	{
-		if(!isset($this->session->userdata['email']))
-		{
+		if (!isset($this->session->userdata['email'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('akun_umum');
@@ -437,16 +386,12 @@ class Seminar extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if ($this->form_validation->run() == FALSE) 
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->buktibayarumum($this->input->post('seminar_id'));
-		} 
-		else 
-		{
-			if(empty($_FILES['buktibayar']['name']))
-			{
+		} else {
+			if (empty($_FILES['buktibayar']['name'])) {
 				$data = [
 					'su_bank'           => $this->input->post('nama_bank'),
 					'su_norekening'     => $this->input->post('no_rek'),
@@ -456,21 +401,16 @@ class Seminar extends CI_Controller {
 					'su_lastupdate'     => date('Y-m-d H:i:s')
 				];
 
-				if($this->seminar_model->updatebayarumum($this->input->post('seminar_id'), $this->session->userdata('email'), $data))
-				{
+				if ($this->seminar_model->updatebayarumum($this->input->post('seminar_id'), $this->session->userdata('email'), $data)) {
 					$this->session->set_flashdata('message', 'Bukti bayar berhasil diupload');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('akun_umum/akun'));
-				} 
-				else 
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Bukti bayar gagal diupload');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('akun_umum/akun'));
 				}
-			}
-			else
-			{
+			} else {
 				$config['upload_path']          = './assets/transfer_seminar_umum/';
 				$config['allowed_types']        = 'jpeg|jpg|png';
 				$config['file_name']            = $this->session->userdata('ktp') . '_' . $this->input->post('seminar_id');
@@ -479,14 +419,11 @@ class Seminar extends CI_Controller {
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if (!$this->upload->do_upload('buktibayar'))
-				{
+				if (!$this->upload->do_upload('buktibayar')) {
 					$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->buktibayarumum($this->input->post('seminar_id'));
-				}
-				else
-				{
+				} else {
 					$data = [
 						'su_bank'           => $this->input->post('nama_bank'),
 						'su_norekening'     => $this->input->post('no_rek'),
@@ -497,14 +434,11 @@ class Seminar extends CI_Controller {
 						'su_lastupdate'     => date('Y-m-d H:i:s')
 					];
 
-					if($this->seminar_model->updatebayarumum($this->input->post('seminar_id'), $this->session->userdata('email'), $data))
-					{
+					if ($this->seminar_model->updatebayarumum($this->input->post('seminar_id'), $this->session->userdata('email'), $data)) {
 						$this->session->set_flashdata('message', 'Bukti bayar berhasil diupload');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_umum/akun'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Bukti bayar gagal diupload');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_umum/akun'));
@@ -516,8 +450,7 @@ class Seminar extends CI_Controller {
 
 	public function buktibayarmahasiswa($id)
 	{
-		if(!isset($this->session->userdata['npm']))
-		{
+		if (!isset($this->session->userdata['npm'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('akun_mahasiswa');
@@ -540,16 +473,12 @@ class Seminar extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if ($this->form_validation->run() == FALSE) 
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->buktibayarmahasiswa($this->input->post('seminar_id'));
-		} 
-		else 
-		{
-			if(empty($_FILES['buktibayar']['name']))
-			{
+		} else {
+			if (empty($_FILES['buktibayar']['name'])) {
 				$data = [
 					'smhs_bank'           => $this->input->post('nama_bank'),
 					'smhs_norekening'     => $this->input->post('no_rek'),
@@ -559,21 +488,16 @@ class Seminar extends CI_Controller {
 					'smhs_lastupdate'     => date('Y-m-d H:i:s')
 				];
 
-				if($this->seminar_model->updatebayarmahasiswa($this->input->post('seminar_id'), $this->session->userdata('npm'), $data))
-				{
+				if ($this->seminar_model->updatebayarmahasiswa($this->input->post('seminar_id'), $this->session->userdata('npm'), $data)) {
 					$this->session->set_flashdata('message', 'Bukti bayar berhasil diupload');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('akun_mahasiswa/akun'));
-				} 
-				else 
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Bukti bayar gagal diupload');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('akun_mahasiswa/akun'));
 				}
-			}
-			else
-			{
+			} else {
 				$config['upload_path']          = './assets/transfer_seminar_mahasiswa/';
 				$config['allowed_types']        = 'jpeg|jpg|png';
 				$config['file_name']            = $this->session->userdata('npm') . '_' . $this->input->post('seminar_id');
@@ -582,14 +506,11 @@ class Seminar extends CI_Controller {
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if (!$this->upload->do_upload('buktibayar'))
-				{
+				if (!$this->upload->do_upload('buktibayar')) {
 					$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->buktibayarmahasiswa($this->input->post('seminar_id'));
-				}
-				else
-				{
+				} else {
 					$data = [
 						'smhs_bank'           => $this->input->post('nama_bank'),
 						'smhs_norekening'     => $this->input->post('no_rek'),
@@ -600,14 +521,11 @@ class Seminar extends CI_Controller {
 						'smhs_lastupdate'     => date('Y-m-d H:i:s')
 					];
 
-					if($this->seminar_model->updatebayarmahasiswa($this->input->post('seminar_id'), $this->session->userdata('npm'), $data))
-					{
+					if ($this->seminar_model->updatebayarmahasiswa($this->input->post('seminar_id'), $this->session->userdata('npm'), $data)) {
 						$this->session->set_flashdata('message', 'Bukti bayar berhasil diupload');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_mahasiswa/akun'));
-					} 
-					else 
-					{
+					} else {
 						$this->session->set_flashdata('message', 'Bukti bayar gagal diupload');
 						$this->session->set_flashdata('tipe', 'success');
 						redirect(base_url('akun_mahasiswa/akun'));
@@ -619,8 +537,7 @@ class Seminar extends CI_Controller {
 
 	public function listpesertaumum($id_seminar)
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -637,23 +554,42 @@ class Seminar extends CI_Controller {
 
 	public function cetak_sertifikat_umum($id_seminar, $peserta)
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
 		}
 
-		$data = [
-			'list'         => $this->seminar_model->cetaksertifikatseminarumum($id_seminar, $peserta)
-		];
-		$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);
+		$row = $this->seminar_model->cetaksertifikatseminarumum($id_seminar, $peserta);
+
+
+		if ($row) {
+			$data = [
+				'list'         => $row,
+				'ttd'	   => $this->seminar_model->get_ttd_narasumber($id_seminar)
+			];
+
+			$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);
+
+			$this->load->library('pdf');
+			$paper_size			= 'A4';
+			$orientation		= 'landscape';
+			$html               = $this->output->get_output();
+
+			$this->pdf->set_paper($paper_size, $orientation);
+			$this->pdf->load_html($html);
+			$this->pdf->render();
+			$this->pdf->stream($peserta . ".pdf", array('Attachment' => 0));
+		} else {
+			$this->session->set_flashdata('message', 'User ini tidak ada atau belum pernah mendaftar!');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect(base_url('akun'));
+		}
 	}
 
 	public function listpesertamhs($id_seminar)
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -663,8 +599,7 @@ class Seminar extends CI_Controller {
 
 		$query =  $this->seminar_model->listpesertaseminarmhs($id_seminar);
 
-		foreach($query as $q)
-		{
+		foreach ($query as $q) {
 			$mhs = $this->seminar_model->getnama($q->smhs_mahasiswa);
 			$data_mhs[$q->smhs_mahasiswa] = $mhs->name;
 		}
@@ -681,38 +616,57 @@ class Seminar extends CI_Controller {
 
 	public function cetak_sertifikat_mhs($id_seminar, $npm)
 	{
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
 		}
 
-		$data2 = ['npm'  => $npm];
-		$data_json = json_encode($data2);
-		$curl = curl_init('http://apps.uib.ac.id/portal/api/v2/myprofile');
+		$row = $this->seminar_model->cetaksertifikatseminarmhs($id_seminar, $npm);
 
-		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+		if ($row) {
 
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-			'content-type:application/json',
-			'Content-Length: '.strlen($data_json)
-		));
+			$data2 = ['npm'  => $npm];
+			$data_json = json_encode($data2);
+			$curl = curl_init('http://apps.uib.ac.id/portal/api/v2/myprofile');
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $data_json);
+			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 
-		$result = curl_exec($curl);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+				'content-type:application/json',
+				'Content-Length: ' . strlen($data_json)
+			));
 
-		curl_close($curl);
-		$mahasiswa = json_decode($result);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $data_json);
 
-		$data = [
-			'list'     => $this->seminar_model->cetaksertifikatseminarmhs($id_seminar, $npm),
-			'profil'   => $mahasiswa
-		];
+			$result = curl_exec($curl);
 
-		$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
+			curl_close($curl);
+			$mahasiswa = json_decode($result);
+
+			$data = [
+				'list'     => $row,
+				'profil'   => $mahasiswa,
+				'ttd'	   => $this->seminar_model->get_ttd_narasumber($id_seminar)
+			];
+
+			$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
+
+			$this->load->library('pdf');
+			$paper_size			= 'A4';
+			$orientation		= 'landscape';
+			$html               = $this->output->get_output();
+
+			$this->pdf->set_paper($paper_size, $orientation);
+			$this->pdf->load_html($html);
+			$this->pdf->render();
+			$this->pdf->stream($npm . ".pdf", array('Attachment' => 0));
+		} else {
+			$this->session->set_flashdata('message', 'Mahasiswa ini belum Daftar!');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect(base_url('akun_mahasiswa'));
+		}
 	}
 }
 /* End of file Seminar.php */
