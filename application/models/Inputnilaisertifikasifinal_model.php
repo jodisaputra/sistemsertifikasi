@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Inputnilaisertifikasifinal_model extends CI_Model {
+class Inputnilaisertifikasifinal_model extends CI_Model
+{
 
 	function listsertifikasiumum($id_sertifikasi)
 	{
@@ -16,7 +17,7 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->join('ssc_peserta_umum', 'ssc_peserta_umum.pu_email = ssc_sertifikasi_umum.srtu_peserta');
 		$this->db->where('srtu_sertifikasi', $id_sertifikasi);
 		$this->db->where('ssu_status', 'Lunas');
-        // $this->db->where('ssu_ishadir', 'y');
+		// $this->db->where('ssu_ishadir', 'y');
 		$this->db->where('ssu_skor is NOT NULL');
 		$this->db->group_by('ssc_subsertifikasi_umum.ssu_sertifikasi_umum', $get->ssu_sertifikasi_umum);
 		return $this->db->get('ssc_sertifikasi_umum');
@@ -29,7 +30,7 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->where('srtu_sertifikasi', $id_sertifikasi);
 		$this->db->where('srtu_peserta', $id_peserta);
 		$this->db->where('ssu_status', 'Lunas');
-        // $this->db->where('ssu_ishadir', 'y');
+		// $this->db->where('ssu_ishadir', 'y');
 		$this->db->where('ssu_skor is NOT NULL');
 		return $this->db->get('ssc_sertifikasi_umum');
 	}
@@ -41,7 +42,7 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->where('ssc_sertifikasi_umum.srtu_sertifikasi', $id_sertifikasi);
 		$this->db->where('ssc_sertifikasi_umum.srtu_peserta', $id_peserta);
 		$this->db->where('ssu_status', 'Lunas');
-        // $this->db->where('ssu_ishadir', 'y');
+		// $this->db->where('ssu_ishadir', 'y');
 		$this->db->where('ssu_skor is NOT NULL');
 		$this->db->group_by('ssc_sertifikasi_umum.srtu_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi_umum')->row();
@@ -52,13 +53,13 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$query = $this->db->query(" SELECT t1.*
 			FROM ssc_subsertifikasi_umum t1
 			JOIN ssc_sertifikasi_umum ON ssc_sertifikasi_umum.srtu_id = t1.ssu_sertifikasi_umum
-			WHERE srtu_sertifikasi = '".$id_sertifikasi."' AND srtu_peserta = '".$email."' AND
+			WHERE srtu_sertifikasi = '" . $id_sertifikasi . "' AND srtu_peserta = '" . $email . "' AND
 			ssu_skor >= 
 			(
 			SELECT MAX(ssu_skor)
 			FROM ssc_subsertifikasi_umum t2
 			JOIN ssc_sertifikasi_umum ON ssc_sertifikasi_umum.srtu_id = t2.ssu_sertifikasi_umum
-			WHERE srtu_sertifikasi = '".$id_sertifikasi."' AND srtu_peserta = '".$email."' AND t2.																ssu_subsertifikasi = t1.ssu_subsertifikasi
+			WHERE srtu_sertifikasi = '" . $id_sertifikasi . "' AND srtu_peserta = '" . $email . "' AND t2.																ssu_subsertifikasi = t1.ssu_subsertifikasi
 			)
 			GROUP BY ssu_subsertifikasi");
 		return $query->result();
@@ -90,9 +91,9 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->join('ssc_subsertifikasi_mahasiswa', 'ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa = ssc_sertifikasi_mahasiswa.sm_id');
 		$this->db->where('sm_sertifikasi', $id_sertifikasi);
 		$this->db->where('ssm_status', 'Lunas');
-        // $this->db->where('ssm_ishadir', 'y');
+		// $this->db->where('ssm_ishadir', 'y');
 		$this->db->where('ssm_skor is NOT NULL');
-        $this->db->group_by('ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa', $get->ssm_sertifikasi_mahasiswa);
+		$this->db->group_by('ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa', $get->ssm_sertifikasi_mahasiswa);
 		return $this->db->get('ssc_sertifikasi_mahasiswa');
 	}
 
@@ -101,13 +102,13 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$query = $this->db->query(" SELECT t1.*
 			FROM ssc_subsertifikasi_mahasiswa t1
 			JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t1.ssm_sertifikasi_mahasiswa
-			WHERE sm_sertifikasi = '".$id_sertifikasi."' AND sm_mahasiswa = '".$npm."' AND
+			WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND
 			ssm_skor >= 
 			(
 			SELECT MAX(ssm_skor)
 			FROM ssc_subsertifikasi_mahasiswa t2
 			JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t2.ssm_sertifikasi_mahasiswa
-			WHERE sm_sertifikasi = '".$id_sertifikasi."' AND sm_mahasiswa = '".$npm."' AND t2.																ssm_subsertifikasi = t1.ssm_subsertifikasi
+			WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND t2.																ssm_subsertifikasi = t1.ssm_subsertifikasi
 			)
 			GROUP BY ssm_subsertifikasi");
 		return $query->result();
@@ -127,7 +128,7 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->where('sm_sertifikasi', $id_sertifikasi);
 		$this->db->where('sm_mahasiswa', $id_mahasiswa);
 		$this->db->where('ssm_status', 'Lunas');
-        // $this->db->where('ssm_ishadir', 'y');
+		// $this->db->where('ssm_ishadir', 'y');
 		$this->db->where('ssm_skor is NOT NULL');
 		return $this->db->get('ssc_sertifikasi_mahasiswa');
 	}
@@ -139,7 +140,7 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		$this->db->where('ssc_sertifikasi_mahasiswa.sm_sertifikasi', $id_sertifikasi);
 		$this->db->where('ssc_sertifikasi_mahasiswa.sm_mahasiswa', $id_mahasiswa);
 		$this->db->where('ssm_status', 'Lunas');
-        // $this->db->where('ssm_ishadir', 'y');
+		// $this->db->where('ssm_ishadir', 'y');
 		$this->db->where('ssm_skor is NOT NULL');
 		$this->db->group_by('ssc_sertifikasi_mahasiswa.sm_sertifikasi');
 		return $this->db->get('ssc_subsertifikasi_mahasiswa')->row();
@@ -189,7 +190,6 @@ class Inputnilaisertifikasifinal_model extends CI_Model {
 		curl_close($curl);
 		return $data_mahasiswa;
 	}
-
 }
 
 /* End of file Inputnilaisertifikasifinal_model.php */
