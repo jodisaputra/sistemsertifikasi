@@ -1,6 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?> 
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
 
 </div><!-- /.container-fluid -->
 </div>
@@ -24,7 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url() ?>assets/backend/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url() ?>assets/backend/dist/js/adminlte.min.js"></script>
-
+<!-- Summernote -->
+<script src="<?php echo base_url(); ?>assets/js/summernote/summernote-bs4.js"></script>
 <!-- Sweetalert -->
 <script type="text/javascript" src="<?php echo base_url() ?>assets/sweetalert/sweetalert2.all.min.js"></script>
 
@@ -33,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   // Validasi error, jika username atau password tidak cocok
   if (validation_errors() || $this->session->flashdata('message')) {
     if ($this->session->flashdata('tipe') == 'success') {
-      ?>
+  ?>
 
       const Toast = Swal.mixin({
         toast: true,
@@ -47,9 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         icon: "<?php echo $this->session->flashdata('tipe'); ?>",
         title: "<?php echo $this->session->flashdata('message'); ?>"
       })
-      <?php
+    <?php
     } else {
-      ?>
+    ?>
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -64,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         title: "<?php echo $this->session->flashdata('message'); ?>"
       })
 
-      <?php
+  <?php
     }
   }
   ?>
@@ -75,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url() ?>assets/backend/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url() ?>assets/backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script>
-  $(function () {
+  $(function() {
     $("#example1").DataTable({
       "responsive": true,
       "autoWidth": false,
@@ -92,4 +93,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   });
 </script>
 </body>
+
 </html>
