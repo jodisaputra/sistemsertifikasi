@@ -668,6 +668,41 @@ class Seminar extends CI_Controller
 			redirect(base_url('akun_mahasiswa'));
 		}
 	}
+
+	// Image Upload Summernote
+	public function imageUpload()
+	{
+		if (isset($_FILES["image"]["name"])) {
+			$length = 10;
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$charactersLength = strlen($characters);
+			$randomString = '';
+			for ($i = 0; $i < $length; $i++) {
+				$randomString .= $characters[rand(0, $charactersLength - 1)];
+			}
+			$ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+			$filename = $randomString . '.' . $ext;
+			$config['upload_path'] = './assets/summernote/';
+			$config['allowed_types'] = 'jpg|jpeg|png|gif';
+			$config['file_name'] = $filename;
+			$this->upload->initialize($config);
+			if (!$this->upload->do_upload('image')) {
+				$this->upload->display_errors();
+				return FALSE;
+			} else {
+				$data = $this->upload->data();
+				echo base_url() . './assets/summernote/' . $filename;
+			}
+		}
+	}
+	public function deleteImage()
+	{
+		$src = $this->input->post('src');
+		$file_name = str_replace(base_url(), '', $src);
+		if (unlink($file_name)) {
+			echo 'File Delete Successfully';
+		}
+	}
 }
 /* End of file Seminar.php */
 /* Location: ./application/controllers/Seminar.php */
