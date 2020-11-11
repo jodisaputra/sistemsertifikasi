@@ -105,29 +105,29 @@
                               if ($l->su_status == 'Menunggu Pembayaran' || $l->su_status == 'Validasi Pembayaran') {
                               ?>
 
-                               <a href="<?php echo base_url('validasipembayaranseminarumum/detail/' . $l->su_seminar . '/' . $l->su_peserta) ?>" class="btn btn-info">Detail</a>
+                               <a title="Detail Pembayaran Seminar Umum" href="<?php echo base_url('validasipembayaranseminarumum/detail/' . $l->su_seminar . '/' . $l->su_peserta) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
-                               <a href="<?php echo base_url('validasipembayaranseminarumum/setLunas/' . $l->su_seminar . '/' . $l->su_peserta) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success">Set Lunas</a>
+                               <a title="Set Status Lunas Pembayaran Seminar Umum" href="<?php echo base_url('validasipembayaranseminarumum/setLunas/' . $l->su_seminar . '/' . $l->su_peserta) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
 
-                               <a href="javascript:;" data-id="<?php echo $l->su_peserta ?>" data-seminar="<?php echo $l->su_seminar ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger">
-                                   Set Tolak
+                               <a title="Set Status Tolak Seminar Umum" href="javascript:;" data-id="<?php echo $l->su_peserta ?>" data-seminar="<?php echo $l->su_seminar ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger mb-1">
+                                   <i class="fas fa-times"></i>&nbsp; Set Tolak
                                  </button>
 
                                <?php
                               } else {
                                 ?>
-                                 <a href="<?php echo base_url('validasipembayaranseminarumum/detail/' . $l->su_seminar . '/' . $l->su_peserta) ?>" class="btn btn-info">Detail</a>
+                                 <a title="Detail Pembayaran Seminar Umum" href="<?php echo base_url('validasipembayaranseminarumum/detail/' . $l->su_seminar . '/' . $l->su_peserta) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
                                <?php
                               }
                                 ?>
 
                                <?php if ($l->su_status == 'Lunas' && $l->su_totalbayar == NULL) { ?>
-                                 <a href="javascript:;" data-id="<?php echo $l->su_peserta ?>" data-seminar="<?php echo $l->su_seminar ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning">
-                                     <i class="fas fa-money-check-alt"></i> Isi Total Bayar
+                                 <a title="Isi Total pembayaran Seminar umum" href="javascript:;" data-id="<?php echo $l->su_peserta ?>" data-seminar="<?php echo $l->su_seminar ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning mb-1">
+                                     <i class="fas fa-money-check-alt"></i>&nbsp; Isi Total Bayar
                                    </button>
                                  <?php } elseif ($l->su_status == 'Lunas' && $l->su_totalbayar != NULL) { ?>
-                                   <a href="<?php echo base_url('Validasipembayaranseminarumum/cetak_rop/' . $l->su_peserta . '/' . $l->su_seminar) ?>" class="btn btn-primary" target="_BLANK"><i class="fas fa-print"></i> Cetak ROP</a>
+                                   <a title="Cetak ROP" href="<?php echo base_url('Validasipembayaranseminarumum/cetak_rop/' . $l->su_peserta . '/' . $l->su_seminar) ?>" class="btn btn-primary mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
                                  <?php } ?>
                            </td>
                          </tr>

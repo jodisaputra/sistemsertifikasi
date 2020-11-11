@@ -82,6 +82,7 @@
 
                    <div class="form-group">
                      <label>Banner</label>
+                     <p class="text-danger"><b>(Mohon upload gambar dengan ukuran 275 x 183)</p>
                      <br>
                      <img width="20%" src="<?php echo base_url('assets/banner_seminar/' . $seminar->smr_banner); ?>">
                      <br>

@@ -80,6 +80,7 @@
 
                    <div class="form-group">
                      <label>Banner</label>
+                     <p class="text-danger"><b>(Mohon upload gambar dengan ukuran 275 x 183)</p>
                      <input type="file" class="form-control" name="gambar">
                      <?php echo form_error('gambar') ?>
                    </div>

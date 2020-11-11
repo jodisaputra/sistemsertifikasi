@@ -17,6 +17,8 @@
                <!-- /.card-header -->
 
                <div class="card-body">
+                 <p class="text-danger">Tanda <b>*</b> Wajib Diisi !</p>
+
                  <form action="<?php echo base_url('batch_sertifikasi/simpan_perubahan'); ?>" method="post" enctype="multipart/form-data">
 
                    <input type="hidden" name="batch_id" value="<?php echo $list->bs_id ?>">

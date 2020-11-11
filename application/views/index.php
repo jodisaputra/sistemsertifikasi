@@ -37,8 +37,8 @@
 
                     <div class="col-sm-6 col-lg-4">
                         <div class="single_special_cource">
-                            <img src="<?php echo base_url('assets/banner_batchsertifikasi/' . $b->bs_banner) ?>" class="special_img" style="border: 1px solid #EDEFF2" alt="">
-                            <div class="special_cource_text">
+                            <img src="<?php echo base_url('assets/banner_batchsertifikasi/' . $b->bs_banner) ?>" class="special_img" style="border: 2px solid #EDEFF2" alt="">
+                            <div class="special_cource_text" style="border: 2px solid #EDEFF2">
                                 <a href="<?php echo base_url('home/detail_sertifikasi/' . $b->bs_id) ?>" class="btn_4"><?php echo $b->cert_sertifikasi ?></a>
                                 <a href="<?php echo base_url('home/detail_sertifikasi/' . $b->bs_id) ?>">
                                     <h3><?php echo $b->cert_sertifikasi . ' - ' . $b->scert_subsertifikasi ?></h3>
@@ -93,8 +93,8 @@
                     <div class="col-sm-6 col-lg-4 col-xl-4">
                         <div class="single-home-blog">
                             <div class="card">
-                                <img src="<?php echo base_url('assets/banner_seminar/' . $s->smr_banner) ?>" class="card-img-top" style="border: 1px solid #EDEFF2" alt="blog">
-                                <div class="card-body">
+                                <img src="<?php echo base_url('assets/banner_seminar/' . $s->smr_banner) ?>" class="card-img-top" style="border: 2px solid #EDEFF2" alt="blog">
+                                <div class="card-body" style="border: 2px solid #EDEFF2">
                                     <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>" class="btn_4">Seminar</a>
                                     <a href="<?php echo base_url('home/detail_seminar/' . $s->smr_id) ?>">
                                         <h5 class="card-title"><?php echo $s->smr_acara ?></h5>

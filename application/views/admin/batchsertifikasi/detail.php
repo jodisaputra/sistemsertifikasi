@@ -18,44 +18,44 @@
                <div class="card-body">
 
                  <div class="form-group">
-                   <label>Nama Sub Sertifikasi *</label>
+                   <label>Nama Sub Sertifikasi </label>
                    <input type="text" class="form-control" value="<?php echo $batch->scert_subsertifikasi ?>" readonly>
 
                  </div>
 
                  <div class="form-group">
-                   <label>Tanggal Daftar *</label>
+                   <label>Tanggal Daftar </label>
                    <input type="text" class="form-control" value="<?php echo date('d M Y', strtotime($batch->bs_mulai_daftar)) ?>" readonly>
                  </div>
 
                  <div class="form-group">
-                   <label>Tanggal Terakhir Daftar *</label>
+                   <label>Tanggal Terakhir Daftar </label>
                    <input type="text" class="form-control" value="<?php echo date('d M Y', strtotime($batch->bs_terakhir_daftar)) ?>" readonly>
                  </div>
 
                  <div class="form-group">
-                   <label>Biaya Mahasiswa *</label>
+                   <label>Biaya Mahasiswa </label>
                    <input type="text" class="form-control" value="<?php echo 'Rp. ' . number_format($batch->bs_biaya_mhs, '0', ',', '.') ?>" readonly>
                  </div>
 
                  <div class="form-group">
-                   <label>Biaya Umum *</label>
+                   <label>Biaya Umum </label>
                    <input type="text" class="form-control" value="<?php echo 'Rp. ' . number_format($batch->bs_biaya_umum, '0', ',', '.') ?>" readonly>
                  </div>
 
                  <div class="form-group">
-                   <label>Jumlah Max Peserta *</label>
+                   <label>Jumlah Max Peserta </label>
                    <input type="text" class="form-control" value="<?php echo $batch->bs_jumlahmax . ' Orang' ?>" readonly>
                  </div>
 
                  <div class="form-group">
-                   <label>Banner *</label>
+                   <label>Banner</label>
                    <br>
                    <img width="20%" src="<?php echo base_url('assets/banner_batchsertifikasi/' . $batch->bs_banner); ?>">
                  </div>
-
+                 <hr>
                  <div class="form-group">
-                   <label>Keterangan *</label>
+                   <label>Keterangan</label>
                    <?php echo $batch->bs_keterangan; ?>
                  </div>
                  <a href="<?php echo base_url('batch_sertifikasi') ?>" class="btn btn-danger">Kembali</a>

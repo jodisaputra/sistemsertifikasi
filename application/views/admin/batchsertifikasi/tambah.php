@@ -15,8 +15,9 @@
            <div class="col-12">
              <div class="card">
                <!-- /.card-header -->
-
                <div class="card-body">
+                 <p class="text-danger">Tanda <b>*</b> Wajib Diisi !</p>
+
                  <form action="<?php echo base_url('batch_sertifikasi/simpan'); ?>" method="post" enctype="multipart/form-data">
 
                    <div class="form-group">

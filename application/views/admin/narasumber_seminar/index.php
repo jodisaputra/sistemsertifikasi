@@ -29,7 +29,7 @@
                        <th>Asal Institusi</th>
                        <th>Sebagai</th>
                        <th width="20%">Tanda tangan</th>
-                       <th>Aksi</th>
+                       <th width="20%">Aksi</th>
                      </tr>
                    </thead>
                    <tbody>
@@ -50,8 +50,8 @@
                            <?php } ?>
                          </td>
                          <td>
-                           <a href="<?php echo base_url('narasumberseminar/ubah/' . $l->ns_id) ?>" class="btn btn-warning">Ubah</a>
-                           <a href="<?php echo base_url('narasumberseminar/delete/' . $l->ns_id . '/' . $l->ns_seminar) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger">Hapus</a>
+                           <a title="Ubah Narasumber Seminar" href="<?php echo base_url('narasumberseminar/ubah/' . $l->ns_id) ?>" class="btn btn-warning mb-1"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
+                           <a title="Hapus Narasumber Seminar" href="<?php echo base_url('narasumberseminar/delete/' . $l->ns_id . '/' . $l->ns_seminar) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mb-1"><i class="fas fa-trash"></i>&nbsp; Hapus</a>
                          </td>
                        </tr>
                      <?php } ?>
