@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,15 +21,16 @@
   <!-- Sweetalert -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/sweetalert/sweetalert2.css">
 </head>
+
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b>Sistem</b>Sertifikasi</a>
+      <a href=""><b>Sistem Sertifikasi</b></a>
     </div>
     <!-- /.login-logo -->
 
     <div class="text-center">
-      <img src="<?php echo base_url() ?>assets/img/logo.png" class="w-50 pb-2">      
+      <img src="<?php echo base_url() ?>assets/img/logo.png" class="w-50 pb-2">
     </div>
 
 
@@ -38,14 +40,14 @@
         <form action="<?php echo base_url() ?>auth/login" method="post">
 
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Email" name="email">
+            <input type="text" class="form-control" placeholder="Username" name="email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
-          
+
           <div class="input-group mb-3">
             <input type="password" class="form-control" placeholder="Password" name="password">
             <div class="input-group-append">
@@ -54,7 +56,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-12">
               <button type="submit" class="btn btn-primary btn-block">Log In</button>
@@ -80,10 +82,10 @@
 
   <script>
     <?php
-  // Validasi error, jika username atau password tidak cocok
+    // Validasi error, jika username atau password tidak cocok
     if (validation_errors() || $this->session->flashdata('message')) {
       if ($this->session->flashdata('tipe') == 'success') {
-        ?>
+    ?>
 
         const Toast = Swal.mixin({
           toast: true,
@@ -97,9 +99,9 @@
           icon: "<?php echo $this->session->flashdata('tipe'); ?>",
           title: "<?php echo $this->session->flashdata('message'); ?>"
         })
-        <?php
+      <?php
       } else {
-        ?>
+      ?>
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -114,11 +116,12 @@
           title: "<?php echo $this->session->flashdata('message'); ?>"
         })
 
-        <?php
+    <?php
       }
     }
     ?>
   </script>
 
 </body>
+
 </html>

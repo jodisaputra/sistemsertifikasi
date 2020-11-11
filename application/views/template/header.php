@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!doctype html>
@@ -46,81 +46,78 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="<?php echo base_url() ?>"> <img src="<?php echo base_url() ?>assets/img/uib.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-                    <div class="collapse navbar-collapse main-menu-item justify-content-end"
-                    id="navbarSupportedContent">
-                    <ul class="navbar-nav align-items-center">
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url('home') ?>">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url() ?>#sertifikasi">Sertifikasi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url() ?>#seminar">Seminar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://sertifikasi.uib.ac.id/">Berita</a>
-                        </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url('home') ?>">Beranda</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url() ?>#sertifikasi">Sertifikasi</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url() ?>#seminar">Seminar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="https://sertifikasi.uib.ac.id/">Berita</a>
+                                </li>
 
-                        <?php
+                                <?php
 
-                            if($this->session->userdata('npm')) { 
-                        
-                        ?>
+                                if ($this->session->userdata('npm')) {
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Akun </a>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="<?php echo base_url() ?>akun_mahasiswa/akun"><?php echo $this->session->userdata('nama') ?></a>
-                                    <a class="dropdown-item" href="<?php echo base_url() ?>logout">Logout</a>
-                                </div>
-                            </li>
+                                ?>
 
-                        <?php 
-                        
-                            } elseif($this->session->userdata('email')) {
-                        
-                        ?>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Akun </a>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="<?php echo base_url() ?>akun_mahasiswa/akun"><?php echo $this->session->userdata('nama') ?></a>
+                                            <a class="dropdown-item" href="<?php echo base_url() ?>logout">Logout</a>
+                                        </div>
+                                    </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Akun </a>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="<?php echo base_url() ?>akun_umum/akun"><?php echo $this->session->userdata('nama') ?></a>
-                                    <a class="dropdown-item" href="<?php echo base_url() ?>logout">Logout</a>
-                                </div>
-                            </li>
+                                <?php
+
+                                } elseif ($this->session->userdata('email')) {
+
+                                ?>
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Akun </a>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="<?php echo base_url() ?>akun_umum/akun"><?php echo $this->session->userdata('nama') ?></a>
+                                            <a class="dropdown-item" href="<?php echo base_url() ?>logout">Logout</a>
+                                        </div>
+                                    </li>
 
 
-                        <?php 
+                                <?php
 
-                            } else {
-                        
-                        ?>
+                                } else {
 
-                            <li class="d-none d-lg-block">
-                                <a class="btn_1" href="<?php echo base_url() ?>home/login">Login</a>
-                            </li>
+                                ?>
 
-                        <?php 
-                            }
-                        ?>
+                                    <li class="d-none d-lg-block">
+                                        <a class="btn_1" href="<?php echo base_url() ?>home/login">Masuk</a>
+                                    </li>
 
-                    </ul>
+                                <?php
+                                }
+                                ?>
+
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-            </nav>
+            </div>
         </div>
-    </div>
-</div>
-</header>
+    </header>
     <!-- Header part end-->

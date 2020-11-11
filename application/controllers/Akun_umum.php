@@ -199,7 +199,7 @@ class Akun_umum extends CI_Controller
 						$this->load->library('phpmailer_lib');
 						$mail = $this->phpmailer_lib->load();
 
-						$mail->setFrom('noreply@uib.ac.id', 'Universitas Internasional Batam');
+						$mail->setFrom('noreply.uib.ac.id@gmail.com', 'Universitas Internasional Batam');
 						$mail->addAddress($email, ucfirst($nama));
 						$mail->AddEmbeddedImage('assets/cetak/logo.jpg', 'logo');
 						$mail->Subject = 'Konfirmasi Registrasi Akun';

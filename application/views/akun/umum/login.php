@@ -3,9 +3,9 @@
 	<div class="container">
 
 		<div class="row justify-content-center">
-			
+
 			<div class="col-6 align-center">
-				<h2 class="text-center mb-5">Login Umum</h2>
+				<h2 class="text-center mb-5">Masuk Umum</h2>
 
 				<form action="<?php echo base_url() ?>akun_umum/login" method="post">
 
@@ -18,7 +18,7 @@
 					</div>
 
 					<div class="row mt-3 mb-3">
-						
+
 						<div class="col-6 mt-3">
 							Belum punya akun? <a href="<?php echo base_url() ?>akun_umum/register">Daftar disini</a>
 						</div>
@@ -29,7 +29,7 @@
 
 					</div>
 
-					<button type="submit" class="btn btn-primary mt-3 btn-block">Login</button>
+					<button type="submit" class="btn btn-primary mt-3 btn-block">Masuk</button>
 
 				</form>
 
