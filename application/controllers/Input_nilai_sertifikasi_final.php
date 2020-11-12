@@ -38,60 +38,69 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 
 	public function input_nilai_umum($id_sertifikat, $id_peserta)
 	{
-		$total = 0;
-		$status = 'y';
+		$cek_penilaian = $this->inputnilaisertifikasifinal_model->cek_penilaian($id_sertifikat);
 
-		//Get Nilai Max
-		$getnilaimax = $this->inputnilaisertifikasifinal_model->nilaimax($id_sertifikat, $id_peserta);
-
-		$sub = $this->inputnilaisertifikasifinal_model->listsertifikasicount($id_sertifikat, $id_peserta)->num_rows();
-
-		$totalsubsertifikasi = $this->sertifikasi_model->totalsubsertifikasi($id_sertifikat)->num_rows();
-
-		// Cek jika tidak mengikuti semua subsertifikasi (dengan syarat ada lebih dari 1 subsertifikasi);
-
-		if ($sub < $totalsubsertifikasi) {
-			$status = 'n';
-		}
-
-		foreach ($getnilaimax as $g) {
-			$total += $g->ssu_skor;
-		}
-
-		// Untuk Set Grade : Contoh Grade A
-		$getgrade = $this->inputnilaisertifikasifinal_model->getgrade($id_sertifikat)->result();
-
-		// $grade = '';
-		// $penghargaan = '';
-		// $lembaga = '';
-		// $statuslulus = '';
-
-		if ($status == 'y') {
-			foreach ($getgrade as $g) {
-				if ($total >= $g->pn_min && $total <= $g->pn_max) {
-					$grade = $g->pn_grade;
-					$penghargaan = $g->pn_penghargaan;
-					$lembaga = $g->pn_lembagasertifikat;
-					$statuslulus = $g->pn_status;
-				}
-			}
-
-			$data = [
-				'title'	=> 'Input Nilai Final Sertifikasi Umum',
-				'list'           => $this->inputnilaisertifikasifinal_model->listsertifikasiumumlistid($id_sertifikat, $id_peserta),
-				'skortotal'      => $total,
-				'grade'          => $grade,
-				'penghargaan'    => $penghargaan,
-				'lembaga'        => $lembaga,
-				'status'         => $statuslulus,
-				'view'	=> 'admin/nilai_sertifikasi_final/umum/tambah'
-			];
-
-			$this->load->view('admin/template/wrapper', $data);
-		} else {
-			$this->session->set_flashdata('message', 'Peserta Belum Mengikuti Semua Subsertifikasi');
+		if (!$cek_penilaian) {
+			$this->session->set_flashdata('message', 'Modul Penilaian masih kosong!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $id_sertifikat));
+		} else {
+
+			$total = 0;
+			$status = 'y';
+
+			//Get Nilai Max
+			$getnilaimax = $this->inputnilaisertifikasifinal_model->nilaimax($id_sertifikat, $id_peserta);
+
+			$sub = $this->inputnilaisertifikasifinal_model->listsertifikasicount($id_sertifikat, $id_peserta)->num_rows();
+
+			$totalsubsertifikasi = $this->sertifikasi_model->totalsubsertifikasi($id_sertifikat)->num_rows();
+
+			// Cek jika tidak mengikuti semua subsertifikasi (dengan syarat ada lebih dari 1 subsertifikasi);
+
+			if ($sub < $totalsubsertifikasi) {
+				$status = 'n';
+			}
+
+			foreach ($getnilaimax as $g) {
+				$total += $g->ssu_skor;
+			}
+
+			// Untuk Set Grade : Contoh Grade A
+			$getgrade = $this->inputnilaisertifikasifinal_model->getgrade($id_sertifikat)->result();
+
+			// $grade = '';
+			// $penghargaan = '';
+			// $lembaga = '';
+			// $statuslulus = '';
+
+			if ($status == 'y') {
+				foreach ($getgrade as $g) {
+					if ($total >= $g->pn_min && $total <= $g->pn_max) {
+						$grade = $g->pn_grade;
+						$penghargaan = $g->pn_penghargaan;
+						$lembaga = $g->pn_lembagasertifikat;
+						$statuslulus = $g->pn_status;
+					}
+				}
+
+				$data = [
+					'title'	=> 'Input Nilai Final Sertifikasi Umum',
+					'list'           => $this->inputnilaisertifikasifinal_model->listsertifikasiumumlistid($id_sertifikat, $id_peserta),
+					'skortotal'      => $total,
+					'grade'          => $grade,
+					'penghargaan'    => $penghargaan,
+					'lembaga'        => $lembaga,
+					'status'         => $statuslulus,
+					'view'	=> 'admin/nilai_sertifikasi_final/umum/tambah'
+				];
+
+				$this->load->view('admin/template/wrapper', $data);
+			} else {
+				$this->session->set_flashdata('message', 'Peserta Belum Mengikuti Semua Subsertifikasi');
+				$this->session->set_flashdata('tipe', 'error');
+				redirect(base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $id_sertifikat));
+			}
 		}
 	}
 
@@ -181,32 +190,40 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 
 	public function nilai_mahasiswa_final($id_sertifikat)
 	{
+		$cek_penilaian = $this->inputnilaisertifikasifinal_model->cek_penilaian($id_sertifikat);
 
-		$cek = $this->inputnilaisertifikasifinal_model->listsertifikasimahasiswa($id_sertifikat)->result();
-
-		if ($cek != NULL) {
-
-			$query = $this->inputnilaisertifikasifinal_model->listsertifikasimahasiswa($id_sertifikat)->result();
-
-			$mhs = array();
-
-			foreach ($query as $q) {
-				$mahasiswa = $this->inputnilaisertifikasifinal_model->getnama($q->sm_mahasiswa);
-				$mhs[$q->sm_mahasiswa] = $mahasiswa->name;
-			}
-
-			$data = [
-				'title'	=> 'Input Nilai Final Sertifikasi Mahasiswa',
-				'list'      => $query,
-				'mhs'	=> $mhs,
-				'view'	=> 'admin/nilai_sertifikasi_final/mahasiswa/index'
-			];
-
-			$this->load->view('admin/template/wrapper', $data);
-		} else {
-			$this->session->set_flashdata('message', 'Nilai sertifikasi mahasiswa belum diisi !');
+		if (!$cek_penilaian) {
+			$this->session->set_flashdata('message', 'Modul Penilaian masih kosong!');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect(base_url('sertifikasi'));
+			redirect(base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $id_sertifikat));
+		} else {
+
+			$cek = $this->inputnilaisertifikasifinal_model->listsertifikasimahasiswa($id_sertifikat)->result();
+
+			if ($cek != NULL) {
+
+				$query = $this->inputnilaisertifikasifinal_model->listsertifikasimahasiswa($id_sertifikat)->result();
+
+				$mhs = array();
+
+				foreach ($query as $q) {
+					$mahasiswa = $this->inputnilaisertifikasifinal_model->getnama($q->sm_mahasiswa);
+					$mhs[$q->sm_mahasiswa] = $mahasiswa->name;
+				}
+
+				$data = [
+					'title'	=> 'Input Nilai Final Sertifikasi Mahasiswa',
+					'list'      => $query,
+					'mhs'	=> $mhs,
+					'view'	=> 'admin/nilai_sertifikasi_final/mahasiswa/index'
+				];
+
+				$this->load->view('admin/template/wrapper', $data);
+			} else {
+				$this->session->set_flashdata('message', 'Nilai sertifikasi mahasiswa belum diisi !');
+				$this->session->set_flashdata('tipe', 'error');
+				redirect(base_url('sertifikasi'));
+			}
 		}
 	}
 

@@ -190,6 +190,12 @@ class Inputnilaisertifikasifinal_model extends CI_Model
 		curl_close($curl);
 		return $data_mahasiswa;
 	}
+
+	function cek_penilaian($id_sertifikasi)
+	{
+		$this->db->where('pn_sertifikasi', $id_sertifikasi);
+		return $this->db->get('ssc_penilaian')->num_rows();
+	}
 }
 
 /* End of file Inputnilaisertifikasifinal_model.php */
