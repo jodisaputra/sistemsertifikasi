@@ -1,15 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Penilaian extends CI_Controller {
+class Penilaian extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('penilaian_model');
 		$this->load->model('sertifikasi_model');
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -53,14 +53,12 @@ class Penilaian extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->tambah();
-		}
-		else
-		{
+		} else {
+
 			$data = [
 				'pn_sertifikasi'        => $this->input->post('sertifikasi'),
 				'pn_min'                => $this->input->post('nilai_min'),
@@ -73,14 +71,11 @@ class Penilaian extends CI_Controller {
 				'pn_lastupdate'         => date('Y-m-d H:i:s')
 			];
 
-			if($this->penilaian_model->insert($data))
-			{
+			if ($this->penilaian_model->insert($data)) {
 				$this->session->set_flashdata('message', 'Data berhasil disimpan');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('penilaian'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal disimpan');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('penilaian'));
@@ -92,8 +87,7 @@ class Penilaian extends CI_Controller {
 	{
 		$row = $this->penilaian_model->listbyid($id);
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'title'	=> 'Pelatih Sertifikasi',
 				'sertifikasi'   => $this->sertifikasi_model->get_all_sertifikasi(),
@@ -102,9 +96,7 @@ class Penilaian extends CI_Controller {
 			];
 
 			$this->load->view('admin/template/wrapper', $data);
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('penilaian'));
@@ -126,14 +118,11 @@ class Penilaian extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->ubah($this->input->post('penilaian_id'));
-		}
-		else
-		{
+		} else {
 			$data = [
 				'pn_sertifikasi'        => $this->input->post('sertifikasi'),
 				'pn_min'                => $this->input->post('nilai_min'),
@@ -146,14 +135,11 @@ class Penilaian extends CI_Controller {
 				'pn_lastupdate'         => date('Y-m-d H:i:s')
 			];
 
-			if($this->penilaian_model->update($this->input->post('penilaian_id'), $data))
-			{
+			if ($this->penilaian_model->update($this->input->post('penilaian_id'), $data)) {
 				$this->session->set_flashdata('message', 'Data berhasil diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('penilaian'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('penilaian'));
@@ -163,20 +149,16 @@ class Penilaian extends CI_Controller {
 
 	public function delete($id)
 	{
-		if($this->penilaian_model->delete($id))
-		{
+		if ($this->penilaian_model->delete($id)) {
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('penilaian'));
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('penilaian'));
 		}
 	}
-
 }
 
 /* End of file Penilaian.php */

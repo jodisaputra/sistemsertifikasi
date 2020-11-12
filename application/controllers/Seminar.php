@@ -605,7 +605,7 @@ class Seminar extends CI_Controller
 		}
 
 		$data = [
-			'title'	=> 'List Sertifikat Peserta',
+			'title'	=> 'List Sertifikat Mahasiswa',
 			'list'         => $query,
 			'mhs'	=> $data_mhs,
 			'view'	=> 'admin/seminar/sertifikat/mahasiswa/index'

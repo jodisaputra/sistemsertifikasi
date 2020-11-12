@@ -16,6 +16,7 @@
              <div class="card">
                <!-- /.card-header -->
                <div class="card-body">
+                 <a href="<?php echo base_url('batch_sertifikasi'); ?>" class="btn btn-danger mb-3">Kembali</a>
                  <table id="example1" class="table table-bordered table-striped">
                    <thead>
                      <tr>

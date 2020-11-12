@@ -156,7 +156,7 @@
                  <span aria-hidden="true">&times;</span>
                </button>
              </div>
-             <form action="<?php echo base_url('Validasipembayaranseminarumum/inputtotal'); ?>" method="post">
+             <form action="<?php echo base_url('Validasipembayaranseminarumum/setTolak'); ?>" method="post">
                <div class="modal-body">
                  <input type="hidden" name="idpeserta" id="id" value="">
                  <input type="hidden" name="seminar" id="seminar" value="">

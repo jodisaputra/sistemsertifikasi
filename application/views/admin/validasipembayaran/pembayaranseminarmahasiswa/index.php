@@ -127,7 +127,7 @@
                                      <i class="fas fa-money-check-alt"></i>&nbsp; Isi Total Bayar
                                    </button>
                                  <?php } elseif ($l['smhs_status'] == 'Lunas' && $l['smhs_totalbayar'] != NULL) { ?>
-                                   <a title="Cetak ROP" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/cetak_rop/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-primary" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
+                                   <a title="Cetak ROP" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/cetak_rop/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-primary mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
                                  <?php } ?>
                            </td>
                          </tr>
