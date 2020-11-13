@@ -105,19 +105,25 @@ class Inputnilaisertifikasifinal_model extends CI_Model
 
 	function nilaimaxmahasiswa($id_sertifikasi, $npm)
 	{
-		$query = $this->db->query(" SELECT t1.*
-			FROM ssc_subsertifikasi_mahasiswa t1
-			JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t1.ssm_sertifikasi_mahasiswa
-			WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND
-			ssm_skor >= 
-			(
-			SELECT MAX(ssm_skor)
-			FROM ssc_subsertifikasi_mahasiswa t2
-			JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t2.ssm_sertifikasi_mahasiswa
-			WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND t2.																ssm_subsertifikasi = t1.ssm_subsertifikasi
-			)
-			GROUP BY ssm_subsertifikasi");
-		return $query->result();
+		$this->db->select_max('ssm_skor');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		$this->db->where('ssc_sertifikasi_mahasiswa.sm_sertifikasi', $id_sertifikasi);
+		$this->db->where('ssc_sertifikasi_mahasiswa.sm_mahasiswa', $npm);
+		return $this->db->get('ssc_subsertifikasi_mahasiswa')->result();
+
+		// $query = $this->db->query(" SELECT t1.*
+		// 	FROM ssc_subsertifikasi_mahasiswa t1
+		// 	JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t1.ssm_sertifikasi_mahasiswa
+		// 	WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND
+		// 	ssm_skor >= 
+		// 	(
+		// 	SELECT MAX(ssm_skor)
+		// 	FROM ssc_subsertifikasi_mahasiswa t2
+		// 	JOIN ssc_sertifikasi_mahasiswa ON ssc_sertifikasi_mahasiswa.sm_id = t2.ssm_sertifikasi_mahasiswa
+		// 	WHERE sm_sertifikasi = '" . $id_sertifikasi . "' AND sm_mahasiswa = '" . $npm . "' AND t2.																ssm_subsertifikasi = t1.ssm_subsertifikasi
+		// 	)
+		// 	GROUP BY ssm_subsertifikasi");
+		// return $query->result();
 	}
 
 	function getskormahasiswa($id_sertifikasi, $id_mahasiswa)
