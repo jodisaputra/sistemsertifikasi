@@ -24,6 +24,12 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
+    function listjadwal($id)
+    {
+        $this->db->where('js_batch', $id);
+        return $this->db->get('ssc_jadwal_subsertifikasi')->row();
+    }
+
     function listbatchbyidhome($id)
     {
         $this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
@@ -51,13 +57,13 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->delete($this->table);
     }
 
-    function cek_sub_mahasiswa($id_sertifikasi_mahasiswa) 
+    function cek_sub_mahasiswa($id_sertifikasi_mahasiswa)
     {
         $this->db->where('ssm_sertifikasi_mahasiswa', $id_sertifikasi_mahasiswa);
         return $this->db->get('ssc_subsertifikasi_mahasiswa')->result();
     }
 
-     function cek_sub_umum($id_sertifikasi_umum) 
+    function cek_sub_umum($id_sertifikasi_umum)
     {
         $this->db->where('ssu_sertifikasi_umum', $id_sertifikasi_umum);
         return $this->db->get('ssc_subsertifikasi_umum')->result();
@@ -78,22 +84,21 @@ class Batchsertifikasi_model extends CI_Model
 
     function simpan_absen($absen)
     {
-        foreach($absen as $a)
-        {
-           $query = $this->db->insert('ssc_absen_sertifikasi', $a);
+        foreach ($absen as $a) {
+            $query = $this->db->insert('ssc_absen_sertifikasi', $a);
         }
         return $query;
     }
 
     function delete_absen($id_absen)
-    {   
+    {
         $this->db->where('as_id', $id_absen);
         $this->db->delete('ssc_absen_sertifikasi');
     }
 
     function generateidsertifikasiumum($kode)
     {
-        $query = $this->db->query("SELECT MAX(RIGHT(ssc_sertifikasi_umum.srtu_id,3)) as total FROM ssc_sertifikasi_umum WHERE srtu_id LIKE '". $kode . "%'");
+        $query = $this->db->query("SELECT MAX(RIGHT(ssc_sertifikasi_umum.srtu_id,3)) as total FROM ssc_sertifikasi_umum WHERE srtu_id LIKE '" . $kode . "%'");
         return $query->row();
     }
 
@@ -103,7 +108,7 @@ class Batchsertifikasi_model extends CI_Model
         $this->db->select_max('srtu_id');
         $this->db->where('srtu_peserta', $email);
         $result = $this->db->get('ssc_sertifikasi_umum')->row();
-        return $result->srtu_id; 
+        return $result->srtu_id;
     }
 
     function getidsertifikasimahasiswa()
@@ -112,7 +117,7 @@ class Batchsertifikasi_model extends CI_Model
         $this->db->select_max('sm_id');
         $this->db->where('sm_mahasiswa', $npm);
         $result = $this->db->get('ssc_sertifikasi_mahasiswa')->row();
-        return $result->sm_id; 
+        return $result->sm_id;
     }
 
     function cek($email, $id_sertifikasi)
@@ -149,13 +154,13 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->get('ssc_subsertifikasi_mahasiswa');
     }
 
-    function cekbelumlulushome($email,$sertifikasi,$id_subser)
+    function cekbelumlulushome($email, $sertifikasi, $id_subser)
     {
         $this->db->join('ssc_subsertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
         $this->db->where('srtu_peserta', $email);
         $this->db->where('srtu_sertifikasi', $sertifikasi);
         $this->db->where('ssc_subsertifikasi_umum.ssu_subsertifikasi', $id_subser);
-        $this->db->where('srtu_status','Tidak Lulus');
+        $this->db->where('srtu_status', 'Tidak Lulus');
         return $this->db->get('ssc_sertifikasi_umum');
     }
 
@@ -177,25 +182,25 @@ class Batchsertifikasi_model extends CI_Model
 
     function daftar_sertifikasi_mhs($data)
     {
-       return $this->db->insert('ssc_sertifikasi_mahasiswa', $data);
+        return $this->db->insert('ssc_sertifikasi_mahasiswa', $data);
     }
 
-    function daftar_sertifikasi_mhs_tidaklulus($id_sertifikasi,$data)
+    function daftar_sertifikasi_mhs_tidaklulus($id_sertifikasi, $data)
     {
         $this->db->where('sm_id', $id_sertifikasi);
         return $this->db->update('ssc_sertifikasi_mahasiswa', $data);
     }
 
     function generateID($npm)
-	{
-		$query = $this->db->query("SELECT MAX(RIGHT(ssc_sertifikasi_mahasiswa.sm_id,3)) as total FROM ssc_sertifikasi_mahasiswa WHERE sm_id LIKE '" . $npm . "%'");
-		return $query->row();
+    {
+        $query = $this->db->query("SELECT MAX(RIGHT(ssc_sertifikasi_mahasiswa.sm_id,3)) as total FROM ssc_sertifikasi_mahasiswa WHERE sm_id LIKE '" . $npm . "%'");
+        return $query->row();
     }
-    
+
     function generateIDsubsertifikasiumum($id_subsertifikasi)
     {
         $query = $this->db->query("SELECT MAX(RIGHT(ssc_subsertifikasi_umum.ssu_id,2)) as total FROM ssc_subsertifikasi_umum WHERE ssu_id LIKE '" . $id_subsertifikasi . "%'");
-		return $query->row();
+        return $query->row();
     }
 
     function insert_subsertifikasiumum($data2)
@@ -206,7 +211,7 @@ class Batchsertifikasi_model extends CI_Model
     function generateIDsubsertifikasimhs($id_subsertifikasi)
     {
         $query = $this->db->query("SELECT MAX(RIGHT(ssc_subsertifikasi_mahasiswa.ssm_id,2)) as total FROM ssc_subsertifikasi_mahasiswa WHERE ssm_id LIKE '" . $id_subsertifikasi . "%'");
-		return $query->row();
+        return $query->row();
     }
 
     function insert_subsertifikasimhs($data2)

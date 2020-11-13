@@ -9,6 +9,7 @@ class Batch_sertifikasi extends CI_Controller
 		parent::__construct();
 		$this->load->model('batchsertifikasi_model');
 		$this->load->model('sertifikasi_model');
+		$this->load->model('jadwalsubsertifikasi_model');
 	}
 
 	public function index()
@@ -39,6 +40,7 @@ class Batch_sertifikasi extends CI_Controller
 		$data = [
 			'title'	=> 'Batch Sertifikasi',
 			'batch'     => $this->batchsertifikasi_model->listbatchbyid($id),
+			'jadwal'     => $this->batchsertifikasi_model->listjadwal($id),
 			'view'	=> 'admin/batchsertifikasi/detail'
 		];
 
@@ -72,6 +74,11 @@ class Batch_sertifikasi extends CI_Controller
 		$this->form_validation->set_rules('jumlah_max_peserta', 'Jumlah Max Peserta', 'required|trim|numeric');
 		$this->form_validation->set_rules('jumlah_min_peserta', 'Jumlah Min Peserta', 'required|trim|numeric');
 		$this->form_validation->set_rules('jumlah_pertemuan', 'Jumlah Pertemuan', 'required|trim|numeric');
+
+		$this->form_validation->set_rules('tanggal_pelaksanaan', 'Tanggal Pelaksanaan', 'required');
+		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required');
+		$this->form_validation->set_rules('jam_selesai', 'Jam Selesai', 'required');
+
 		if (empty($_FILES['banner']['name'])) {
 			$this->form_validation->set_rules('banner', 'Gambar Banner', 'required');
 		}
@@ -117,8 +124,21 @@ class Batch_sertifikasi extends CI_Controller
 				];
 
 				if ($this->batchsertifikasi_model->insert($data)) {
-					$jumlah = $this->input->post('jumlah_pertemuan');
 
+					// Tambah jadwal sertifikasi
+					$data_jadwal = [
+						'js_batch'          => $this->db->insert_id(),
+						'js_tanggal'        => $this->input->post('tanggal_pelaksanaan'),
+						'js_mulai'          => $this->input->post('jam_mulai'),
+						'js_selesai'        => $this->input->post('jam_selesai'),
+						'js_tempat'         => $this->input->post('tempat'),
+						'js_link'           => $this->input->post('link'),
+						'js_userupdate'     => $this->session->userdata('username'),
+						'js_lastupdate'     => date('Y-m-d H:i:s')
+					];
+					$this->jadwalsubsertifikasi_model->insert($data_jadwal);
+
+					$jumlah = $this->input->post('jumlah_pertemuan');
 					for ($i = 1; $i <= $jumlah; $i++) {
 						$absen[$i] = [
 							'as_batch'      => $this->db->insert_id(),
@@ -156,9 +176,9 @@ class Batch_sertifikasi extends CI_Controller
 				'title'	=> 'Batch Sertifikasi',
 				'subsertifikasi'     => $this->sertifikasi_model->get_all_sub_sertifikasibystatus(),
 				'list'               => $row,
-				'view'	=> 'admin/batchsertifikasi/ubah'
+				'jadwal'			 => $this->jadwalsubsertifikasi_model->listbyid($id),
+				'view'				 => 'admin/batchsertifikasi/ubah'
 			];
-
 			$this->load->view('admin/template/wrapper', $data);
 		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada!');
@@ -178,6 +198,10 @@ class Batch_sertifikasi extends CI_Controller
 		$this->form_validation->set_rules('jumlah_min_peserta', 'Jumlah Min Peserta', 'required|trim|numeric');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		$this->form_validation->set_rules('jumlah_pertemuan', 'Jumlah Pertemuan', 'required|trim|numeric');
+
+		$this->form_validation->set_rules('tanggal_pelaksanaan', 'Tanggal Pelaksanaan', 'required');
+		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required');
+		$this->form_validation->set_rules('jam_selesai', 'Jam Selesai', 'required');
 
 		$this->form_validation->set_message('required', '{field} harus diisi');
 		$this->form_validation->set_message('numeric', '{field} harus diisi dengan angka');
@@ -225,6 +249,18 @@ class Batch_sertifikasi extends CI_Controller
 			];
 
 			if ($this->batchsertifikasi_model->update($this->input->post('batch_id'), $data)) {
+				// Jadwal ujian
+				$data_jadwal = [
+					'js_tanggal'        => $this->input->post('tanggal_pelaksanaan'),
+					'js_mulai'          => $this->input->post('jam_mulai'),
+					'js_selesai'        => $this->input->post('jam_selesai'),
+					'js_tempat'         => $this->input->post('tempat'),
+					'js_link'           => $this->input->post('link'),
+					'js_userupdate'     => $this->session->userdata('email'),
+					'js_lastupdate'     => date('Y-m-d H:i:s')
+				];
+				$this->jadwalsubsertifikasi_model->update($this->input->post('batch_id'), $data_jadwal);
+
 				$cekjumlah = $this->batchsertifikasi_model->cekjumlahtabel($this->input->post('batch_id'));
 				$jumlah = $this->input->post('jumlah_pertemuan');
 				$cekid = $this->batchsertifikasi_model->cekid($this->input->post('batch_id'));
@@ -277,7 +313,7 @@ class Batch_sertifikasi extends CI_Controller
 			redirect('auth');
 		}
 
-		if ($this->batchsertifikasi_model->delete($id)) {
+		if ($this->batchsertifikasi_model->delete($id) && $this->jadwalsubsertifikasi_model->delete($id)) {
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('batch_sertifikasi'));
@@ -296,10 +332,6 @@ class Batch_sertifikasi extends CI_Controller
 			redirect(base_url('home/detail_sertifikasi/' . $id_batch));
 		} else {
 			$cek = $this->batchsertifikasi_model->cek($this->session->userdata['email'], $id_sertifikasi)->row_array();
-
-			// header('content-type: application/json');
-			// echo json_encode($cek);
-			// die;
 
 			if ($cek['srtu_status'] == 'Lulus') {
 				//jika sudah pernah daftar dan Lulus

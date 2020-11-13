@@ -48,13 +48,21 @@ class Inputnilaisertifikasifinal_model extends CI_Model
 		return $this->db->get('ssc_subsertifikasi_umum')->row();
 	}
 
-	function nilaimax($id_sertifikasi, $id_peserta)
+	function nilaimax($id_sertifikasi, $email)
 	{
-		$this->db->select_max('ssu_skor');
-		$this->db->join('ssc_sertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
-		$this->db->where('ssc_sertifikasi_umum.srtu_sertifikasi', $id_sertifikasi);
-		$this->db->where('ssc_sertifikasi_umum.srtu_peserta', $id_peserta);
-		return $this->db->get('ssc_subsertifikasi_umum')->result();
+		$query = $this->db->query(" SELECT t1.*
+			FROM ssc_subsertifikasi_umum t1
+			JOIN ssc_sertifikasi_umum ON ssc_sertifikasi_umum.srtu_id = t1.ssu_sertifikasi_umum
+			WHERE srtu_sertifikasi = '" . $id_sertifikasi . "' AND srtu_peserta = '" . $email . "' AND
+			ssu_skor >= 
+			(
+			SELECT MAX(ssu_skor)
+			FROM ssc_subsertifikasi_umum t2
+			JOIN ssc_sertifikasi_umum ON ssc_sertifikasi_umum.srtu_id = t2.ssu_sertifikasi_umum
+			WHERE srtu_sertifikasi = '" . $id_sertifikasi . "' AND srtu_peserta = '" . $email . "' AND t2.																ssu_subsertifikasi = t1.ssu_subsertifikasi
+			)
+			GROUP BY ssu_subsertifikasi");
+		return $query->result();
 
 		// $query = $this->db->query(" SELECT t1.*
 		// 	FROM ssc_subsertifikasi_umum t1
@@ -208,6 +216,14 @@ class Inputnilaisertifikasifinal_model extends CI_Model
 		$this->db->where('pn_sertifikasi', $id_sertifikasi);
 		return $this->db->get('ssc_penilaian')->num_rows();
 	}
+
+	// function cek_lulus_umum($id_sertifikasi, $peserta)
+	// {
+	// 	$this->db->where('srtu_sertifikasi', $id_sertifikasi);
+	// 	$this->db->where('srtu_peserta', $peserta);
+	// 	$this->db->where('srtu_status', 'Tidak Lulus');
+	// 	return $this->db->get('ssc_sertifikasi_umum');
+	// }
 }
 
 /* End of file Inputnilaisertifikasifinal_model.php */

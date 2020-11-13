@@ -1,15 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Jadwal_subsertifikasi extends CI_Controller {
+class Jadwal_subsertifikasi extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('jadwalsubsertifikasi_model');
 		$this->load->model('batchsertifikasi_model');
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -53,27 +53,21 @@ class Jadwal_subsertifikasi extends CI_Controller {
 		$this->form_validation->set_message('is_unique', '{field} ini sudah ada!');
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon Isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->tambah();
-		}
-		else
-		{
-            //Cek tanggal dan jam mulai tidak boleh sama
+		} else {
+			//Cek tanggal dan jam mulai tidak boleh sama
 			$tanggal = $this->input->post('tanggal_pelaksanaan');
 			$jam = $this->input->post('jam_mulai');
 			$cek_tanggal = $this->jadwalsubsertifikasi_model->cektanggal($tanggal, $jam);
 
-			if($cek_tanggal->num_rows() > 0)
-			{
+			if ($cek_tanggal->num_rows() > 0) {
 				$this->session->set_flashdata('message', 'Tanggal Pelaksanaan atau Jam Mulai ini Sudah ada! Mohon isi Tanggal Pelaksanaan atau Jam Mulai lain');
 				$this->session->set_flashdata('tipe', 'error');
 				$this->tambah();
-			}
-			else
-			{
+			} else {
 				$data = [
 					'js_batch'          => $this->input->post('batch_sertifikasi'),
 					'js_tanggal'        => $this->input->post('tanggal_pelaksanaan'),
@@ -85,14 +79,11 @@ class Jadwal_subsertifikasi extends CI_Controller {
 					'js_lastupdate'     => date('Y-m-d H:i:s')
 				];
 
-				if ($this->jadwalsubsertifikasi_model->insert($data)) 
-				{
+				if ($this->jadwalsubsertifikasi_model->insert($data)) {
 					$this->session->set_flashdata('message', 'Daftar berhasil disimpan');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('jadwal_subsertifikasi'));
-				} 
-				else 
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Data gagal disimpan');
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('jadwal_subsertifikasi'));
@@ -105,8 +96,7 @@ class Jadwal_subsertifikasi extends CI_Controller {
 	{
 		$row = $this->jadwalsubsertifikasi_model->listbyid($id);
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'title'	=> 'Jadwal Ujian Sertifikasi',
 				'batch'     => $this->batchsertifikasi_model->listbatchbysertifikasistatus(),
@@ -115,32 +105,29 @@ class Jadwal_subsertifikasi extends CI_Controller {
 			];
 
 			$this->load->view('admin/template/wrapper', $data);
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada!');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect('batch_sertifikasi');
+			redirect('jadwal_subsertifikasi');
 		}
 	}
 
 	public function simpan_perubahan()
 	{
-		$this->form_validation->set_rules('tanggal_pelaksanaan', 'Tanggal Pelaksanaan', 'required|callback_check_tanggal');
-		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required|callback_check_waktu');
+		$this->form_validation->set_rules('tanggal_pelaksanaan', 'Tanggal Pelaksanaan', 'required');
+		// $this->form_validation->set_rules('tanggal_pelaksanaan', 'Tanggal Pelaksanaan', 'required|callback_check_tanggal');
+		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required');
+		// $this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required|callback_check_waktu');
 		$this->form_validation->set_rules('jam_selesai', 'Jam Selesai', 'required');
 
 		$this->form_validation->set_message('required', '{field} harus diisi');
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon Isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->ubah($this->input->post('batch_id'));
-		}
-		else
-		{
+		} else {
 			$data = [
 				'js_tanggal'        => $this->input->post('tanggal_pelaksanaan'),
 				'js_mulai'          => $this->input->post('jam_mulai'),
@@ -151,14 +138,11 @@ class Jadwal_subsertifikasi extends CI_Controller {
 				'js_lastupdate'     => date('Y-m-d H:i:s')
 			];
 
-			if ($this->jadwalsubsertifikasi_model->update($this->input->post('batch_id'), $data)) 
-			{
+			if ($this->jadwalsubsertifikasi_model->update($this->input->post('batch_id'), $data)) {
 				$this->session->set_flashdata('message', 'Data berhasil diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('jadwal_subsertifikasi'));
-			} 
-			else 
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal diubah');
 				$this->session->set_flashdata('tipe', 'error');
 				redirect(base_url('jadwal_subsertifikasi'));
@@ -171,14 +155,11 @@ class Jadwal_subsertifikasi extends CI_Controller {
 		$post = $this->input->post(NULL, TRUE);
 		$query = $this->db->query("SELECT * FROM ssc_jadwal_subsertifikasi WHERE js_tanggal = '$post[tanggal_pelaksanaan]' AND js_batch != '$post[batch_id]'");
 
-		if($query->num_rows() > 0)
-		{
+		if ($query->num_rows() > 0) {
 			$this->session->set_flashdata('message', 'Tanggal Pelaksanaan ini Sudah ada! Mohon isi Tanggal Pelaksanaan lain');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect('jadwal_subsertifikasi/update/'.$this->input->post('batch_id'));
-		}
-		else
-		{
+			redirect('jadwal_subsertifikasi/ubah/' . $this->input->post('batch_id'));
+		} else {
 			return TRUE;
 		}
 	}
@@ -188,36 +169,27 @@ class Jadwal_subsertifikasi extends CI_Controller {
 		$post = $this->input->post(NULL, TRUE);
 		$query = $this->db->query("SELECT * FROM ssc_jadwal_subsertifikasi WHERE js_mulai = '$post[jam_mulai]' AND js_batch != '$post[batch_id]'");
 
-		if($query->num_rows() > 0)
-		{
-			$this->session->set_flashdata('message', 'Tanggal Pelaksanaan ini Sudah ada! Mohon isi Tanggal Pelaksanaan lain');
+		if ($query->num_rows() > 0) {
+			$this->session->set_flashdata('message', 'Waktu Pelaksanaan ini Sudah ada! Mohon isi Waktu Pelaksanaan lain');
 			$this->session->set_flashdata('tipe', 'error');
-			redirect('jadwal_subsertifikasi/update/'.$this->input->post('batch_id'));
-		}
-		else
-		{
+			redirect('jadwal_subsertifikasi/ubah/' . $this->input->post('batch_id'));
+		} else {
 			return TRUE;
 		}
 	}
 
 	public function delete($id)
 	{
-		if ($this->jadwalsubsertifikasi_model->delete($id)) 
-		{
+		if ($this->jadwalsubsertifikasi_model->delete($id)) {
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('jadwal_subsertifikasi'));
-		} 
-		else 
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('jadwal_subsertifikasi'));
 		}
 	}
-
-
-
 }
 
 /* End of file Jadwal_subsertifikasi.php */

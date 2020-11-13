@@ -16,84 +16,150 @@
              <div class="card">
                <!-- /.card-header -->
                <div class="card-body">
-                 <p class="text-danger">Tanda <b>*</b> Wajib Diisi !</p>
+                 <p class="text-danger mb-5">Tanda <b>*</b> Wajib Diisi !</p>
 
                  <form action="<?php echo base_url('batch_sertifikasi/simpan'); ?>" method="post" enctype="multipart/form-data">
 
-                   <div class="form-group">
-                     <label>Nama Sub Sertifikasi *</label>
-                     <select name="sub_sertifikasi" class="form-control">
-                       <option value="">Pilih Salah Satu</option>
-                       <?php foreach ($subsertifikasi as $s) : ?>
-                         <option value="<?php echo $s->scert_id ?>" <?php echo set_value('sub_sertifikasi') == $s->scert_id ? "selected" : null ?>><?php echo $s->scert_subsertifikasi ?></option>
-                       <?php endforeach ?>
-                     </select>
-                     <?php echo form_error('sub_sertifikasi') ?>
-                   </div>
+                   <div class="row">
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Nama Sub Sertifikasi *</label>
+                         <select name="sub_sertifikasi" class="form-control">
+                           <option value="">Pilih Salah Satu</option>
+                           <?php foreach ($subsertifikasi as $s) : ?>
+                             <option value="<?php echo $s->scert_id ?>" <?php echo set_value('sub_sertifikasi') == $s->scert_id ? "selected" : null ?>><?php echo $s->scert_subsertifikasi ?></option>
+                           <?php endforeach ?>
+                         </select>
+                         <?php echo form_error('sub_sertifikasi') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Jumlah Pertemuan *</label>
-                     <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo set_value('jumlah_pertemuan') ?>">
-                     <?php echo form_error('jumlah_pertemuan') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jumlah Pertemuan *</label>
+                         <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo set_value('jumlah_pertemuan') ?>">
+                         <?php echo form_error('jumlah_pertemuan') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Tanggal Daftar *</label>
-                     <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo set_value('tanggal_daftar') ?>">
-                     <?php echo form_error('tanggal_daftar') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Daftar *</label>
+                         <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo set_value('tanggal_daftar') ?>">
+                         <?php echo form_error('tanggal_daftar') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Tanggal Terakhir Daftar *</label>
-                     <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo set_value('tanggal_terakhir') ?>">
-                     <?php echo form_error('tanggal_terakhir') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Terakhir Daftar *</label>
+                         <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo set_value('tanggal_terakhir') ?>">
+                         <?php echo form_error('tanggal_terakhir') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Biaya Mahasiswa *</label>
-                     <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo set_value('biaya_mhs') ?>">
-                     <?php echo form_error('biaya_mhs') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Biaya Mahasiswa *</label>
+                         <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo set_value('biaya_mhs') ?>">
+                         <?php echo form_error('biaya_mhs') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Biaya Umum *</label>
-                     <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo set_value('biaya_umum') ?>">
-                     <?php echo form_error('biaya_umum') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Biaya Umum *</label>
+                         <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo set_value('biaya_umum') ?>">
+                         <?php echo form_error('biaya_umum') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Jumlah Max Peserta *</label>
-                     <input type="text" class="form-control input-rupiah" name="jumlah_max_peserta" value="<?php echo set_value('jumlah_max_peserta') ?>">
-                     <?php echo form_error('jumlah_max_peserta') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jumlah Max Peserta *</label>
+                         <input type="text" class="form-control input-rupiah" name="jumlah_max_peserta" value="<?php echo set_value('jumlah_max_peserta') ?>">
+                         <?php echo form_error('jumlah_max_peserta') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Jumlah Min Peserta *</label>
-                     <input type="text" class="form-control" name="jumlah_min_peserta" value="<?php echo set_value('jumlah_min_peserta') ?>">
-                     <?php echo form_error('jumlah_min_peserta') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jumlah Min Peserta *</label>
+                         <input type="text" class="form-control" name="jumlah_min_peserta" value="<?php echo set_value('jumlah_min_peserta') ?>">
+                         <?php echo form_error('jumlah_min_peserta') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Banner *</label>
-                     <input type="file" class="form-control" name="banner">
-                     <?php echo form_error('banner') ?>
-                   </div>
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Banner *</label>
+                         <input type="file" class="form-control" name="banner">
+                         <?php echo form_error('banner') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Keterangan *</label>
-                     <textarea id="keterangan" name="keterangan" class="form-control cust_sumnote" rows="10" cols="80"><?php echo set_value('keterangan') ?></textarea>
-                     <?php echo form_error('keterangan') ?>
-                   </div>
+                     <div class="col-12">
+                       <div class="form-group">
+                         <label>Keterangan *</label>
+                         <textarea id="keterangan" name="keterangan" class="form-control cust_sumnote" rows="10" cols="80"><?php echo set_value('keterangan') ?></textarea>
+                         <?php echo form_error('keterangan') ?>
+                       </div>
+                     </div>
 
-                   <button class="btn btn-success" type="submit">Tambah</button>
-                   <a href="<?php echo base_url('batch_sertifikasi') ?>" class="btn btn-danger">Kembali</a>
+                     <div class="col-12 text-center mt-3 mb-4">
+                       <h1>Jadwal Ujian Sertifikasi</h1>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Pelaksanaan *</label>
+                         <input type="date" class="form-control" name="tanggal_pelaksanaan" value="<?php echo set_value('tanggal_pelaksanaan') ?>">
+                         <?php echo form_error('tanggal_pelaksanaan') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jam Mulai *</label>
+                         <input type="time" class="form-control" name="jam_mulai" value="<?php echo set_value('jam_mulai') ?>">
+                         <?php echo form_error('jam_mulai') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jam Selesai *</label>
+                         <input type="time" class="form-control" name="jam_selesai" value="<?php echo set_value('jam_selesai') ?>">
+                         <?php echo form_error('jam_selesai') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-6">
+                       <div class="form-group">
+                         <label>Tempat</label>
+                         <input type="text" class="form-control" name="tempat" value="<?php echo set_value('tempat') ?>">
+                       </div>
+                     </div>
+
+                     <div class="col-6">
+                       <div class="form-group">
+                         <label>Link</label>
+                         <input type="text" class="form-control" name="link" value="<?php echo set_value('link') ?>">
+                       </div>
+                     </div>
+
+                     <div class="col-12 mt-4">
+                       <button class="btn btn-success" type="submit">Tambah</button>
+                       <a href="<?php echo base_url('batch_sertifikasi') ?>" class="btn btn-danger">Kembali</a>
+                     </div>
                  </form>
                </div>
-               <!-- /.card-body -->
              </div>
-             <!-- /.card -->
+             <!-- /.card-body -->
            </div>
-           <!-- /.col -->
+           <!-- /.card -->
+         </div>
+         <!-- /.col -->
          </div>
          <!-- /.row -->
        </section>

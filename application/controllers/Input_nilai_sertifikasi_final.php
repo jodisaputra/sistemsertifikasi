@@ -52,10 +52,6 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 			//Get Nilai Max
 			$getnilaimax = $this->inputnilaisertifikasifinal_model->nilaimax($id_sertifikat, $id_peserta);
 
-			// header('content-type: application/json');
-			// echo json_encode($getnilaimax);
-			// die;
-
 			$sub = $this->inputnilaisertifikasifinal_model->listsertifikasicount($id_sertifikat, $id_peserta)->num_rows();
 
 			$totalsubsertifikasi = $this->sertifikasi_model->totalsubsertifikasi($id_sertifikat)->num_rows();
@@ -65,6 +61,7 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 			if ($sub < $totalsubsertifikasi) {
 				$status = 'n';
 			}
+
 
 			foreach ($getnilaimax as $g) {
 				$total += $g->ssu_skor;

@@ -23,90 +23,160 @@
 
                    <input type="hidden" name="batch_id" value="<?php echo $list->bs_id ?>">
 
-                   <div class="form-group">
-                     <label>Nama Sub Sertifikasi *</label>
-                     <select name="sub_sertifikasi" class="form-control">
-                       <option value="">Pilih Salah Satu</option>
-                       <?php foreach ($subsertifikasi as $s) : ?>
-                         <option value="<?php echo $s->scert_id ?>" <?php if ($s->scert_id == $list->bs_subsertifikasi) {
-                                                                      echo 'selected';
-                                                                    } ?>><?php echo $s->scert_subsertifikasi ?></option>
-                       <?php endforeach ?>
-                     </select>
-                     <?php echo form_error('sub_sertifikasi') ?>
+                   <div class="row">
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Nama Sub Sertifikasi *</label>
+                         <select name="sub_sertifikasi" class="form-control">
+                           <option value="">Pilih Salah Satu</option>
+                           <?php foreach ($subsertifikasi as $s) : ?>
+                             <option value="<?php echo $s->scert_id ?>" <?php if ($s->scert_id == $list->bs_subsertifikasi) {
+                                                                          echo 'selected';
+                                                                        } ?>><?php echo $s->scert_subsertifikasi ?></option>
+                           <?php endforeach ?>
+                         </select>
+                         <?php echo form_error('sub_sertifikasi') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jumlah Pertemuan *</label>
+                         <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo $list->bs_jumlahpertemuan ?>">
+                         <?php echo form_error('jumlah_pertemuan') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Daftar *</label>
+                         <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo $list->bs_mulai_daftar ?>">
+                         <?php echo form_error('tanggal_daftar') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Terakhir Daftar *</label>
+                         <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo $list->bs_terakhir_daftar ?>">
+                         <?php echo form_error('tanggal_terakhir') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Biaya Mahasiswa *</label>
+                         <input type="number" class="form-control" name="biaya_mhs" value="<?php echo $list->bs_biaya_mhs ?>">
+                         <?php echo form_error('biaya_mhs') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Biaya Umum *</label>
+                         <input type="number" class="form-control" name="biaya_umum" value="<?php echo $list->bs_biaya_umum ?>">
+                         <?php echo form_error('biaya_umum') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-6">
+                       <div class="form-group">
+                         <label>Jumlah Min Peserta *</label>
+                         <input type="text" class="form-control" name="jumlah_min_peserta" value="<?php echo $list->bs_jumlahmin ?>">
+                         <?php echo form_error('jumlah_min_peserta') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-6">
+                       <div class="form-group">
+                         <label>Jumlah Max Peserta *</label>
+                         <input type="text" class="form-control input-rupiah" name="jumlah_max_peserta" value="<?php echo $list->bs_jumlahmax ?>">
+                         <?php echo form_error('jumlah_max_peserta') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-12">
+                       <div class="form-group">
+                         <small class="text-danger">Gambar Sebelumnya</small>
+                         <br>
+                         <br>
+                         <img width="30%" src="<?php echo base_url('assets/banner_batchsertifikasi/' . $list->bs_banner); ?>" class="img-fluid img-thumbnails" alt="">
+                       </div>
+                       <div class="form-group">
+                         <label>Banner *</label>
+                         <input type="hidden" name="oldfile" value="<?php echo $list->bs_banner ?>">
+                         <input type="file" class="form-control" name="banner">
+                         <?php echo form_error('banner') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-12">
+                       <div class="form-group">
+                         <label>Keterangan *</label>
+                         <textarea name="keterangan" id="keterangan" class="form-control cust_sumnote" rows="10" cols="80"><?php echo $list->bs_keterangan ?></textarea>
+                         <?php echo form_error('keterangan') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-12 text-center mt-3 mb-4">
+                       <h1>Jadwal Ujian Sertifikasi</h1>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Tanggal Pelaksanaan *</label>
+                         <input type="date" class="form-control" name="tanggal_pelaksanaan" value="<?php echo $jadwal->js_tanggal ?>">
+                         <?php echo form_error('tanggal_pelaksanaan') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jam Mulai *</label>
+                         <input type="time" class="form-control" name="jam_mulai" value="<?php echo $jadwal->js_mulai ?>">
+                         <?php echo form_error('jam_mulai') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-4">
+                       <div class="form-group">
+                         <label>Jam Selesai *</label>
+                         <input type="time" class="form-control" name="jam_selesai" value="<?php echo $jadwal->js_selesai ?>">
+                         <?php echo form_error('jam_selesai') ?>
+                       </div>
+                     </div>
+
+                     <div class="col-6">
+                       <div class="form-group">
+                         <label>Tempat</label>
+                         <input type="text" class="form-control" name="tempat" value="<?php echo $jadwal->js_tempat ?>">
+                       </div>
+                     </div>
+
+                     <div class="col-6 mb-4">
+                       <div class="form-group">
+                         <label>Link</label>
+                         <input type="text" class="form-control" name="link" value="<?php echo $jadwal->js_link ?>">
+                       </div>
+                     </div>
+
+                     <div class="col-12">
+                       <button class="btn btn-success" type="submit">Ubah</button>
+                       <a href="<?php echo base_url('batch_sertifikasi') ?>" class="btn btn-danger">Kembali</a>
+                     </div>
                    </div>
 
-                   <div class="form-group">
-                     <label>Jumlah Pertemuan *</label>
-                     <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo $list->bs_jumlahpertemuan ?>">
-                     <?php echo form_error('jumlah_pertemuan') ?>
-                   </div>
 
-                   <div class="form-group">
-                     <label>Tanggal Daftar *</label>
-                     <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo $list->bs_mulai_daftar ?>">
-                     <?php echo form_error('tanggal_daftar') ?>
-                   </div>
 
-                   <div class="form-group">
-                     <label>Tanggal Terakhir Daftar *</label>
-                     <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo $list->bs_terakhir_daftar ?>">
-                     <?php echo form_error('tanggal_terakhir') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Biaya Mahasiswa *</label>
-                     <input type="number" class="form-control" name="biaya_mhs" value="<?php echo $list->bs_biaya_mhs ?>">
-                     <?php echo form_error('biaya_mhs') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Biaya Umum *</label>
-                     <input type="number" class="form-control" name="biaya_umum" value="<?php echo $list->bs_biaya_umum ?>">
-                     <?php echo form_error('biaya_umum') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Jumlah Max Peserta *</label>
-                     <input type="text" class="form-control" name="jumlah_max_peserta" value="<?php echo $list->bs_jumlahmax ?>">
-                     <?php echo form_error('jumlah_max_peserta') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Jumlah Min Peserta *</label>
-                     <input type="text" class="form-control" name="jumlah_min_peserta" value="<?php echo $list->bs_jumlahmin ?>">
-                     <?php echo form_error('jumlah_min_peserta') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Banner *</label>
-                     <br>
-                     <img width="20%" src="<?php echo base_url('assets/banner_batchsertifikasi/' . $list->bs_banner); ?>" alt="">
-                     <br>
-                     <small class="text-danger">Gambar Sebelumnya</small>
-                     <br>
-                     <input type="hidden" name="oldfile" value="<?php echo $list->bs_banner ?>">
-                     <input type="file" class="form-control" name="banner">
-                     <?php echo form_error('banner') ?>
-                   </div>
-
-                   <div class="form-group">
-                     <label>Keterangan *</label>
-                     <textarea name="keterangan" id="keterangan" class="form-control cust_sumnote" rows="10" cols="80"><?php echo $list->bs_keterangan ?></textarea>
-                     <?php echo form_error('keterangan') ?>
-                   </div>
-
-                   <button class="btn btn-success" type="submit">Ubah</button>
-                   <a href="<?php echo base_url('batch_sertifikasi') ?>" class="btn btn-danger">Kembali</a>
                  </form>
                </div>
                <!-- /.card-body -->
+               <!-- /.card -->
              </div>
-             <!-- /.card -->
+             <!-- /.col -->
            </div>
-           <!-- /.col -->
-         </div>
-         <!-- /.row -->
+           <!-- /.row -->
        </section>
        <!-- /.content -->
 
