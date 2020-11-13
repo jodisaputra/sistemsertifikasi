@@ -425,8 +425,7 @@ class Batch_sertifikasi extends CI_Controller
 						}
 					}
 				} else {
-					echo 'daftar baru';
-					die;
+
 					// Jika Sudah pernah daftar tapi belum lulus
 					if ($cek['srtu_status'] == 'Tidak Lulus') {
 						$data_blm = $cek;

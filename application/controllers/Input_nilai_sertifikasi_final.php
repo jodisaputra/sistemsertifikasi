@@ -41,7 +41,7 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 		$cek_penilaian = $this->inputnilaisertifikasifinal_model->cek_penilaian($id_sertifikat);
 
 		if (!$cek_penilaian) {
-			$this->session->set_flashdata('message', 'Modul Penilaian masih kosong!');
+			$this->session->set_flashdata('message', 'Data penilaian untuk kalkulasi masih kosong!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $id_sertifikat));
 		} else {
@@ -51,6 +51,10 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 
 			//Get Nilai Max
 			$getnilaimax = $this->inputnilaisertifikasifinal_model->nilaimax($id_sertifikat, $id_peserta);
+
+			// header('content-type: application/json');
+			// echo json_encode($getnilaimax);
+			// die;
 
 			$sub = $this->inputnilaisertifikasifinal_model->listsertifikasicount($id_sertifikat, $id_peserta)->num_rows();
 
@@ -193,7 +197,7 @@ class Input_nilai_sertifikasi_final extends CI_Controller
 		$cek_penilaian = $this->inputnilaisertifikasifinal_model->cek_penilaian($id_sertifikat);
 
 		if (!$cek_penilaian) {
-			$this->session->set_flashdata('message', 'Modul Penilaian masih kosong!');
+			$this->session->set_flashdata('message', 'Data penilaian untuk kalkulasi masih kosong!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $id_sertifikat));
 		} else {
