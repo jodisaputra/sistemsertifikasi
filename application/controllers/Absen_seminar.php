@@ -82,11 +82,62 @@ class Absen_seminar extends CI_Controller
 		}
 
 		if ($this->absenseminar_model->update_mahasiswa($this->input->post('id_seminar'), $this->input->post('id_mahasiswa'), $data)) {
-			$this->session->set_flashdata('message', 'Absen berhasil Ditambah');
+			$this->session->set_flashdata('message', 'Absen berhasil Disimpan');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('seminar'));
 		} else {
-			$this->session->set_flashdata('message', 'Absen gagal Ditambah');
+			$this->session->set_flashdata('message', 'Absen gagal Disimpan');
+			$this->session->set_flashdata('tipe', 'success');
+			redirect(base_url('seminar'));
+		}
+	}
+
+	public function simpan_mahasiswaall()
+	{
+		$mhs = $this->input->post('id_mahasiswa');
+		$seminar = $this->input->post('id_seminar');
+
+		$absen =  $this->absenseminar_model->listseminarmahasiswa($seminar);
+
+		foreach ($absen as $i) {
+			$data[$i->smhs_mahasiswa] = [
+				'smhs_ishadir'        => 'y',
+				'smhs_userupdate'    => $this->session->userdata('username'),
+				'smhs_lastupdate'    => date('Y-m-d H:i:s')
+			];
+		}
+
+		if ($this->absenseminar_model->update_mahasiswa($seminar, $mhs, $data)) {
+			$this->session->set_flashdata('message', 'Absen Berhasil disimpan');
+			$this->session->set_flashdata('tipe', 'success');
+			redirect('seminar');
+		} else {
+			$this->session->set_flashdata('message', 'Absen Gagal Disimpan');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect('seminar');
+		}
+	}
+
+	public function simpan_pesertaall()
+	{
+		$peserta = $this->input->post('id_peserta');
+		$seminar = $this->input->post('id_seminar');
+
+		$absen =  $this->absenseminar_model->listseminarumum($seminar);
+		foreach ($absen as $a) {
+			$data[$a->su_peserta] = [
+				'su_ishadir'        => 'y',
+				'su_userupdate'     => $this->session->userdata('username'),
+				'su_lastupdate'     => date('Y-m-d H:i:s')
+			];
+		}
+
+		if ($this->absenseminar_model->update_umum($seminar, $peserta, $data)) {
+			$this->session->set_flashdata('message', 'Absen berhasil Disimpan');
+			$this->session->set_flashdata('tipe', 'success');
+			redirect(base_url('seminar'));
+		} else {
+			$this->session->set_flashdata('message', 'Absen gagal Disimpan');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('seminar'));
 		}
