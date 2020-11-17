@@ -143,6 +143,24 @@ class Seminar extends CI_Controller
 		}
 	}
 
+	public function detail($id)
+	{
+		if (!isset($this->session->userdata['username'])) {
+			$this->session->set_flashdata('message', 'Anda Belum Login!');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect('auth');
+		}
+
+		$data = [
+			'title'	=> 'Seminar',
+			'seminar'	=> $this->seminar_model->listseminarbyid($id),
+			'model'      => $this->modelsertifikat_model->listmodelsertifikat(),
+			'view'	=> 'admin/seminar/detail'
+		];
+
+		$this->load->view('admin/template/wrapper', $data);
+	}
+
 	public function simpan_perubahan()
 	{
 		$this->form_validation->set_rules('nama_seminar', 'Nama Seminar', 'required');
@@ -163,7 +181,7 @@ class Seminar extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
-			$this->update($this->input->post('seminar_id'));
+			$this->ubah($this->input->post('seminar_id'));
 		} else {
 
 			if ($_FILES['gambar']['name'] != "") {

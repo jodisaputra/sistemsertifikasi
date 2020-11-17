@@ -25,10 +25,7 @@
                        <th>No</th>
                        <th>Nama Seminar</th>
                        <th>Tempat</th>
-                       <th>Tanggal Seminar</th>
-                       <th>Nama Moderator</th>
-                       <th>Jam Mulai</th>
-                       <th width="40%">Aksi</th>
+                       <th width="50%">Aksi</th>
                      </tr>
                    </thead>
                    <tbody>
@@ -39,23 +36,22 @@
                          <td><?php echo $no++ ?></td>
                          <td><?php echo $s->smr_acara ?></td>
                          <td><?php echo $s->smr_tempat ?></td>
-                         <td><?php echo $s->smr_tanggal ?></td>
-                         <td><?php echo $s->smr_moderator ?></td>
-                         <td><?php echo $s->smr_jam_mulai ?></td>
                          <td>
-                           <a title="Ubah Seminar" href="<?php echo base_url('seminar/ubah/' . $s->smr_id) ?>" class="btn btn-warning mb-1"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
+                           <a title="Ubah Seminar" href="<?php echo base_url('seminar/detail/' . $s->smr_id) ?>" class="btn btn-info btn-sm mb-4"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
-                           <a title="Hapus Seminar" href="<?php echo base_url('seminar/delete/' . $s->smr_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mb-1"><i class="fas fa-trash"></i>&nbsp; Hapus</a>
+                           <a title="Ubah Seminar" href="<?php echo base_url('seminar/ubah/' . $s->smr_id) ?>" class="btn btn-warning btn-sm mb-4"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
 
-                           <a title="Input Narasumber Seminar" href="<?php echo base_url('narasumberseminar/list_narasumber/' . $s->smr_id); ?>" class="btn btn-secondary mb-1"><i class="fas fa-user"></i>&nbsp; Input Narasumber</a>
+                           <a title="Hapus Seminar" href="<?php echo base_url('seminar/delete/' . $s->smr_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mb-4 btn-sm"><i class="fas fa-trash"></i>&nbsp; Hapus</a>
 
-                           <a title="Absensi Mahasiswa" href="<?php echo base_url('absen_seminar/absen_mahasiswa/' . $s->smr_id); ?>" class="btn btn-primary mb-1"><i class="fas fa-file-alt"></i>&nbsp; Absen Mahasiswa</a>
+                           <a title="Input Narasumber Seminar" href="<?php echo base_url('narasumberseminar/list_narasumber/' . $s->smr_id); ?>" class="btn btn-success btn-sm mb-4"><i class="fas fa-user"></i>&nbsp; Narasumber</a>
 
-                           <a title="Absen Umum" href="<?php echo base_url('absen_seminar/absen_umum/' . $s->smr_id); ?>" class="btn btn-primary mb-1"><i class="fas fa-file-alt"></i>&nbsp; Absen Umum</a>
+                           <a title="Absensi Mahasiswa" href="<?php echo base_url('absen_seminar/absen_mahasiswa/' . $s->smr_id); ?>" class="btn btn-primary btn-sm mb-4"><i class="fas fa-file-alt"></i>&nbsp; Absen Mahasiswa</a>
 
-                           <a title="Cetak Sertifikat Seminar Mahasiswa" href="<?php echo base_url('seminar/listpesertamhs/' . $s->smr_id); ?>" class="btn btn-info mb-1"><i class="fa fa-print"></i>&nbsp; Cetak Sertifikat Mahasiswa</a>
+                           <a title="Absen Umum" href="<?php echo base_url('absen_seminar/absen_umum/' . $s->smr_id); ?>" class="btn btn-primary btn-sm mb-4"><i class="fas fa-file-alt"></i>&nbsp; Absen Umum</a>
 
-                           <a title="Cetak Sertifikat Seminar Peserta Umum" href="<?php echo base_url('seminar/listpesertaumum/' . $s->smr_id); ?>" class="btn btn-info mb-1"><i class="fa fa-print"></i>&nbsp; Cetak Sertifikat Umum</a>
+                           <a title="Cetak Sertifikat Seminar Mahasiswa" href="<?php echo base_url('seminar/listpesertamhs/' . $s->smr_id); ?>" class="btn btn-info btn-sm mb-4"><i class="fa fa-print"></i>&nbsp; Cetak Sertifikat Mahasiswa</a>
+
+                           <a title="Cetak Sertifikat Seminar Peserta Umum" href="<?php echo base_url('seminar/listpesertaumum/' . $s->smr_id); ?>" class="btn btn-info btn-sm mb-4"><i class="fa fa-print"></i>&nbsp; Cetak Sertifikat Umum</a>
                          </td>
                        </tr>
                      <?php } ?>
