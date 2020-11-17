@@ -665,6 +665,7 @@ class Seminar extends CI_Controller
 
 			$data = [
 				'list'     => $row,
+				'link'	   => base_url('assets/template_sertifikat/' . $row->ms_sertifikat),
 				'profil'   => $mahasiswa,
 				'ttd'	   => $this->seminar_model->get_ttd_narasumber($id_seminar)
 			];

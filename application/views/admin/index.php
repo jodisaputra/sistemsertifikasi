@@ -76,3 +76,49 @@
               </div>
               <!-- /.col -->
             </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header border-transparent">
+                    <h3 class="card-title">List Sertifikasi yang berjalan</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table m-0">
+                        <thead>
+                          <tr>
+                            <th>Nama Sertifikasi</th>
+                            <th>Tanggal Mulai Daftar</th>
+                            <th>Jumlah Pendaftar</th>
+                            <th>Tanggal Pelaksanaan Ujian</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php foreach ($sertifikasi as $s) : ?>
+                            <tr>
+                              <td><?php echo $s->scert_subsertifikasi; ?></td>
+                              <td><?php echo date('d M y', strtotime($s->bs_mulai_daftar)) ?></td>
+                              <td>
+                                mahasiswa (<?php echo $totaldaftar ?>) + Umum () = Orang
+                              </td>
+                              <td><?php echo date('d M y', strtotime($s->js_tanggal)); ?></td>
+                              <td>
+                                <a href="<?php echo base_url('batch_sertifikasi/detail/' . $s->bs_id) ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Detail</a>
+                              </td>
+                            <?php endforeach; ?>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer clearfix">
+                  </div>
+                  <!-- /.card-footer -->
+                </div>
+              </div>
+            </div>

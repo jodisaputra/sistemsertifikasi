@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard_model extends CI_Model {
+class Dashboard_model extends CI_Model
+{
 
 	function gettotalpendaftar()
 	{
@@ -35,6 +36,15 @@ class Dashboard_model extends CI_Model {
 		return $query->num_rows();
 	}
 
+	function list_sertifikasi()
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+		$this->db->join('ssc_jadwal_subsertifikasi', 'ssc_jadwal_subsertifikasi.js_batch = ssc_batch_sertifikasi.bs_id');
+		$this->db->limit(3);
+		$this->db->order_by('bs_mulai_daftar', 'DESC');
+		return $this->db->get('ssc_batch_sertifikasi')->result();
+	}
 }
 
 /* End of file Dashboard_model.php */

@@ -1,14 +1,14 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Model_sertifikat extends CI_Controller {
+class Model_sertifikat extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('modelsertifikat_model');
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -38,55 +38,47 @@ class Model_sertifikat extends CI_Controller {
 	public function simpan()
 	{
 		$this->form_validation->set_rules('nama_model', 'Nama Model Sertifikat', 'required|trim');
-		if(empty($_FILES['gambar']['name']))
-		{
+		if (empty($_FILES['gambar']['name'])) {
 			$this->form_validation->set_rules('gambar', 'Gambar Model', 'required');
 		}
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 		$this->form_validation->set_message('required', '{field} harus diisi!');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'warning');
 			$this->tambah();
-		}
-		else
-		{
+		} else {
 			$getid = $this->modelsertifikat_model->getid();
 			$config['upload_path']          = './assets/template_sertifikat/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_width']            = 750;
+			$config['max_height']           = 500;
 			$config['file_name']            =  $getid;
 			$config['overwrite']            = TRUE;
 
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
 
-			if (!$this->upload->do_upload('gambar'))
-			{
+			if (!$this->upload->do_upload('gambar')) {
 				$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 				$this->session->set_flashdata('tipe', 'warning');
 				$this->tambah();
-			}
-			else
-			{
+			} else {
 				$data = [
 					'ms_model'          => $this->input->post('nama_model'),
 					'ms_sertifikat'     => $this->upload->data('file_name'),
-					'ms_linkmodel'      => 'model_sertifikat/template/'.$getid,
+					'ms_linkmodel'      => 'model_sertifikat/template/' . $getid,
 					'ms_userupdate'     => $this->session->userdata('username'),
 					'ms_lastupdate'     => date('Y-m-d H:i:s')
 				];
 
-				if($this->modelsertifikat_model->insert($data))
-				{
+				if ($this->modelsertifikat_model->insert($data)) {
 					$this->session->set_flashdata('message', 'Data berhasil disimpan');
 					$this->session->set_flashdata('tipe', 'success');
 					redirect(base_url('model_sertifikat'));
-				}
-				else
-				{
+				} else {
 					$this->session->set_flashdata('message', 'Data gagal disimpan');
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('model_sertifikat'));
@@ -100,8 +92,7 @@ class Model_sertifikat extends CI_Controller {
 
 		$row = $this->modelsertifikat_model->listmodelsertifikatbyid($id);
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'title'	=> 'Model Sertifikat',
 				'list'               => $row,
@@ -109,9 +100,7 @@ class Model_sertifikat extends CI_Controller {
 			];
 
 			$this->load->view('admin/template/wrapper', $data);
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('model_sertifikat');
@@ -119,110 +108,94 @@ class Model_sertifikat extends CI_Controller {
 	}
 
 	public function simpan_perubahan()
-    {
-        $this->form_validation->set_rules('nama_model', 'Nama Model Sertifikat', 'required|trim');
+	{
+		$this->form_validation->set_rules('nama_model', 'Nama Model Sertifikat', 'required|trim');
 
-        $this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
-        $this->form_validation->set_message('required', '{field} harus diisi!');
+		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+		$this->form_validation->set_message('required', '{field} harus diisi!');
 
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'warning');
 			$this->ubah($this->input->post('model_id'));
-        }
-        else
-        {
-            if($_FILES['gambar']['name'] != "")
-            {
-                $getid = $this->modelsertifikat_model->getid();
-                $config['upload_path']          = './assets/template_sertifikat/';
-                $config['allowed_types']        = 'jpg|png|jpeg';
-                $config['file_name']            =  $this->input->post('model_id');
-                $config['overwrite']            = TRUE;
-    
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+		} else {
+			if ($_FILES['gambar']['name'] != "") {
+				$getid = $this->modelsertifikat_model->getid();
+				$config['upload_path']          = './assets/template_sertifikat/';
+				$config['allowed_types']        = 'jpg|png|jpeg';
+				$config['max_width']            = 750;
+				$config['max_height']           = 500;
+				$config['file_name']            =  $this->input->post('model_id');
+				$config['overwrite']            = TRUE;
 
-                if (!$this->upload->do_upload('gambar'))
-                {
-                    $this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
-                    $this->session->set_flashdata('tipe', 'warning');
-                    $this->ubah($this->input->post('model_id'));
-                }
-                else
-                {
-                    $data = [
-                        'ms_model'          => $this->input->post('nama_model'),
-                        'ms_sertifikat'     => $this->upload->data('file_name'),
-                        'ms_linkmodel'      => $this->input->post('link_model'),
-                        'ms_userupdate'     => $this->session->userdata('email'),
-                        'ms_lastupdate'     => date('Y-m-d H:i:s')
-                    ];
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
 
-                    if($this->modelsertifikat_model->update($this->input->post('model_id'), $data))
-                    {
-                        $this->session->set_flashdata('message', 'Data berhasil diubah');
-                        $this->session->set_flashdata('tipe', 'success');
-                        redirect(base_url('model_sertifikat'));
-                    }
-                    else
-                    {
-                        $this->session->set_flashdata('message', 'Data gagal diubah');
-                        $this->session->set_flashdata('tipe', 'error');
-                        redirect(base_url('model_sertifikat'));
-                    }
-                }
-            }
-            else
-            {
-                $data = [
-                    'ms_model'          => $this->input->post('nama_model'),
-                    'ms_sertifikat'     => $this->input->post('gambar_old'),
-                    'ms_linkmodel'      => $this->input->post('link_model'),
-                    'ms_userupdate'     => $this->session->userdata('email'),
-                    'ms_lastupdate'     => date('Y-m-d H:i:s')
-                ];
+				if (!$this->upload->do_upload('gambar')) {
+					$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
+					$this->session->set_flashdata('tipe', 'warning');
+					$this->ubah($this->input->post('model_id'));
+				} else {
+					$data = [
+						'ms_model'          => $this->input->post('nama_model'),
+						'ms_sertifikat'     => $this->upload->data('file_name'),
+						'ms_linkmodel'      => $this->input->post('link_model'),
+						'ms_userupdate'     => $this->session->userdata('email'),
+						'ms_lastupdate'     => date('Y-m-d H:i:s')
+					];
 
-                if($this->modelsertifikat_model->update($this->input->post('model_id'), $data))
-                {
-                    $this->session->set_flashdata('message', 'Data berhasil diubah');
-                    $this->session->set_flashdata('tipe', 'success');
-                    redirect(base_url('model_sertifikat'));
-                }
-                else
-                {
-                    $this->session->set_flashdata('message', 'Data gagal diubah');
-                    $this->session->set_flashdata('tipe', 'error');
-                    redirect(base_url('model_sertifikat'));
-                }
-            }
-        }
-    }
+					if ($this->modelsertifikat_model->update($this->input->post('model_id'), $data)) {
+						$this->session->set_flashdata('message', 'Data berhasil diubah');
+						$this->session->set_flashdata('tipe', 'success');
+						redirect(base_url('model_sertifikat'));
+					} else {
+						$this->session->set_flashdata('message', 'Data gagal diubah');
+						$this->session->set_flashdata('tipe', 'error');
+						redirect(base_url('model_sertifikat'));
+					}
+				}
+			} else {
+				$data = [
+					'ms_model'          => $this->input->post('nama_model'),
+					'ms_sertifikat'     => $this->input->post('gambar_old'),
+					'ms_linkmodel'      => $this->input->post('link_model'),
+					'ms_userupdate'     => $this->session->userdata('email'),
+					'ms_lastupdate'     => date('Y-m-d H:i:s')
+				];
 
-    public function delete($id)
-    {
-        if($this->modelsertifikat_model->delete($id))
-        {
-            $this->session->set_flashdata('message', 'Data berhasil dihapus');
-            $this->session->set_flashdata('tipe', 'success');
-            redirect(base_url('model_sertifikat'));
-        }
-        else
-        {
-            $this->session->set_flashdata('message', 'Data gagal dihapus');
-            $this->session->set_flashdata('tipe', 'error');
-            redirect(base_url('model_sertifikat'));
-        }
-    }
-    
-    public function template($id)
-    {
-        $data = [
-            'list'      => $this->modelsertifikat_model->listmodelsertifikatbyid($id)
-        ];
-        $this->load->view('admin/model_sertifikat/template', $data);
-    }
+				if ($this->modelsertifikat_model->update($this->input->post('model_id'), $data)) {
+					$this->session->set_flashdata('message', 'Data berhasil diubah');
+					$this->session->set_flashdata('tipe', 'success');
+					redirect(base_url('model_sertifikat'));
+				} else {
+					$this->session->set_flashdata('message', 'Data gagal diubah');
+					$this->session->set_flashdata('tipe', 'error');
+					redirect(base_url('model_sertifikat'));
+				}
+			}
+		}
+	}
+
+	public function delete($id)
+	{
+		if ($this->modelsertifikat_model->delete($id)) {
+			$this->session->set_flashdata('message', 'Data berhasil dihapus');
+			$this->session->set_flashdata('tipe', 'success');
+			redirect(base_url('model_sertifikat'));
+		} else {
+			$this->session->set_flashdata('message', 'Data gagal dihapus');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect(base_url('model_sertifikat'));
+		}
+	}
+
+	public function template($id)
+	{
+		$data = [
+			'list'      => $this->modelsertifikat_model->listmodelsertifikatbyid($id)
+		];
+		$this->load->view('admin/model_sertifikat/template', $data);
+	}
 }
 
 /* End of file Model_sertifikat.php */
