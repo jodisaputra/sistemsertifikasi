@@ -125,9 +125,11 @@ class Batch_sertifikasi extends CI_Controller
 
 				if ($this->batchsertifikasi_model->insert($data)) {
 
+					$last_id = $this->db->insert_id();
+
 					// Tambah jadwal sertifikasi
 					$data_jadwal = [
-						'js_batch'          => $this->db->insert_id(),
+						'js_batch'          => $last_id,
 						'js_tanggal'        => $this->input->post('tanggal_pelaksanaan'),
 						'js_mulai'          => $this->input->post('jam_mulai'),
 						'js_selesai'        => $this->input->post('jam_selesai'),
@@ -141,7 +143,7 @@ class Batch_sertifikasi extends CI_Controller
 					$jumlah = $this->input->post('jumlah_pertemuan');
 					for ($i = 1; $i <= $jumlah; $i++) {
 						$absen[$i] = [
-							'as_batch'      => $this->db->insert_id(),
+							'as_batch'      => $last_id,
 							'as_nama_absen' => "Pertemuan Ke ",
 							'as_userupdate' => $this->session->userdata('username'),
 							'as_lastupdate' => date('Y-m-d H:i:s')
