@@ -69,8 +69,8 @@ class Batch_sertifikasi extends CI_Controller
 		$this->form_validation->set_rules('sub_sertifikasi', 'Sub Sertifikasi', 'required');
 		$this->form_validation->set_rules('tanggal_daftar', 'Tanggal Daftar', 'required');
 		$this->form_validation->set_rules('tanggal_terakhir', 'Tanggal Terakhir', 'required');
-		$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required|trim|numeric');
-		$this->form_validation->set_rules('biaya_umum', 'Biaya Umum', 'required|trim|numeric');
+		$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required');
+		$this->form_validation->set_rules('biaya_umum', 'Biaya Umum', 'required');
 		$this->form_validation->set_rules('jumlah_max_peserta', 'Jumlah Max Peserta', 'required|trim|numeric');
 		$this->form_validation->set_rules('jumlah_min_peserta', 'Jumlah Min Peserta', 'required|trim|numeric');
 		$this->form_validation->set_rules('jumlah_pertemuan', 'Jumlah Pertemuan', 'required|trim|numeric');
@@ -108,12 +108,13 @@ class Batch_sertifikasi extends CI_Controller
 			} else {
 				$upload_data = $this->upload->data();
 				$namafile = $upload_data['file_name'];
+
 				$data = [
 					'bs_subsertifikasi'         => $this->input->post('sub_sertifikasi'),
 					'bs_mulai_daftar'           => $this->input->post('tanggal_daftar'),
 					'bs_terakhir_daftar'        => $this->input->post('tanggal_terakhir'),
-					'bs_biaya_mhs'              => $this->input->post('biaya_mhs'),
-					'bs_biaya_umum'             => $this->input->post('biaya_umum'),
+					'bs_biaya_mhs'              => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_mhs', TRUE), 2)),
+					'bs_biaya_umum'             => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_umum', TRUE), 2)),
 					'bs_banner'                 => $namafile,
 					'bs_keterangan'             => $this->input->post('keterangan'),
 					'bs_jumlahmax'              => $this->input->post('jumlah_max_peserta'),

@@ -187,7 +187,7 @@
                  <input type="hidden" name="idpeserta" id="id" value="">
                  <input type="hidden" name="seminar" id="seminar" value="">
                  <label>Total Biaya yang ditransfer</label>
-                 <input type="text" name="total" class="form-control">
+                 <input type="text" name="total" class="form-control uang">
                </div>
                <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

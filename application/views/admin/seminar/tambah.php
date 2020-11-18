@@ -57,13 +57,13 @@
 
                    <div class="form-group">
                      <label>Biaya Mahasiswa *</label>
-                     <input type="text" class="form-control" name="biaya_mhs" value="<?php echo set_value('biaya_mhs') ?>">
+                     <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo set_value('biaya_mhs') ?>">
                      <?php echo form_error('biaya_mhs') ?>
                    </div>
 
                    <div class="form-group">
                      <label>Biaya Umum *</label>
-                     <input type="text" class="form-control" name="biaya_umum" value="<?php echo set_value('biaya_umum') ?>">
+                     <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo set_value('biaya_umum') ?>">
                      <?php echo form_error('biaya_umum') ?>
                    </div>
 

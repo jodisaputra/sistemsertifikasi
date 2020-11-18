@@ -31,12 +31,12 @@
              <div class="col-lg-4 right-contents">
                  <div class="sidebar_top">
                      <ul>
-                         <li>
+                         <!-- <li>
                              <a class="justify-content-between d-flex">
                                  <p>Nama Pelatih</p>
-                                 <span class="color"><?php echo $batch->ps_nama ?></span>
+                                 <span class="color"><?php echo $pelatih->ps_nama ?></span>
                              </a>
-                         </li>
+                         </li> -->
                          <li>
                              <a class="justify-content-between d-flex">
                                  <p>Tanggal Ujian </p>

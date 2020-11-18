@@ -77,13 +77,12 @@
               <!-- /.col -->
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-12">
                 <div class="card">
                   <div class="card-header border-transparent">
-                    <h3 class="card-title">List Sertifikasi yang berjalan</h3>
+                    <h3 class="card-title">Sertifikasi yang sedang berjalan</h3>
                   </div>
-                  <!-- /.card-header -->
                   <div class="card-body p-0">
                     <div class="table-responsive">
                       <table class="table m-0">
@@ -101,8 +100,9 @@
                             <tr>
                               <td><?php echo $s->scert_subsertifikasi; ?></td>
                               <td><?php echo date('d M y', strtotime($s->bs_mulai_daftar)) ?></td>
-                              <td>
-                                mahasiswa (<?php echo $totaldaftar ?>) + Umum () = Orang
+                              <td height="70px">
+                                mahasiswa : <?php echo $totalmahasiswaperbatch[$s->bs_id] . ' Orang' ?>
+                                <br> Umum : = Orang
                               </td>
                               <td><?php echo date('d M y', strtotime($s->js_tanggal)); ?></td>
                               <td>
@@ -113,12 +113,9 @@
                         </tbody>
                       </table>
                     </div>
-                    <!-- /.table-responsive -->
                   </div>
-                  <!-- /.card-body -->
                   <div class="card-footer clearfix">
                   </div>
-                  <!-- /.card-footer -->
                 </div>
               </div>
-            </div>
+            </div> -->

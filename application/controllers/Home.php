@@ -20,6 +20,10 @@ class Home extends CI_Controller
 			'view'	=> 'index'
 		];
 
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
+
 		$this->load->view('template/wrapper', $data);
 	}
 
@@ -41,8 +45,13 @@ class Home extends CI_Controller
 		$cek = $this->batchsertifikasi_model->listbatchbyidhome($id_batch);
 		$data = [
 			'batch'     => $cek,
+			// 'pelatih'	=> $this->batchsertifikasi_model->list_pelatih($id_batch),
 			'view'	=> 'detail-batch'
 		];
+
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 
 		$this->load->view('template/wrapper', $data);
 	}

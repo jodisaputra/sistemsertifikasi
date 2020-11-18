@@ -18,6 +18,22 @@ class Dashboard extends CI_Controller
 			redirect('auth');
 		}
 
+		// $result_mhs = array();
+		// $query_mhs = $this->dashboard_model->getresultmahasiswa();
+
+		// foreach ($query_mhs as $query) {
+		// 	$total = $this->dashboard_model->gettotalsertifikasimahasiswa($query['ssm_batch']);
+
+		// 	if (!$total) {
+		// 	} else {
+		// 		$result_mhs[$query['ssm_batch']] = $total;
+		// 	}
+		// }
+
+		// header('content-type: application/json');
+		// echo json_encode($result_mhs);
+		// die;
+
 		$data = [
 			'title'	=> 'Dashboard',
 			'totaldaftar' => $this->dashboard_model->gettotalpendaftar(),
@@ -25,6 +41,7 @@ class Dashboard extends CI_Controller
 			'totallulus' => $this->dashboard_model->gettotalmhslulus(),
 			'totaltidaklulus' => $this->dashboard_model->gettotalmhstidaklulus(),
 			'sertifikasi' => $this->dashboard_model->list_sertifikasi(),
+			// 'totalmahasiswaperbatch' => $result_mhs,
 			'view'	=> 'admin/index'
 		];
 		// header('content-type: application/json');
