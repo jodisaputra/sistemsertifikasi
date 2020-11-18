@@ -26,7 +26,7 @@
                        <th width="20%">Nama Sertifikasi</th>
                        <th width="20%">Program Studi</th>
                        <th>Status</th>
-                       <th width="55%">Aksi</th>
+                       <th width="45%">Aksi</th>
                      </tr>
                    </thead>
                    <tbody>
@@ -72,15 +72,15 @@
                          </td>
                          <td class="text-center">
 
-                           <a title="Edit Sertifikasi" href="<?php echo base_url('sertifikasi/ubah/' . $s->cert_id) ?>" class="btn btn-warning mb-1"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
+                           <a title="Edit Sertifikasi" href="<?php echo base_url('sertifikasi/ubah/' . $s->cert_id) ?>" class="btn btn-warning btn-sm mb-3"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
 
-                           <a title="Hapus Sertifikasi" href="<?php echo base_url('sertifikasi/delete/' . $s->cert_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus Sertifikasi ini?')" class="btn btn-danger mb-1"><i class="fas fa-trash"></i>&nbsp; Hapus</a>
+                           <a title="Hapus Sertifikasi" href="<?php echo base_url('sertifikasi/delete/' . $s->cert_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus Sertifikasi ini?')" class="btn btn-danger btn-sm mb-3"><i class="fas fa-trash"></i>&nbsp; Hapus</a>
 
-                           <a title="Daftar Subsertifikasi" href="<?php echo base_url('subsertifikasi/index/' . $s->cert_id) ?>" class="btn btn-info mb-1"><i class="fas fa-certificate"></i>&nbsp; Sub-Sertifikasi</a>
+                           <a title="Daftar Subsertifikasi" href="<?php echo base_url('subsertifikasi/index/' . $s->cert_id) ?>" class="btn btn-info btn-sm mb-3"><i class="fas fa-certificate"></i>&nbsp; Sub-Sertifikasi</a>
 
-                           <a title="Input Nilai Terakhir dan Sertifikat Peserta Umum" href="<?php echo base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $s->cert_id) ?>" class="btn btn-primary mb-1"><i class="fas fa-sort-numeric-up-alt"></i>&nbsp; Input Nilai Terakhir Umum</a>
+                           <a title="Input Nilai Terakhir dan Sertifikat Peserta Umum" href="<?php echo base_url('input_nilai_sertifikasi_final/nilai_umum_final/' . $s->cert_id) ?>" class="btn btn-primary btn-sm mb-3"><i class="fas fa-sort-numeric-up-alt"></i>&nbsp; Input Nilai Terakhir Umum</a>
 
-                           <a title="Input Nilai Terakhir dan Sertifikat Mahasiswa" href="<?php echo base_url('input_nilai_sertifikasi_final/nilai_mahasiswa_final/' . $s->cert_id) ?>" class="btn btn-primary mb-1"><i class="fas fa-sort-numeric-up-alt"></i>&nbsp; Input Nilai Terakhir Mahasiswa</a>
+                           <a title="Input Nilai Terakhir dan Sertifikat Mahasiswa" href="<?php echo base_url('input_nilai_sertifikasi_final/nilai_mahasiswa_final/' . $s->cert_id) ?>" class="btn btn-primary btn-sm mb-3"><i class="fas fa-sort-numeric-up-alt"></i>&nbsp; Input Nilai Terakhir Mahasiswa</a>
                          </td>
                        </tr>
                      <?php } ?>
