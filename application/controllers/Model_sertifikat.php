@@ -50,29 +50,58 @@ class Model_sertifikat extends CI_Controller
 			$this->session->set_flashdata('tipe', 'warning');
 			$this->tambah();
 		} else {
+			$dname = explode(".", $_FILES['gambar']['name']);
+			$ext = end($dname);
 			$getid = $this->modelsertifikat_model->getid();
+			$filename = $getid . "." . $ext;
 			$config['upload_path']          = './assets/template_sertifikat/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
-			$config['max_width']            = 750;
-			$config['max_height']           = 500;
-			$config['file_name']            =  $getid;
+			$config['file_name']            =  $filename;
 			$config['overwrite']            = TRUE;
 
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
+
+			// $uploadData = $this->upload->data();
+
 
 			if (!$this->upload->do_upload('gambar')) {
 				$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 				$this->session->set_flashdata('tipe', 'warning');
 				$this->tambah();
 			} else {
+				// $config_img['image_library'] = 'gd2';
+				// $config_img['source_image'] = './assets/template_sertifikat/' . $filename;
+				// $config_img['new_image'] = './assets/template_sertifikat/' . "new" . $filename;
+				// $config_img['maintain_ratio'] = TRUE;
+				// $config_img['width']     = 750;
+				// $config_img['height']   = 500;
+
+				// $this->load->library('image_lib', $config_img);
+				// $this->image_lib->resize(); $image_data =   $this->upload->data();
+				$this->load->library('image_lib');
+				$image_data =   $this->upload->data();
+				$configer =  array(
+					'image_library'   => 'gd2',
+					'source_image'    =>  $image_data['full_path'],
+					'maintain_ratio'  =>  TRUE,
+					'width'           =>  700,
+					'height'          =>  500,
+				);
+				$this->image_lib->clear();
+				$this->image_lib->initialize($configer);
+				$this->image_lib->resize();
 				$data = [
 					'ms_model'          => $this->input->post('nama_model'),
-					'ms_sertifikat'     => $this->upload->data('file_name'),
-					'ms_linkmodel'      => 'model_sertifikat/template/' . $getid,
+					'ms_sertifikat'     => $filename,
+					'ms_linkmodel'      => 'model_sertifikat/template/' . $filename,
 					'ms_userupdate'     => $this->session->userdata('username'),
 					'ms_lastupdate'     => date('Y-m-d H:i:s')
 				];
+
+				// header('content-type: application/json');
+				// echo json_encode($data);
+				// die;
 
 				if ($this->modelsertifikat_model->insert($data)) {
 					$this->session->set_flashdata('message', 'Data berhasil disimpan');
@@ -89,7 +118,6 @@ class Model_sertifikat extends CI_Controller
 
 	public function ubah($id)
 	{
-
 		$row = $this->modelsertifikat_model->listmodelsertifikatbyid($id);
 
 		if ($row) {
@@ -120,15 +148,15 @@ class Model_sertifikat extends CI_Controller
 			$this->ubah($this->input->post('model_id'));
 		} else {
 			if ($_FILES['gambar']['name'] != "") {
-				$getid = $this->modelsertifikat_model->getid();
+				$dname = explode(".", $_FILES['gambar']['name']);
+				$ext = end($dname);
+				$filename = $this->input->post('model_id') . "." . $ext;
 				$config['upload_path']          = './assets/template_sertifikat/';
 				$config['allowed_types']        = 'jpg|png|jpeg';
-				$config['max_width']            = 750;
-				$config['max_height']           = 500;
-				$config['file_name']            =  $this->input->post('model_id');
+				$config['file_name']            =  $filename;
 				$config['overwrite']            = TRUE;
 
-				$this->load->library('upload', $config);
+				$this->load->library('upload');
 				$this->upload->initialize($config);
 
 				if (!$this->upload->do_upload('gambar')) {
@@ -136,11 +164,23 @@ class Model_sertifikat extends CI_Controller
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->ubah($this->input->post('model_id'));
 				} else {
+					$this->load->library('image_lib');
+					$image_data =   $this->upload->data();
+					$configer =  array(
+						'image_library'   => 'gd2',
+						'source_image'    =>  $image_data['full_path'],
+						'maintain_ratio'  =>  TRUE,
+						'width'           =>  700,
+						'height'          =>  500,
+					);
+					$this->image_lib->clear();
+					$this->image_lib->initialize($configer);
+					$this->image_lib->resize();
 					$data = [
 						'ms_model'          => $this->input->post('nama_model'),
 						'ms_sertifikat'     => $this->upload->data('file_name'),
 						'ms_linkmodel'      => $this->input->post('link_model'),
-						'ms_userupdate'     => $this->session->userdata('email'),
+						'ms_userupdate'     => $this->session->userdata('username'),
 						'ms_lastupdate'     => date('Y-m-d H:i:s')
 					];
 

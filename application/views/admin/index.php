@@ -17,105 +17,61 @@
           <div class="container-fluid">
 
             <div class="row">
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
+              <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3><?php echo $totaldaftar ?></h3>
 
-                  <div class="info-box-content">
-                    <span class="info-box-text">Jumlah Pendaftar</span>
-                    <span class="info-box-number">
-                      <?php echo $totaldaftar ?>
-                    </span>
+                    <p>Jumlah Pendaftar <br> Umum</p>
                   </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-info elevation-1"><i class="fas fa-calendar-alt"></i></span>
-
-                  <div class="info-box-content">
-                    <span class="info-box-text">Jumlah Seminar</span>
-                    <span class="info-box-number"><?php echo $totalseminar ?></span>
+                  <div class="icon">
+                    <i class="fas fa-users"></i>
                   </div>
-                  <!-- /.info-box-content -->
                 </div>
-                <!-- /.info-box -->
               </div>
-              <!-- /.col -->
+              <!-- ./col -->
+              <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3><?php echo $totalseminar; ?></h3>
 
-              <!-- fix for small devices only -->
-              <div class="clearfix hidden-md-up"></div>
-
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
-
-                  <div class="info-box-content">
-                    <span class="info-box-text">Jumlah Mahasiswa Lulus</span>
-                    <span class="info-box-number"><?php echo $totallulus ?></span>
+                    <p>Jumlah Seminar</p>
+                    <br>
                   </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-times"></i></span>
-
-                  <div class="info-box-content">
-                    <span class="info-box-text">Jumlah Mahasiswa<br> Belum Lulus</span>
-                    <span class="info-box-number"><?php echo $totaltidaklulus ?></span>
+                  <div class="icon">
+                    <i class="fas fa-calendar-alt"></i>
                   </div>
-                  <!-- /.info-box-content -->
                 </div>
-                <!-- /.info-box -->
               </div>
-              <!-- /.col -->
+              <!-- ./col -->
+              <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h3><?= $totallulus; ?></h3>
+
+                    <p>Jumlah Mahasiswa <br> Lulus</p>
+                  </div>
+                  <div class="icon">
+                    <i class="far fa-check-square"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- ./col -->
+              <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                  <div class="inner">
+                    <h3><?= $totaltidaklulus; ?></h3>
+
+                    <p>Jumlah Mahasiswa <br> Tidak Lulus</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-times"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- ./col -->
             </div>
-
-            <!-- <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header border-transparent">
-                    <h3 class="card-title">Sertifikasi yang sedang berjalan</h3>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="table-responsive">
-                      <table class="table m-0">
-                        <thead>
-                          <tr>
-                            <th>Nama Sertifikasi</th>
-                            <th>Tanggal Mulai Daftar</th>
-                            <th>Jumlah Pendaftar</th>
-                            <th>Tanggal Pelaksanaan Ujian</th>
-                            <th>Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php foreach ($sertifikasi as $s) : ?>
-                            <tr>
-                              <td><?php echo $s->scert_subsertifikasi; ?></td>
-                              <td><?php echo date('d M y', strtotime($s->bs_mulai_daftar)) ?></td>
-                              <td height="70px">
-                                mahasiswa : <?php echo $totalmahasiswaperbatch[$s->bs_id] . ' Orang' ?>
-                                <br> Umum : = Orang
-                              </td>
-                              <td><?php echo date('d M y', strtotime($s->js_tanggal)); ?></td>
-                              <td>
-                                <a href="<?php echo base_url('batch_sertifikasi/detail/' . $s->bs_id) ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Detail</a>
-                              </td>
-                            <?php endforeach; ?>
-                            </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="card-footer clearfix">
-                  </div>
-                </div>
-              </div>
-            </div> -->

@@ -36,7 +36,7 @@
                        <tr>
                          <td><?php echo $no++ ?></td>
                          <td><?php echo $l->ms_model ?></td>
-                         <td><a href="<?php echo base_url($l->ms_linkmodel) ?>">Model Sertifikat</a></td>
+                         <td><a href="<?php echo base_url('assets/template_sertifikat/' . $l->ms_sertifikat) ?>">Model Sertifikat</a></td>
                          <td>
                            <a title="Ubah Model Sertifikat" href="<?php echo base_url('model_sertifikat/ubah/' . $l->ms_id) ?>" class="btn btn-warning mb-1"><i class="fas fa-edit"></i>&nbsp; Ubah</a>
                            <a title="Hapus Model Sertifikat" href="<?php echo base_url('model_sertifikat/delete/' . $l->ms_id) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mb-1"><i class="fas fa-trash"></i> Hapus</a>
