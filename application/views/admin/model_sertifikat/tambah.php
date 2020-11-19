@@ -27,8 +27,10 @@
 
                    <div class="form-group">
                      <label>Gambar <br>
-                       <p class="text-danger">(Mohon Upload Gambar dengan tipe file .jpg, .jpeg, atau .png Ukuran 84 x 60 cm. Bila gambar melebihi ukuran tersebut mohon diedit agar tidak terjadi kesalahan saat mencetak sertifikat. Jika mengalami masalah untuk size photo, silahkan resize di link berikut <a href="https://picresize.com/" target="_BLANK">picresize.com</a>)</p>
-                       <a href="<?php echo base_url('assets/contohsertifikat.png'); ?>" target="_BLANK">Contoh Model Sertifikat</a>
+                       <p class="text-danger">(Mohon Upload Gambar dengan tipe file .jpg, .jpeg, atau .png.</p>
+                       <a href="<?php echo base_url('assets/contohsertifikat.jpeg'); ?>" target="_BLANK">Contoh Model Sertifikat yang terisi</a>
+                       <br>
+                       <a href="<?php echo base_url('assets/contohsertifikat.png'); ?>" target="_BLANK">Contoh Model Sertifikat Polos</a>
                      </label>
                      <input type="file" class="form-control" name="gambar" value="<?php echo set_value('gambar') ?>">
                      <?php echo form_error('gambar') ?>

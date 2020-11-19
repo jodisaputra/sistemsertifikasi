@@ -29,7 +29,7 @@
 
                    <div class="form-group">
                      <label>Gambar <br>
-                       <p class="text-danger">(Mohon Upload Gambar dengan tipe file .jpg, .jpeg, atau .png Ukuran 84 x 60 cm. Bila gambar melebihi ukuran tersebut mohon diedit agar tidak terjadi kesalahan saat mencetak sertifikat. Jika mengalami masalah untuk size photo, silahkan resize di link berikut <a href="https://picresize.com/" target="_BLANK">picresize.com</a>)</p>
+                       <p class="text-danger">(Mohon Upload Gambar dengan tipe file .jpg, .jpeg, atau .png.</p>
                      </label>
                      <br>
                      <img width="30%" src="<?php echo base_url('assets/template_sertifikat/' . $list->ms_sertifikat); ?>" alt="">

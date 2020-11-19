@@ -8,7 +8,7 @@
 
   <style>
     @page {
-      size: 19.8cm 13cm;
+      size: 18cm 12.9cm;
       margin: 0;
       font-family: 'Lusitana', serif;
     }
@@ -17,7 +17,7 @@
       margin: 0px;
       background-image: url(<?php echo base_url('assets/template_sertifikat/' . $list->ms_sertifikat); ?>);
       background-repeat: no-repeat;
-      background-position: center;
+      position: fixed;
       font-family: 'Lusitana', serif;
     }
   </style>

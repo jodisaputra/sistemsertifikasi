@@ -90,10 +90,6 @@ class Model_sertifikat extends CI_Controller
 					'ms_lastupdate'     => date('Y-m-d H:i:s')
 				];
 
-				// header('content-type: application/json');
-				// echo json_encode($data);
-				// die;
-
 				if ($this->modelsertifikat_model->insert($data)) {
 					$this->session->set_flashdata('message', 'Data berhasil disimpan');
 					$this->session->set_flashdata('tipe', 'success');
