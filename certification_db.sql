@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Website Sertifikasi
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 50724
- Source Host           : certification.uib.ac.id:3306
+ Source Host           : localhost:3306
  Source Schema         : certification_db
 
  Target Server Type    : MySQL
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 01/10/2020 12:28:17
+ Date: 19/11/2020 09:55:25
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,11 @@ CREATE TABLE `ssc_absen_peserta_sertifikasi`  (
   `aps_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `aps_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`aps_absen`, `aps_peserta`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_absen_peserta_sertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_absen_sertifikasi
@@ -45,7 +49,11 @@ CREATE TABLE `ssc_absen_sertifikasi`  (
   `as_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `as_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`as_id`, `as_batch`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_absen_sertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_batch_sertifikasi
@@ -66,7 +74,11 @@ CREATE TABLE `ssc_batch_sertifikasi`  (
   `bs_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `bs_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`bs_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_batch_sertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_jadwal_subsertifikasi
@@ -82,7 +94,11 @@ CREATE TABLE `ssc_jadwal_subsertifikasi`  (
   `js_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `js_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`js_batch`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_jadwal_subsertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_log_sertifikasi
@@ -109,7 +125,11 @@ CREATE TABLE `ssc_log_sertifikasi`  (
   `ls_userupdate` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `ls_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`ls_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_log_sertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_model_sertifikat
@@ -123,7 +143,11 @@ CREATE TABLE `ssc_model_sertifikat`  (
   `ms_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ms_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`ms_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_model_sertifikat
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_modul
@@ -136,7 +160,26 @@ CREATE TABLE `ssc_modul`  (
   `mdl_icon` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `mdl_mainmenu` int(11) NOT NULL,
   PRIMARY KEY (`mdl_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_modul
+-- ----------------------------
+INSERT INTO `ssc_modul` VALUES (1, 'Pengaturan Seminar', '#', 'fas fa-clipboard-list', 0);
+INSERT INTO `ssc_modul` VALUES (2, 'Model Sertifikat', 'model_sertifikat', 'far fa-file-alt', 1);
+INSERT INTO `ssc_modul` VALUES (3, 'Daftar Seminar', 'seminar', 'fas fa-clipboard-list', 1);
+INSERT INTO `ssc_modul` VALUES (4, 'Pembayaran Mahasiswa', 'validasipembayaranseminarmahasiswa', 'fas fa-money-check', 1);
+INSERT INTO `ssc_modul` VALUES (5, 'Pembayaran Umum', 'validasipembayaranseminarumum', 'fas fa-money-check-alt', 1);
+INSERT INTO `ssc_modul` VALUES (6, 'Pengaturan Sertifikasi', '#', 'fas fa-certificate', 0);
+INSERT INTO `ssc_modul` VALUES (7, 'Daftar Sertifikasi', 'sertifikasi', 'fas fa-certificate', 6);
+INSERT INTO `ssc_modul` VALUES (8, 'Batch Sertifikasi', 'batch_sertifikasi', 'fas fa-list-alt', 6);
+INSERT INTO `ssc_modul` VALUES (9, 'Daftar Penilaian Sertifikasi', 'penilaian', 'fas fa-sort-numeric-up-alt', 6);
+INSERT INTO `ssc_modul` VALUES (10, 'Pembayaran Mahasiswa', 'validasipembayaransertifikasimahasiswa', 'fas fa-money-check', 6);
+INSERT INTO `ssc_modul` VALUES (11, 'Pembayaran Umum', 'validasipembayaransertifikasiumum', 'fas fa-money-check-alt', 6);
+INSERT INTO `ssc_modul` VALUES (12, 'Pengaturan', '#', 'fas fa-cog', 0);
+INSERT INTO `ssc_modul` VALUES (13, 'Pengaturan Modul', 'modul', 'fas fa-bars', 12);
+INSERT INTO `ssc_modul` VALUES (14, 'Pengaturan Grup User', 'usergroup', 'fas fa-users-cog', 12);
+INSERT INTO `ssc_modul` VALUES (15, 'Pengaturan User', 'user', 'fas fa-user', 12);
 
 -- ----------------------------
 -- Table structure for ssc_modul_group
@@ -147,7 +190,26 @@ CREATE TABLE `ssc_modul_group`  (
   `mg_usergroup` int(11) NOT NULL,
   `mg_modul` int(11) NOT NULL,
   PRIMARY KEY (`mg_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_modul_group
+-- ----------------------------
+INSERT INTO `ssc_modul_group` VALUES (1, 1, 1);
+INSERT INTO `ssc_modul_group` VALUES (2, 1, 2);
+INSERT INTO `ssc_modul_group` VALUES (3, 1, 3);
+INSERT INTO `ssc_modul_group` VALUES (4, 1, 4);
+INSERT INTO `ssc_modul_group` VALUES (5, 1, 5);
+INSERT INTO `ssc_modul_group` VALUES (6, 1, 6);
+INSERT INTO `ssc_modul_group` VALUES (7, 1, 7);
+INSERT INTO `ssc_modul_group` VALUES (8, 1, 8);
+INSERT INTO `ssc_modul_group` VALUES (9, 1, 9);
+INSERT INTO `ssc_modul_group` VALUES (10, 1, 10);
+INSERT INTO `ssc_modul_group` VALUES (11, 1, 11);
+INSERT INTO `ssc_modul_group` VALUES (12, 1, 12);
+INSERT INTO `ssc_modul_group` VALUES (13, 1, 13);
+INSERT INTO `ssc_modul_group` VALUES (14, 1, 14);
+INSERT INTO `ssc_modul_group` VALUES (15, 1, 15);
 
 -- ----------------------------
 -- Table structure for ssc_narasumber_seminar
@@ -158,11 +220,17 @@ CREATE TABLE `ssc_narasumber_seminar`  (
   `ns_seminar` int(11) NOT NULL,
   `ns_narasumber` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ns_institusi` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `ns_set_tandatangan` enum('y','n') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `ns_tandatangan` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `ns_sebagai` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ns_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ns_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`ns_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_narasumber_seminar
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_pelatih_subsertifikasi
@@ -177,7 +245,11 @@ CREATE TABLE `ssc_pelatih_subsertifikasi`  (
   `ps_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ps_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`ps_batch`, `ps_email`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_pelatih_subsertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_penilaian
@@ -195,7 +267,11 @@ CREATE TABLE `ssc_penilaian`  (
   `pn_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `pn_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`pn_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_penilaian
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_peserta_umum
@@ -211,7 +287,11 @@ CREATE TABLE `ssc_peserta_umum`  (
   `pu_isaktif` enum('y','n') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`pu_email`) USING BTREE,
   UNIQUE INDEX `pu_ktp`(`pu_ktp`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_peserta_umum
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_seminar
@@ -235,7 +315,11 @@ CREATE TABLE `ssc_seminar`  (
   `smr_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `smr_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`smr_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_seminar
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_seminar_mahasiswa
@@ -250,12 +334,17 @@ CREATE TABLE `ssc_seminar_mahasiswa`  (
   `smhs_namapemilik` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `smhs_bukti` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `smhs_ishadir` enum('y','n') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `smhs_totalbayar` bigint(20) NULL DEFAULT NULL,
   `smhs_status` enum('Menunggu Pembayaran','Validasi Pembayaran','Lunas','Tolak') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `smhs_keteranganpembayaran` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `smhs_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `smhs_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`smhs_seminar`, `smhs_mahasiswa`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_seminar_mahasiswa
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_seminar_umum
@@ -274,8 +363,13 @@ CREATE TABLE `ssc_seminar_umum`  (
   `su_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `su_lastupdate` datetime(0) NOT NULL,
   `su_keteranganpembayaran` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `su_totalbayar` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`su_seminar`, `su_peserta`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_seminar_umum
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_sertifikasi
@@ -289,7 +383,11 @@ CREATE TABLE `ssc_sertifikasi`  (
   `cert_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `cert_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`cert_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_sertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_sertifikasi_mahasiswa
@@ -311,7 +409,11 @@ CREATE TABLE `ssc_sertifikasi_mahasiswa`  (
   `sm_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `sm_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`sm_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_sertifikasi_mahasiswa
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_sertifikasi_umum
@@ -333,7 +435,11 @@ CREATE TABLE `ssc_sertifikasi_umum`  (
   `srtu_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `srtu_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`srtu_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_sertifikasi_umum
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_subsertifikasi
@@ -347,7 +453,11 @@ CREATE TABLE `ssc_subsertifikasi`  (
   `scert_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `scert_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`scert_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_subsertifikasi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_subsertifikasi_mahasiswa
@@ -369,8 +479,13 @@ CREATE TABLE `ssc_subsertifikasi_mahasiswa`  (
   `ssm_skor` decimal(6, 2) NULL DEFAULT NULL,
   `ssm_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ssm_lastupdate` datetime(0) NOT NULL,
+  `ssm_totalbayar` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`ssm_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_subsertifikasi_mahasiswa
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_subsertifikasi_umum
@@ -392,8 +507,13 @@ CREATE TABLE `ssc_subsertifikasi_umum`  (
   `ssu_skor` decimal(6, 2) NULL DEFAULT NULL,
   `ssu_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ssu_lastupdate` datetime(0) NOT NULL,
+  `ssu_totalbayar` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`ssu_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_subsertifikasi_umum
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ssc_user
@@ -408,7 +528,13 @@ CREATE TABLE `ssc_user`  (
   `usr_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `usr_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`usr_email`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_user
+-- ----------------------------
+INSERT INTO `ssc_user` VALUES ('herman@uib.ac.id', 'Herman', 4, 0, 'y', '', '2020-11-09 03:39:08');
+INSERT INTO `ssc_user` VALUES ('jodi@uib.ac.id', 'Jodi Saragih', 1, 0, 'y', 'razer.29.gamer@gmail.com', '2020-11-19 02:51:03');
 
 -- ----------------------------
 -- Table structure for ssc_user_group
@@ -422,6 +548,13 @@ CREATE TABLE `ssc_user_group`  (
   `ug_userupdate` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `ug_lastupdate` datetime(0) NOT NULL,
   PRIMARY KEY (`ug_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ssc_user_group
+-- ----------------------------
+INSERT INTO `ssc_user_group` VALUES (1, 'IT Center UIB', '-', 'y', 'jodi@uib.ac.id', '2020-11-19 02:48:15');
+INSERT INTO `ssc_user_group` VALUES (2, 'Keuangan', '-', 'y', 'jodi@uib.ac.id', '2020-11-19 02:48:23');
+INSERT INTO `ssc_user_group` VALUES (3, 'ADC', '-', 'y', 'jodi@uib.ac.id', '2020-11-19 02:48:29');
 
 SET FOREIGN_KEY_CHECKS = 1;
