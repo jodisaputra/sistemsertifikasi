@@ -24,7 +24,6 @@
                    <thead>
                      <tr>
                        <th>No</th>
-                       <th width="10%">Seminar</th>
                        <th>Nama Narasumber</th>
                        <th>Asal Institusi</th>
                        <th>Sebagai</th>
@@ -39,7 +38,6 @@
                        <tr>
                          <td><?php echo $no++ ?></td>
                          <td><?php echo $l->smr_acara ?></td>
-                         <td><?php echo $l->ns_narasumber ?></td>
                          <td><?php echo $l->ns_institusi ?></td>
                          <td><?php echo $l->ns_sebagai ?></td>
                          <td style="text-align: center;">
