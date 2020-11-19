@@ -116,7 +116,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               $this->db->join('ssc_modul', 'ssc_modul.mdl_id = ssc_modul_group.mg_modul');
               $this->db->where('usr_email', $this->session->userdata('username'));
               $this->db->where('mdl_mainmenu', $main->mdl_id);
-              $this->db->order_by('ssc_modul.mdl_modul', 'ASC');
+              $this->db->order_by('ssc_modul.mdl_id', 'ASC');
               $menu = $this->db->get()->result();
 
               if ($menu) {
