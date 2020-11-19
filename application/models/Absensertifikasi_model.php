@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Absensertifikasi_model extends CI_Model {
+class Absensertifikasi_model extends CI_Model
+{
 
 	function listsertifikasimahasiswa($id_batch)
 	{
@@ -14,8 +15,7 @@ class Absensertifikasi_model extends CI_Model {
 	function update_mahasiswa($id_batchsertifikasi, $id_mahasiswa, $data)
 	{
 		$this->db->where('ssm_batch', $id_batchsertifikasi);
-		foreach($id_mahasiswa as $d)
-		{
+		foreach ($id_mahasiswa as $d) {
 			$this->db->where('ssm_sertifikasi_mahasiswa', $d);
 			$this->db->update('ssc_subsertifikasi_mahasiswa', $data[$d]);
 		}
@@ -39,14 +39,14 @@ class Absensertifikasi_model extends CI_Model {
 	function listsertifikasiumumrow($id_absen)
 	{
 		$this->db->where('aps_absen', $id_absen);
-        // $this->db->where('aps_peserta', $id_peserta);
+		// $this->db->where('aps_peserta', $id_peserta);
 		return $this->db->get('ssc_absen_peserta_sertifikasi')->result();
 	}
 
 	function listsertifikasiumum_row($id_absen)
 	{
 		$this->db->where('aps_absen', $id_absen);
-        // $this->db->where('aps_peserta', $id_peserta);
+		// $this->db->where('aps_peserta', $id_peserta);
 		return $this->db->get('ssc_absen_peserta_sertifikasi')->row();
 	}
 
@@ -64,29 +64,26 @@ class Absensertifikasi_model extends CI_Model {
 
 	function insert_absen($data)
 	{
-		foreach($data as $d)
-		{
-			$this->db->insert('ssc_absen_peserta_sertifikasi',$d);
+		foreach ($data as $d) {
+			$this->db->insert('ssc_absen_peserta_sertifikasi', $d);
 		}
 		return TRUE;
 	}
 
-	function updateabsen($id_absen, $id_peserta,$data)
+	function updateabsen($id_absen, $id_peserta, $data)
 	{
 		$this->db->where('aps_absen', $id_absen);
-		foreach($id_peserta as $d)
-		{
+		foreach ($id_peserta as $d) {
 			$this->db->where('aps_peserta', $d);
-			$this->db->update('ssc_absen_peserta_sertifikasi',$data[$d]);
+			$this->db->update('ssc_absen_peserta_sertifikasi', $data[$d]);
 		}
 		return TRUE;
 	}
 
 	function insert_absenmhs($data_mhs)
 	{
-		foreach($data_mhs as $dm)
-		{
-			$this->db->insert('ssc_absen_peserta_sertifikasi',$dm);
+		foreach ($data_mhs as $dm) {
+			$this->db->insert('ssc_absen_peserta_sertifikasi', $dm);
 		}
 		return TRUE;
 	}
@@ -113,7 +110,7 @@ class Absensertifikasi_model extends CI_Model {
 	function listabsen($id_batch)
 	{
 		$this->db->join('ssc_batch_sertifikasi', 'ssc_batch_sertifikasi.bs_id = ssc_absen_sertifikasi.as_batch');
-        // $this->db->join('ssc_absen_peserta_sertifikasi', 'ssc_absen_peserta_sertifikasi.aps_absen = ssc_absen_sertifikasi.as_id');
+		// $this->db->join('ssc_absen_peserta_sertifikasi', 'ssc_absen_peserta_sertifikasi.aps_absen = ssc_absen_sertifikasi.as_id');
 		$this->db->where('as_batch', $id_batch);
 		return $this->db->get('ssc_absen_sertifikasi');
 	}
@@ -129,6 +126,12 @@ class Absensertifikasi_model extends CI_Model {
 	{
 		$this->db->where('as_id', $id_absen);
 		return $this->db->get('ssc_absen_sertifikasi')->row();
+	}
+
+	function list_pelatih($id_batch)
+	{
+		$this->db->where('ps_batch', $id_batch);
+		return $this->db->get('ssc_pelatih_subsertifikasi')->result();
 	}
 
 	function insert_header($id_absen, $data)
@@ -148,14 +151,14 @@ class Absensertifikasi_model extends CI_Model {
 	{
 		$this->db->where('as_batch', $id_batch);
 		return $this->db->get('ssc_absen_sertifikasi')->row();
-	}      
+	}
 
 	public function cetakabsen($id_absen, $id_batch)
 	{
 		$this->db->join('ssc_absen_sertifikasi', 'ssc_absen_sertifikasi.as_id = ssc_absen_peserta_sertifikasi.aps_absen');
 		$this->db->join('ssc_batch_sertifikasi', 'ssc_batch_sertifikasi.bs_id = ssc_absen_sertifikasi.as_batch');
 		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		$this->db->where('ssc_absen_sertifikasi.as_id', $id_absen);
 		$this->db->where('ssc_absen_sertifikasi.as_batch', $id_batch);
 		return $this->db->get('ssc_absen_peserta_sertifikasi')->result();
@@ -165,7 +168,7 @@ class Absensertifikasi_model extends CI_Model {
 	{
 		$this->db->join('ssc_batch_sertifikasi', 'ssc_batch_sertifikasi.bs_id = ssc_absen_sertifikasi.as_batch');
 		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_batch_sertifikasi.bs_subsertifikasi');
-		$this->db->join('ssc_sertifikasi','ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
+		$this->db->join('ssc_sertifikasi', 'ssc_sertifikasi.cert_id = ssc_subsertifikasi.scert_sertifikasi');
 		$this->db->where('as_id', $id_absen);
 		$this->db->where('as_batch', $id_batch);
 		return $this->db->get('ssc_absen_sertifikasi')->row();
@@ -196,7 +199,6 @@ class Absensertifikasi_model extends CI_Model {
 		curl_close($curl);
 		return $data_mahasiswa;
 	}
-
 }
 
 /* End of file Absensertifikasi_model.php */

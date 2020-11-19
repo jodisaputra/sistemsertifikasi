@@ -31,24 +31,27 @@
              <div class="col-lg-4 right-contents">
                  <div class="sidebar_top">
                      <ul>
-                         <!-- <li>
-                             <a class="justify-content-between d-flex">
-                                 <p>Nama Pelatih</p>
-                                 <span class="color"><?php echo $pelatih->ps_nama ?></span>
-                             </a>
-                         </li> -->
                          <li>
-                             <a class="justify-content-between d-flex">
-                                 <p>Tanggal Ujian </p>
-                                 <span><?php echo date('d M Y', strtotime($batch->js_tanggal)) ?></span>
-                             </a>
+                             <?php $i = 1; ?>
+                             <?php foreach ($pelatih as $p) { ?>
+                                 <a class="justify-content-between d-flex">
+                                     <p>Nama Pelatih <?php echo $i++; ?></p>
+                                     <span class="color"><?php echo $p->ps_nama ?></span>
+                                 </a>
                          </li>
-                         <li>
-                             <a class="justify-content-between d-flex">
-                                 <p>Waktu Ujian </p>
-                                 <span><?php echo $batch->js_mulai . ' - ' . $batch->js_selesai ?></span>
-                             </a>
-                         </li>
+                     <?php } ?>
+                     <li>
+                         <a class="justify-content-between d-flex">
+                             <p>Tanggal Ujian </p>
+                             <span><?php echo date('d M Y', strtotime($batch->js_tanggal)) ?></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a class="justify-content-between d-flex">
+                             <p>Waktu Ujian </p>
+                             <span><?php echo $batch->js_mulai . ' - ' . $batch->js_selesai ?></span>
+                         </a>
+                     </li>
 
                      </ul>
 

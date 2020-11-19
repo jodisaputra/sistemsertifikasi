@@ -24,11 +24,11 @@ class Batchsertifikasi_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-    // function list_pelatih($id)
-    // {
-    //     $this->db->where('ps_batch', $id);
-    //     return $this->db->get('ssc_pelatih_subsertifikasi')->row();
-    // }
+    function list_pelatih($id)
+    {
+        $this->db->where('ps_batch', $id);
+        return $this->db->get('ssc_pelatih_subsertifikasi')->result();
+    }
 
     function listjadwal($id)
     {

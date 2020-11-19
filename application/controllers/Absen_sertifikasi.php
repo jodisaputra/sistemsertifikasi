@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Absen_sertifikasi extends CI_Controller {
+class Absen_sertifikasi extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -9,13 +10,11 @@ class Absen_sertifikasi extends CI_Controller {
 		$this->load->model('absensertifikasi_model');
 		$this->load->model('users_model');
 
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
 		}
-
 	}
 
 	public function absen_pertemuan($id_batch)
@@ -25,9 +24,8 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$cekid = array();
 
-		foreach($cekabsen as $c)
-		{ 
-			$cekid[$c->aps_absen] = $c->as_id; 
+		foreach ($cekabsen as $c) {
+			$cekid[$c->aps_absen] = $c->as_id;
 		}
 
 		$data = [
@@ -50,8 +48,7 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$query = $this->absensertifikasi_model->listsertifikasimahasiswa($batch->as_batch);
 
-		foreach($query as $q)
-		{
+		foreach ($query as $q) {
 			$data_mhs = $this->absensertifikasi_model->getnama($q->sm_mahasiswa);
 			$mhs[$q->sm_mahasiswa] = $data_mhs->name;
 		}
@@ -60,6 +57,7 @@ class Absen_sertifikasi extends CI_Controller {
 			'title'	=> 'Absen Sertifikasi',
 			'peserta'        => $this->absensertifikasi_model->listsertifikasiumum($batch->as_batch),
 			'header'         => $this->absensertifikasi_model->header($id_absen),
+			'pelatih'		 => $this->absensertifikasi_model->list_pelatih($batch->as_batch),
 			'mahasiswa'      => $query,
 			'mhs'			=> $mhs,
 			'view'	=> 'admin/absen_sertifikasi/absen'
@@ -77,14 +75,11 @@ class Absen_sertifikasi extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 		$this->form_validation->set_message('required', '{field} harus diisi');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format !');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->absen($this->input->post('id_absen'));
-		}
-		else
-		{
+		} else {
 			$namaform = $this->absensertifikasi_model->header($this->input->post('id_absen'));
 			$data = [
 				'as_nama_absen'         => $this->input->post('nama_kegiatan'),
@@ -94,14 +89,11 @@ class Absen_sertifikasi extends CI_Controller {
 				'as_catatan'            => $this->input->post('catatan')
 			];
 
-			if($this->absensertifikasi_model->insert_header($this->input->post('id_absen'), $data))
-			{
+			if ($this->absensertifikasi_model->insert_header($this->input->post('id_absen'), $data)) {
 				$this->session->set_flashdata('message', 'Header Absen berhasil Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('absen_sertifikasi/absen/' . $this->input->post('id_absen')));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Header Absen gagal Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('absen_sertifikasi/absen/' . $this->input->post('id_absen')));
@@ -118,14 +110,11 @@ class Absen_sertifikasi extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 		$this->form_validation->set_message('required', '{field} harus diisi');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi sesuai dengan format !');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->absen_update($this->input->post('id_absen'));
-		}
-		else
-		{
+		} else {
 			$namaform = $this->absensertifikasi_model->header($this->input->post('id_absen'));
 			$data = [
 				'as_nama_absen'         => $this->input->post('nama_kegiatan'),
@@ -135,14 +124,11 @@ class Absen_sertifikasi extends CI_Controller {
 				'as_catatan'            => $this->input->post('catatan')
 			];
 
-			if($this->absensertifikasi_model->insert_header($this->input->post('id_absen'), $data))
-			{
+			if ($this->absensertifikasi_model->insert_header($this->input->post('id_absen'), $data)) {
 				$this->session->set_flashdata('message', 'Header Absen berhasil Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('absen_sertifikasi/absen_update/' . $this->input->post('id_absen')));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Header Absen gagal Diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('absen_sertifikasi/absen_update/' . $this->input->post('id_absen')));
@@ -154,8 +140,7 @@ class Absen_sertifikasi extends CI_Controller {
 	{
 		$absen = $this->absensertifikasi_model->absen_sertifikasiumum();
 
-		foreach($absen as $a)
-		{   
+		foreach ($absen as $a) {
 			$form = str_replace('.', '', $a->srtu_peserta);
 
 			$data[$a->srtu_peserta] = [
@@ -167,12 +152,10 @@ class Absen_sertifikasi extends CI_Controller {
 			];
 		}
 
-		if($this->absensertifikasi_model->insert_absen($data))
-		{
+		if ($this->absensertifikasi_model->insert_absen($data)) {
 			$absen_mahasiswa = $this->absensertifikasi_model->absen_sertifikasimahasiswa();
 
-			foreach($absen_mahasiswa as $am)
-			{   
+			foreach ($absen_mahasiswa as $am) {
 				$form = str_replace('.', '', $am->sm_mahasiswa);
 
 				$data_mhs[$am->sm_mahasiswa] = [
@@ -189,10 +172,7 @@ class Absen_sertifikasi extends CI_Controller {
 			$this->session->set_flashdata('message', 'Absen berhasil disimpan');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('absen_sertifikasi/absen_pertemuan/' . $this->input->post('id_batch')));
-
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Absen gagal disimpan');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('absen_sertifikasi/absen_pertemuan/' . $this->input->post('id_batch')));
@@ -206,7 +186,7 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$ps_row = array();
 		$query = $this->absensertifikasi_model->listsertifikasiumumrow($id_absen);
-		
+
 		$mhs = $this->absensertifikasi_model->absen_sertifikasimahasiswa();
 		$peserta = $this->absensertifikasi_model->absen_sertifikasiumum();
 
@@ -214,18 +194,15 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$nama_user = "";
 
-		foreach($query as $q)
-		{
-			foreach($mhs as $m)
-			{
-				foreach($peserta as $p)
-				{
+		foreach ($query as $q) {
+			foreach ($mhs as $m) {
+				foreach ($peserta as $p) {
 					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
 					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 
 					$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
 					$data_match[$m->sm_mahasiswa] = $data_mhs->name;
-					
+
 					// Kehadiran
 					$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 
@@ -262,23 +239,19 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$nama_user = "";
 
-		foreach($query as $q)
-		{
-			foreach($mhs as $m)
-			{
-				foreach($peserta as $p)
-				{
+		foreach ($query as $q) {
+			foreach ($mhs as $m) {
+				foreach ($peserta as $p) {
 					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
 					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 
 					$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
 					$data_match[$m->sm_mahasiswa] = $data_mhs->name;
-					
+
 					// Kehadiran
 					$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 
 					$nama_user = $data_match;
-
 				}
 			}
 		}
@@ -289,6 +262,7 @@ class Absen_sertifikasi extends CI_Controller {
 			'pesertarow'     => $ps_row,
 			'header'         => $this->absensertifikasi_model->header($id_absen),
 			'mahasiswa'      => $this->absensertifikasi_model->listsertifikasimahasiswa($batch->as_batch),
+			'pelatih'		 => $this->absensertifikasi_model->list_pelatih($batch->as_batch),
 			'nama'	=> $nama_user,
 			'view'	=> 'admin/absen_sertifikasi/absen_update'
 		];
@@ -300,8 +274,7 @@ class Absen_sertifikasi extends CI_Controller {
 	{
 		$absen = $this->absensertifikasi_model->listsemuaabsen();
 
-		foreach($absen as $a)
-		{   
+		foreach ($absen as $a) {
 			$form = str_replace('.', '', $a->aps_peserta);
 
 			$data[$a->aps_peserta] = [
@@ -311,14 +284,11 @@ class Absen_sertifikasi extends CI_Controller {
 			];
 		}
 
-		if($this->absensertifikasi_model->updateabsen($this->input->post('id_absen'),$this->input->post('id_peserta'),$data))
-		{
+		if ($this->absensertifikasi_model->updateabsen($this->input->post('id_absen'), $this->input->post('id_peserta'), $data)) {
 			$this->session->set_flashdata('message', 'Absen berhasil diubah');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('absen_sertifikasi/absen_pertemuan/' . $this->input->post('id_batch')));
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Absen gagal diubah');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('absen_sertifikasi/absen_pertemuan/' . $this->input->post('id_batch')));
@@ -336,12 +306,9 @@ class Absen_sertifikasi extends CI_Controller {
 
 		$nama_user = "";
 
-		foreach($query as $q)
-		{
-			foreach($mhs as $m)
-			{
-				foreach($peserta as $p)
-				{
+		foreach ($query as $q) {
+			foreach ($mhs as $m) {
+				foreach ($peserta as $p) {
 					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
 					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 
@@ -364,7 +331,6 @@ class Absen_sertifikasi extends CI_Controller {
 		// die;
 		$this->load->view('admin/absen_sertifikasi/cetak', $data);
 	}
-
 }
 
 /* End of file Absen_sertifikasi.php */

@@ -17,7 +17,9 @@
                <!-- /.card-header -->
                <div class="card-body">
                  <h3>Header Absen</h3>
-                 <small class="text-danger">Mohon Diisi Sesuai dengan Format!</small>
+                 <!-- <small class="text-danger">Mohon Diisi Sesuai dengan Format!</small> -->
+                 <!-- <br> -->
+                 <small class="text-danger">Catatan: Sebelum mengisi absen, silahkan simpan header absen terlebih dahulu!</small>
                  <br>
                  <br>
                  <form action="<?php echo base_url('absen_sertifikasi/simpan_header'); ?>" method="post">
@@ -35,10 +37,21 @@
                        <input type="date" class="form-control" name="tanggal_pelaksanaan" value="<?php echo $this->input->post('tanggal_pelaksanaan') ?? $header->as_tanggal ?>">
                        <?php echo form_error('tanggal_pelaksanaan') ?>
                      </div>
-                     <div class="col-md-5">
+                     <!-- <div class="col-md-5">
                        <label>Nama Instruktur</label>
                        <input type="text" class="form-control" name="nama_instruktur" value="<?php echo $this->input->post('nama_instruktur') ?? $header->as_nama_instruktur ?>">
                        <?php echo form_error('nama_instruktur') ?>
+                     </div> -->
+                     <div class="col-md-5">
+                       <label>Nama Instruktur</label>
+                       <select name="nama_instruktur" class="form-control">
+                         <?php foreach ($pelatih as $p) : ?>
+                           <option value="<?php echo $p->ps_email; ?>" <?php if ($p->ps_email == $header->as_nama_instruktur) {
+                                                                          echo 'selected';
+                                                                        } ?>><?php echo $p->ps_nama; ?></option>
+                         <?php endforeach; ?>
+                         <?php echo form_error('nama_instruktur') ?>
+                       </select>
                      </div>
                      <div class="col-md-3 form-check form-check-inline pt-4">
                        <input class="form-check-input" type="radio" name="name_<?php echo $header->as_id ?>" <?php if ($header->as_instruktur_ishadir == 'y') {
