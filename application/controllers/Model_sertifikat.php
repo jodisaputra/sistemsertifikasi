@@ -70,23 +70,14 @@ class Model_sertifikat extends CI_Controller
 				$this->session->set_flashdata('tipe', 'warning');
 				$this->tambah();
 			} else {
-				// $config_img['image_library'] = 'gd2';
-				// $config_img['source_image'] = './assets/template_sertifikat/' . $filename;
-				// $config_img['new_image'] = './assets/template_sertifikat/' . "new" . $filename;
-				// $config_img['maintain_ratio'] = TRUE;
-				// $config_img['width']     = 750;
-				// $config_img['height']   = 500;
-
-				// $this->load->library('image_lib', $config_img);
-				// $this->image_lib->resize(); $image_data =   $this->upload->data();
 				$this->load->library('image_lib');
 				$image_data =   $this->upload->data();
 				$configer =  array(
 					'image_library'   => 'gd2',
 					'source_image'    =>  $image_data['full_path'],
 					'maintain_ratio'  =>  TRUE,
-					'width'           =>  700,
-					'height'          =>  500,
+					'width'           =>  748,
+					'height'          =>  489,
 				);
 				$this->image_lib->clear();
 				$this->image_lib->initialize($configer);
@@ -170,8 +161,8 @@ class Model_sertifikat extends CI_Controller
 						'image_library'   => 'gd2',
 						'source_image'    =>  $image_data['full_path'],
 						'maintain_ratio'  =>  TRUE,
-						'width'           =>  700,
-						'height'          =>  500,
+						'width'           =>  748,
+						'height'          =>  489,
 					);
 					$this->image_lib->clear();
 					$this->image_lib->initialize($configer);
