@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -9,8 +10,7 @@ class User extends CI_Controller {
 		$this->load->model('user_model');
 		$this->load->model('usergroup_model');
 
-		if(!isset($this->session->userdata['username']))
-		{
+		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect('auth');
@@ -52,14 +52,11 @@ class User extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->tambah();
-		}
-		else
-		{
+		} else {
 			$data = [
 				'usr_email'         => $this->input->post('email'),
 				'usr_nama'          => $this->input->post('nama'),
@@ -70,14 +67,11 @@ class User extends CI_Controller {
 				'usr_lastupdate'    => date('Y-m-d H:i:s')
 			];
 
-			if($this->user_model->insert($data))
-			{
+			if ($this->user_model->insert($data)) {
 				$this->session->set_flashdata('message', 'Data berhasil disimpan');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('user'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal disimpan');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('user'));
@@ -89,8 +83,7 @@ class User extends CI_Controller {
 	{
 		$row = $this->user_model->listbyid($id);
 
-		if($row)
-		{
+		if ($row) {
 			$data = [
 				'title'	=> 'User',
 				'list'			=> $row,
@@ -98,9 +91,7 @@ class User extends CI_Controller {
 				'view'	=> 'admin/user/ubah'
 			];
 			$this->load->view('admin/template/wrapper', $data);
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data tidak ada');
 			$this->session->set_flashdata('tipe', 'error');
 			redirect(site_url('user'));
@@ -120,31 +111,25 @@ class User extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
-		if($this->form_validation->run() == FALSE)
-		{
+		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('message', 'Mohon isi data sesuai dengan format!');
 			$this->session->set_flashdata('tipe', 'error');
 			$this->ubah($this->input->post('user_id'));
-		}
-		else
-		{
+		} else {
 			$data = [
 				'usr_nama'          => $this->input->post('nama'),
 				'usr_group'         => $this->input->post('user_group'),
 				'usr_prodi'         => $this->input->post('prodi'),
 				'usr_isaktif'       => $this->input->post('status'),
-				'usr_userupdate'    => $this->session->userdata('email'),
+				'usr_userupdate'    => $this->session->userdata('username'),
 				'usr_lastupdate'    => date('Y-m-d H:i:s')
 			];
 
-			if($this->user_model->update($this->input->post('user_id'), $data))
-			{
+			if ($this->user_model->update($this->input->post('user_id'), $data)) {
 				$this->session->set_flashdata('message', 'Data berhasil diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('user'));
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('message', 'Data gagal diubah');
 				$this->session->set_flashdata('tipe', 'success');
 				redirect(base_url('user'));
@@ -154,20 +139,16 @@ class User extends CI_Controller {
 
 	public function delete($id)
 	{
-		if($this->user_model->delete($id))
-		{
+		if ($this->user_model->delete($id)) {
 			$this->session->set_flashdata('message', 'Data berhasil dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('user'));
-		}
-		else
-		{
+		} else {
 			$this->session->set_flashdata('message', 'Data gagal dihapus');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('user'));
 		}
 	}
-
 }
 
 /* End of file User.php */
