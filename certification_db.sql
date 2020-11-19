@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 19/11/2020 09:55:25
+ Date: 19/11/2020 10:06:46
 */
 
 SET NAMES utf8mb4;
@@ -533,8 +533,11 @@ CREATE TABLE `ssc_user`  (
 -- ----------------------------
 -- Records of ssc_user
 -- ----------------------------
-INSERT INTO `ssc_user` VALUES ('herman@uib.ac.id', 'Herman', 4, 0, 'y', '', '2020-11-09 03:39:08');
-INSERT INTO `ssc_user` VALUES ('jodi@uib.ac.id', 'Jodi Saragih', 1, 0, 'y', 'razer.29.gamer@gmail.com', '2020-11-19 02:51:03');
+INSERT INTO `ssc_user` VALUES ('herman@uib.ac.id', 'Herman', 1, 0, 'y', '', '2020-11-19 03:05:31');
+INSERT INTO `ssc_user` VALUES ('jodi@uib.ac.id', 'Jodi Saragih', 1, 0, 'y', '', '2020-11-19 03:05:43');
+INSERT INTO `ssc_user` VALUES ('licen@uib.ac.id', 'Li Cen', 1, 0, 'y', 'jodi@uib.ac.id', '2020-11-19 03:03:53');
+INSERT INTO `ssc_user` VALUES ('patrick@uib.ac.id', 'Patrick', 1, 0, 'y', 'jodi@uib.ac.id', '2020-11-19 03:04:08');
+INSERT INTO `ssc_user` VALUES ('yefta@uib.ac.id', 'Yefta Christian', 1, 0, 'y', 'jodi@uib.ac.id', '2020-11-19 03:04:22');
 
 -- ----------------------------
 -- Table structure for ssc_user_group
