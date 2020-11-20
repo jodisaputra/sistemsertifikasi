@@ -244,10 +244,9 @@ class Absen_sertifikasi extends CI_Controller
 			foreach ($peserta as $p) {
 				$data_peserta = $this->users_model->listusers($p->srtu_peserta);
 				$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
-
-				// Kehadiran
-				$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 			}
+			// Kehadiran
+			$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 		}
 
 		$data = [
@@ -261,6 +260,9 @@ class Absen_sertifikasi extends CI_Controller
 			'view'	=> 'admin/absen_sertifikasi/absen_update'
 		];
 
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
