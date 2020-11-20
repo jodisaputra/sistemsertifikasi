@@ -73,12 +73,14 @@
                         <br>
                         <img width="20%" src="<?php echo base_url('assets/banner_seminar/' . $seminar->smr_banner); ?>">
                     </div>
-
+                    <br>
+                    <hr>
                     <div class="form-group">
                         <label>Keterangan</label>
-                        <textarea name="keterangan" id="keterangan" class="form-control cust_sumnote" rows="10" cols="80" readonly><?php echo $seminar->smr_keterangan ?></textarea>
+                        <?php echo $seminar->smr_keterangan ?>
                     </div>
-
+                    <br>
+                    <hr>
                     <div class="form-group">
                         <label>Model Sertifikat</label>
                         <br>

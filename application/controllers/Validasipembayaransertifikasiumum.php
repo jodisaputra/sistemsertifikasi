@@ -23,7 +23,7 @@ class Validasipembayaransertifikasiumum extends CI_Controller
 		$data = [
 			'title'	=> 'Validasi Pembayaran Sertifikasi Umum',
 			'list'      => $this->validasipembayaransertifikasiumum_model->list()->result(),
-			'listbyid'  => $this->validasipembayaransertifikasiumum_model->listbyid($query['ssu_id'], $query['ssu_subsertifikasi'], $query['ssu_sertifikasi_umum']),
+			// 'listbyid'  => $this->validasipembayaransertifikasiumum_model->listbyid($query['ssu_id'], $query['ssu_subsertifikasi'], $query['ssu_sertifikasi_umum']),
 			'view'	=> 'admin/validasipembayaran/pembayaransertifikasiumum/index'
 		];
 
@@ -110,7 +110,7 @@ class Validasipembayaransertifikasiumum extends CI_Controller
 			redirect(base_url('validasipembayaransertifikasiumum'));
 		} else {
 			$data = [
-				'ssu_totalbayar'     			=> $this->input->post('total'),
+				'ssu_totalbayar'     		   => preg_replace("/[^0-9]/", '', substr($this->input->post('total', TRUE), 2)),
 				'ssu_userupdate'               => $this->session->userdata('username'),
 				'ssu_lastupdate'               => date('Y-m-d H:i:s')
 			];

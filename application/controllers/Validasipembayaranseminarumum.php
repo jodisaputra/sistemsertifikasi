@@ -18,11 +18,11 @@ class Validasipembayaranseminarumum extends CI_Controller
 
 	public function index()
 	{
-		$query = $this->validasipembayaranseminarumum_model->list()->row_array();
+		// $query = $this->validasipembayaranseminarumum_model->list()->row_array();
 		$data = [
 			'title'	=> 'Validasi Pembayaran Seminar Umum',
 			'list'          => $this->validasipembayaranseminarumum_model->list()->result(),
-			'listbyid'      => $this->validasipembayaranseminarumum_model->listbyid($query['su_seminar'], $query['su_peserta']),
+			// 'listbyid'      => $this->validasipembayaranseminarumum_model->listbyid($query['su_seminar'], $query['su_peserta']),
 			'view'	=> 'admin/validasipembayaran/pembayaranseminarumum/index'
 		];
 
@@ -112,7 +112,7 @@ class Validasipembayaranseminarumum extends CI_Controller
 			redirect(base_url('validasipembayaranseminarumum'));
 		} else {
 			$data = [
-				'su_totalbayar'			      => $this->input->post('total'),
+				'su_totalbayar'			      => preg_replace("/[^0-9]/", '', substr($this->input->post('total', TRUE), 2)),
 				'su_userupdate'               => $this->session->userdata('username'),
 				'su_lastupdate'               => date('Y-m-d H:i:s')
 			];

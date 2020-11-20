@@ -106,28 +106,28 @@
                               if ($l['smhs_status'] == 'Menunggu Pembayaran' || $l['smhs_status'] == 'Validasi Pembayaran') {
                               ?>
 
-                               <a title="Detail Pembayaran Seminar" href="<?php echo base_url('validasipembayaranseminarmahasiswa/detail/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
+                               <a title="Detail Pembayaran Seminar" href="<?php echo base_url('validasipembayaranseminarmahasiswa/detail/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
-                               <a title="Set Status Lunas Pembayaran Seminar" href="<?php echo base_url('validasipembayaranseminarmahasiswa/setLunas/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
+                               <a title="Set Status Lunas Pembayaran Seminar" href="<?php echo base_url('validasipembayaranseminarmahasiswa/setLunas/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success btn-sm mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
 
-                               <a title="Set Status Tolak Pembayaran Seminar" href="javascript:;" data-id="<?php echo $l['smhs_mahasiswa'] ?>" data-seminar="<?php echo $l['smhs_seminar'] ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger">
+                               <a title="Set Status Tolak Pembayaran Seminar" href="javascript:;" data-id="<?php echo $l['smhs_mahasiswa'] ?>" data-seminar="<?php echo $l['smhs_seminar'] ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger btn-sm mb-1">
                                    <i class="fas fa-times"></i>&nbsp; Set Tolak
                                  </button>
 
                                <?php
                               } else {
                                 ?>
-                                 <a title="Detail Pembayaran Seminar" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/detail/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i> Detail</a>
+                                 <a title="Detail Pembayaran Seminar" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/detail/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i> Detail</a>
                                <?php
                               }
                                 ?>
 
                                <?php if ($l['smhs_status'] == 'Lunas' && $l['smhs_totalbayar'] == NULL) { ?>
-                                 <a title="Isi total Bayar" href="javascript:;" data-id="<?php echo $l['smhs_mahasiswa'] ?>" data-seminar="<?php echo $l['smhs_seminar'] ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning mb-1">
+                                 <a title="Isi total Bayar" href="javascript:;" data-id="<?php echo $l['smhs_mahasiswa'] ?>" data-seminar="<?php echo $l['smhs_seminar'] ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning btn-sm mb-1">
                                      <i class="fas fa-money-check-alt"></i>&nbsp; Isi Total Bayar
                                    </button>
                                  <?php } elseif ($l['smhs_status'] == 'Lunas' && $l['smhs_totalbayar'] != NULL) { ?>
-                                   <a title="Cetak ROP" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/cetak_rop/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-primary mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
+                                   <a title="Cetak ROP" href="<?php echo base_url('Validasipembayaranseminarmahasiswa/cetak_rop/' . $l['smhs_mahasiswa'] . '/' . $l['smhs_seminar']) ?>" class="btn btn-primary btn-sm mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
                                  <?php } ?>
                            </td>
                          </tr>

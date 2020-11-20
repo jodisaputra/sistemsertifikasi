@@ -188,8 +188,14 @@ class Akun_umum extends CI_Controller
 
 						date_default_timezone_set('Asia/Jakarta');
 
+						// Untuk Local
+
+						// $aktivasi = $nama . ', akun anda berhasil diregistrasi. Agar akun anda bisa digunakan, silahkan aktivasi dengan menggunakan link dibawah ini';
+						// $link = '<a class="btn btn-primary" href="http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">Aktivasi</a>';
+
+						// Untuk Server
 						$aktivasi = $nama . ', akun anda berhasil diregistrasi. Agar akun anda bisa digunakan, silahkan aktivasi dengan menggunakan link dibawah ini';
-						$link = '<a class="btn btn-primary" href="http://localhost/sistemsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">Aktivasi</a>';
+						$link = '<a class="btn btn-primary" href="http://sertifikasi.uib.ac.id/daftarsertifikasi/akun_umum/konfirmasi/' . $guardcode . '">Aktivasi</a>';
 
 						// template untuk email
 						$bodymsg = $this->load->view('admin/email/registrasi.html', '', TRUE);

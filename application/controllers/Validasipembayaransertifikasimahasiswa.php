@@ -119,7 +119,7 @@ class Validasipembayaransertifikasimahasiswa extends CI_Controller
 			redirect(base_url('validasipembayaransertifikasimahasiswa'));
 		} else {
 			$data = [
-				'ssm_totalbayar'     		   => $this->input->post('total'),
+				'ssm_totalbayar'     		   => preg_replace("/[^0-9]/", '', substr($this->input->post('total', TRUE), 2)),
 				'ssm_userupdate'               => $this->session->userdata('username'),
 				'ssm_lastupdate'               => date('Y-m-d H:i:s')
 			];
