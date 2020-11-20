@@ -104,11 +104,11 @@
                               if ($l->ssu_status == 'Menunggu Pembayaran' || $l->ssu_status == 'Validasi Pembayaran') {
                               ?>
 
-                               <a title="Detail Pembayaran Sertifikasi Umum" href="<?php echo base_url('validasipembayaransertifikasiumum/detail/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
+                               <a title="Detail Pembayaran Sertifikasi Umum" href="<?php echo base_url('validasipembayaransertifikasiumum/detail/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
-                               <a title="Set Status Lunas Pembayaran Sertifikasi Umum" href="<?php echo base_url('validasipembayaransertifikasiumum/setLunas/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
+                               <a title="Set Status Lunas Pembayaran Sertifikasi Umum" href="<?php echo base_url('validasipembayaransertifikasiumum/setLunas/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success btn-sm mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
 
-                               <a title="Set Status Tolak Pembayaran Sertifikasi Umum" href="javascript:;" data-id="<?php echo $l->ssu_id ?>" data-subsertifikasi="<?php echo $l->ssu_subsertifikasi ?>" data-peserta="<?php echo $l->ssu_sertifikasi_umum ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger mb-1">
+                               <a title="Set Status Tolak Pembayaran Sertifikasi Umum" href="javascript:;" data-id="<?php echo $l->ssu_id ?>" data-subsertifikasi="<?php echo $l->ssu_subsertifikasi ?>" data-peserta="<?php echo $l->ssu_sertifikasi_umum ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger btn-sm mb-1">
                                    <i class="fas fa-times"></i>&nbsp; Set Tolak
                                  </button>
                                </a>
@@ -116,18 +116,18 @@
                              <?php
                               } else {
                               ?>
-                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasiumum/detail/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
+                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasiumum/detail/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
                              <?php
                               }
                               ?>
 
                              <?php if ($l->ssu_status == 'Lunas' && $l->ssu_totalbayar == NULL) { ?>
-                               <a title="Isi Total Pembayaran" href="javascript:;" data-id="<?php echo $l->ssu_id ?>" data-subsertifikasi="<?php echo $l->ssu_subsertifikasi ?>" data-peserta="<?php echo $l->ssu_sertifikasi_umum ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning mb-1">
+                               <a title="Isi Total Pembayaran" href="javascript:;" data-id="<?php echo $l->ssu_id ?>" data-subsertifikasi="<?php echo $l->ssu_subsertifikasi ?>" data-peserta="<?php echo $l->ssu_sertifikasi_umum ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning btn-sm mb-1">
                                    <i class="fas fa-money-check-alt"></i>&nbsp; Isi Total Bayar
                                  </button>
                                <?php } elseif ($l->ssu_status == 'Lunas' && $l->ssu_totalbayar != NULL) { ?>
-                                 <a title="Cetak ROP" href="<?php echo base_url('validasipembayaransertifikasiumum/cetak_rop/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-primary mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
+                                 <a title="Cetak ROP" href="<?php echo base_url('validasipembayaransertifikasiumum/cetak_rop/' . $l->ssu_id . '/' . $l->ssu_subsertifikasi . '/' . $l->ssu_sertifikasi_umum) ?>" class="btn btn-primary btn-sm mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
                                <?php } ?>
                            </td>
                          </tr>

@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>Absensi Sertifikasi - Sistem Sertifikasi</title>
-  <link rel="stylesheet" href="<?php echo base_url('assets/cetak/print.css'); ?>">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <meta charset="utf-8">
+    <title>Absensi Sertifikasi - Sistem Sertifikasi</title>
+    <link rel="stylesheet" href="<?php echo base_url('assets/cetak/print.css'); ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 </head>
 
 <body>
     <div id="common">
         <div id="page-khs">
-            
+
             <div class="header-khs">
                 <img src="<?php echo base_url('assets/cetak/logo.jpg') ?>" alt="">
                 <h1>UNIVERSITAS INTERNASIONAL BATAM</h1>
             </div>
-            
+
             <h2 style="margin-top: 10px; text-align: left;">Absensi <?php echo $row->scert_subsertifikasi ?></h2>
 
             <table width="677" class="table-common">
@@ -46,34 +47,34 @@
                 </thead>
                 <tbody>
                     <?php $no = 1;  ?>
-                    <?php foreach($listabsen as $l) : ?>
-                    <tr>
-                        <td><?php echo $no++ ?></td>
-                        <td><?php echo $nama[$l->aps_peserta] ?></td>
-                    <td>
-                        <?php if($l->aps_ishadir == 'y') { ?>
-                        <i class="fas fa-check"></i>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <?php if($l->aps_ishadir == 'n') { ?>
-                        <i class="fas fa-check"></i>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <?php if($l->aps_ishadir == 'i') { ?>
-                        <i class="fas fa-check"></i>
-                        <?php } ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <br>
-        <br>
-        <p>Keterangan : <?php echo $row->as_catatan ?></p>         
+                    <?php foreach ($listabsen as $l) : ?>
+                        <tr>
+                            <td><?php echo $no++ ?></td>
+                            <td><?php echo $nama[$l->aps_peserta] ?></td>
+                            <td>
+                                <?php if ($l->aps_ishadir == 'y') { ?>
+                                    <i class="fas fa-check"></i>
+                                <?php } ?>
+                            </td>
+                            <td>
+                                <?php if ($l->aps_ishadir == 'n') { ?>
+                                    <i class="fas fa-check"></i>
+                                <?php } ?>
+                            </td>
+                            <td>
+                                <?php if ($l->aps_ishadir == 'i') { ?>
+                                    <i class="fas fa-check"></i>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <p>Keterangan : <?php echo $row->as_catatan ?></p>
+        </div>
     </div>
-</div>
 </body>
 
 </html>

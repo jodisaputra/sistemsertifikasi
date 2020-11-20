@@ -192,22 +192,20 @@ class Absen_sertifikasi extends CI_Controller
 
 		$data_match = array();
 
-		$nama_user = "";
-
 		foreach ($query as $q) {
+
 			foreach ($mhs as $m) {
-				foreach ($peserta as $p) {
-					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
-					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
+				$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
+				$data_match[$m->sm_mahasiswa] = $data_mhs->name;
+			}
 
-					$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
-					$data_match[$m->sm_mahasiswa] = $data_mhs->name;
+			foreach ($peserta as $p) {
+				$data_peserta = $this->users_model->listusers($p->srtu_peserta);
+				$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 
-					// Kehadiran
-					$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 
-					$nama_user = $data_match;
-				}
+				// Kehadiran
+				$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 			}
 		}
 
@@ -217,7 +215,7 @@ class Absen_sertifikasi extends CI_Controller
 			'pesertarow'     => $ps_row,
 			'header'         => $this->absensertifikasi_model->header($id_absen),
 			'mahasiswa'      => $this->absensertifikasi_model->listsertifikasimahasiswa($batch->as_batch),
-			'nama'	=> $nama_user,
+			'nama'	=> $data_match,
 			'view'	=> 'admin/absen_sertifikasi/detail'
 		];
 
@@ -237,22 +235,18 @@ class Absen_sertifikasi extends CI_Controller
 
 		$data_match = array();
 
-		$nama_user = "";
-
 		foreach ($query as $q) {
 			foreach ($mhs as $m) {
-				foreach ($peserta as $p) {
-					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
-					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
+				$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
+				$data_match[$m->sm_mahasiswa] = $data_mhs->name;
+			}
 
-					$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
-					$data_match[$m->sm_mahasiswa] = $data_mhs->name;
+			foreach ($peserta as $p) {
+				$data_peserta = $this->users_model->listusers($p->srtu_peserta);
+				$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 
-					// Kehadiran
-					$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
-
-					$nama_user = $data_match;
-				}
+				// Kehadiran
+				$ps_row[$q->aps_peserta]  = $q->aps_ishadir;
 			}
 		}
 
@@ -263,7 +257,7 @@ class Absen_sertifikasi extends CI_Controller
 			'header'         => $this->absensertifikasi_model->header($id_absen),
 			'mahasiswa'      => $this->absensertifikasi_model->listsertifikasimahasiswa($batch->as_batch),
 			'pelatih'		 => $this->absensertifikasi_model->list_pelatih($batch->as_batch),
-			'nama'	=> $nama_user,
+			'nama'	=> $data_match,
 			'view'	=> 'admin/absen_sertifikasi/absen_update'
 		];
 
@@ -304,31 +298,22 @@ class Absen_sertifikasi extends CI_Controller
 
 		$data_match = array();
 
-		$nama_user = "";
+		foreach ($mhs as $m) {
+			$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
+			$data_match[$m->sm_mahasiswa] = $data_mhs->name;
+		}
 
-		foreach ($query as $q) {
-			foreach ($mhs as $m) {
-				foreach ($peserta as $p) {
-					$data_peserta = $this->users_model->listusers($p->srtu_peserta);
-					$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
-
-					$data_mhs = $this->absensertifikasi_model->getnama($m->sm_mahasiswa);
-					$data_match[$m->sm_mahasiswa] = $data_mhs->name;
-
-					$nama_user = $data_match;
-				}
-			}
+		foreach ($peserta as $p) {
+			$data_peserta = $this->users_model->listusers($p->srtu_peserta);
+			$data_match[$p->srtu_peserta] = $data_peserta->pu_nama;
 		}
 
 		$data = [
 			'listabsen'         => $query,
 			'row'               => $this->absensertifikasi_model->cetakabsenrow($id_absen, $id_batch),
-			'nama'				=> $nama_user
+			'nama'				=> $data_match
 		];
 
-		// header('content-type: application/json');
-		// echo json_encode($data);
-		// die;
 		$this->load->view('admin/absen_sertifikasi/cetak', $data);
 	}
 }

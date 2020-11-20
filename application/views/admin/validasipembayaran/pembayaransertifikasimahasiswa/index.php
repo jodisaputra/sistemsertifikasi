@@ -105,11 +105,11 @@
                               if ($l['ssm_status'] == 'Menunggu Pembayaran' || $l['ssm_status'] == 'Validasi Pembayaran') {
                               ?>
 
-                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/detail/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
+                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/detail/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
-                               <a title="Set Status Lunas Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/setLunas/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
+                               <a title="Set Status Lunas Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/setLunas/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" onclick="return confirm('Apakah anda yakin ingin set Status Lunas?')" class="btn btn-success btn-sm mb-1"><i class="fas fa-check"></i>&nbsp; Set Lunas</a>
 
-                               <a title="Set Status Tolak Pembayaran Sertifikasi Mahasiswa" href="javascript:;" data-id="<?php echo $l['ssm_id'] ?>" data-subsertifikasi="<?php echo $l['ssm_subsertifikasi'] ?>" data-mahasiswa="<?php echo $l['ssm_sertifikasi_mahasiswa'] ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger mb-1">
+                               <a title="Set Status Tolak Pembayaran Sertifikasi Mahasiswa" href="javascript:;" data-id="<?php echo $l['ssm_id'] ?>" data-subsertifikasi="<?php echo $l['ssm_subsertifikasi'] ?>" data-mahasiswa="<?php echo $l['ssm_sertifikasi_mahasiswa'] ?>" data-toggle="modal" data-target="#exampleModal"><button type="button" class="btn btn-danger btn-sm mb-1">
                                    <i class="fas fa-times"></i>&nbsp; Set Tolak
                                  </button>
                                </a>
@@ -117,18 +117,18 @@
                              <?php
                               } else {
                               ?>
-                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/detail/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-info"><i class="fas fa-eye"></i>&nbsp; Detail</a>
+                               <a title="Detail Pembayaran Sertifikasi Mahasiswa" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/detail/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
                              <?php
                               }
                               ?>
 
                              <?php if ($l['ssm_status'] == 'Lunas' && $l['ssm_totalbayar'] == NULL) { ?>
-                               <a title="Isi total Pembayaran Sertifikasi" href="javascript:;" data-id="<?php echo $l['ssm_id'] ?>" data-subsertifikasi="<?php echo $l['ssm_subsertifikasi'] ?>" data-mahasiswa="<?php echo $l['ssm_sertifikasi_mahasiswa'] ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning">
+                               <a title="Isi total Pembayaran Sertifikasi" href="javascript:;" data-id="<?php echo $l['ssm_id'] ?>" data-subsertifikasi="<?php echo $l['ssm_subsertifikasi'] ?>" data-mahasiswa="<?php echo $l['ssm_sertifikasi_mahasiswa'] ?>" data-toggle="modal" data-target="#exampleModalTotal"><button type="button" class="btn btn-warning btn-sm mb-1">
                                    <i class="fas fa-money-check-alt"></i>&nbsp; Isi Total Bayar
                                  </button>
                                <?php } elseif ($l['ssm_status'] == 'Lunas' && $l['ssm_totalbayar'] != NULL) { ?>
-                                 <a title="Cetak ROP" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/cetak_rop/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-primary" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
+                                 <a title="Cetak ROP" href="<?php echo base_url('validasipembayaransertifikasimahasiswa/cetak_rop/' . $l['ssm_id'] . '/' . $l['ssm_subsertifikasi'] . '/' . $l['ssm_sertifikasi_mahasiswa']) ?>" class="btn btn-primary btn-sm mb-1" target="_BLANK"><i class="fas fa-print"></i>&nbsp; Cetak ROP</a>
                                <?php } ?>
                            </td>
                          </tr>
