@@ -34,11 +34,11 @@
                          <td>
                            <?php error_reporting(E_ALL ^ E_NOTICE); ?>
                            <?php if ($l->as_id == $cek[$l->as_id]) { ?>
-                             <a title="Input Ulang Absen Sertifikasi" href="<?php echo base_url('Absen_sertifikasi/absen_update/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-primary mb-1"><i class="fas fa-plus"></i>&nbsp; Input Ulang Absen Sertifikasi</a>
-                             <a title="Detail Absensi" href="<?php echo base_url('Absen_sertifikasi/detail/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-info mb-1"><i class="fas fa-eye"></i>&nbsp; Detail Absensi</a>
-                             <a title="Cetak Absen" href="<?php echo base_url('Absen_sertifikasi/cetak_absen/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-warning mb-1" target="_blank"><i class="fas fa-print"></i>&nbsp; Cetak Absen</a>
+                             <a title="Input Ulang Absen Sertifikasi" href="<?php echo base_url('Absen_sertifikasi/absen_update/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-primary btn-sm mb-1"><i class="fas fa-plus"></i>&nbsp; Input Ulang Absen Sertifikasi</a>
+                             <a title="Detail Absensi" href="<?php echo base_url('Absen_sertifikasi/detail/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-info btn-sm mb-1"><i class="fas fa-eye"></i>&nbsp; Detail Absensi</a>
+                             <a title="Cetak Absen" href="<?php echo base_url('Absen_sertifikasi/cetak_absen/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-warning btn-sm mb-1" target="_blank"><i class="fas fa-print"></i>&nbsp; Cetak Absen</a>
                            <?php } else { ?>
-                             <a title="Input Absen Sertifikasi" href="<?php echo base_url('Absen_sertifikasi/absen/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-primary mb-1"><i class="fas fa-plus"></i>&nbsp; Input Absen Sertifikasi</a>
+                             <a title="Input Absen Sertifikasi" href="<?php echo base_url('Absen_sertifikasi/absen/' . $l->as_id . '/' . $l->as_batch) ?>" class="btn btn-primary btn-sm mb-1"><i class="fas fa-plus"></i>&nbsp; Input Absen Sertifikasi</a>
                            <?php } ?>
                          </td>
                        </tr>
