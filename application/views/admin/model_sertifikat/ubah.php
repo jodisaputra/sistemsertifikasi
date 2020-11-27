@@ -20,7 +20,6 @@
                  <form action="<?php echo base_url('model_sertifikat/simpan_perubahan'); ?>" method="post" enctype="multipart/form-data">
 
                    <input type="hidden" name="model_id" value="<?php echo $list->ms_id ?>">
-                   <input type="hidden" name="link_model" value="<?php echo $list->ms_linkmodel ?>">
                    <div class="form-group">
                      <label>Nama Model Sertifikat</label>
                      <input type="text" class="form-control" name="nama_model" value="<?php echo $list->ms_model ?>">
@@ -42,6 +41,16 @@
                      <input type="hidden" name="gambar_old" value="<?php echo $list->ms_sertifikat ?>">
                      <?php echo form_error('gambar') ?>
                    </div>
+
+                   <div class="form-group">
+                     <label>Bentuk Sertifikat</label>
+                      <select class="form-control" name="bentuk_sertifikat">
+                        <option value="landscape" <?php if($list->ms_bentuk_sertifikat == 'landscape') { echo 'selected'; } ?>>Landscape</option>
+                        <option value="portrait" <?php if($list->ms_bentuk_sertifikat == 'portrait') { echo 'selected'; } ?>>Portrait</option>
+                      </select>
+                     <?php echo form_error('bentuk_sertifikat') ?>
+                   </div>
+
 
                    <button class="btn btn-success" type="submit">Ubah</button>
                    <a href="<?php echo base_url('model_sertifikat') ?>" class="btn btn-secondary">Kembali</a>

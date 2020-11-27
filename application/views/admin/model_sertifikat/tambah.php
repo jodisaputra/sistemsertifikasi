@@ -36,6 +36,15 @@
                      <?php echo form_error('gambar') ?>
                    </div>
 
+                    <div class="form-group">
+                     <label>Bentuk Sertifikat</label>
+                      <select class="form-control" name="bentuk_sertifikat">
+                        <option value="landscape" <?php echo set_value('bentuk_sertifikat') == 'landscape' ? 'selected' : null ?>>Landscape</option>
+                        <option value="portrait" <?php echo set_value('bentuk_sertifikat') == 'portrait' ? 'selected' : null ?>>Portrait</option>
+                      </select>
+                     <?php echo form_error('bentuk_sertifikat') ?>
+                   </div>
+
                    <button class="btn btn-success" type="submit">Tambah</button>
                    <a href="<?php echo base_url('model_sertifikat') ?>" class="btn btn-danger">Kembali</a>
                  </form>

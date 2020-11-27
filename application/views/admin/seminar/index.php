@@ -45,6 +45,8 @@
 
                            <a title="Input Narasumber Seminar" href="<?php echo base_url('narasumberseminar/list_narasumber/' . $s->smr_id); ?>" class="btn btn-success btn-sm mb-4"><i class="fas fa-user"></i>&nbsp; Narasumber</a>
 
+                           <a title="Input Panitia Seminar" href="<?php echo base_url('panitiaseminar/list_panitia/' . $s->smr_id); ?>" class="btn btn-success btn-sm mb-4"><i class="fas fa-users"></i>&nbsp; Panitia</a>
+
                            <a title="Absensi Mahasiswa" href="<?php echo base_url('absen_seminar/absen_mahasiswa/' . $s->smr_id); ?>" class="btn btn-primary btn-sm mb-4"><i class="fas fa-file-alt"></i>&nbsp; Absen Mahasiswa</a>
 
                            <a title="Absen Umum" href="<?php echo base_url('absen_seminar/absen_umum/' . $s->smr_id); ?>" class="btn btn-primary btn-sm mb-4"><i class="fas fa-file-alt"></i>&nbsp; Absen Umum</a>

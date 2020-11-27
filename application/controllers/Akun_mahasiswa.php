@@ -158,12 +158,22 @@ class Akun_mahasiswa extends CI_Controller
 				'ttd'	   => $this->seminar_model->get_ttd_narasumber($seminar)
 			];
 
-			$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
-
 			$this->load->library('pdf');
-			$paper_size			= 'A4';
-			$orientation		= 'landscape';
-			$html               = $this->output->get_output();
+
+			if($row->ms_bentuk_sertifikat == 'portrait')
+			{
+				$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa_portrait', $data);
+				$orientation		= 'portrait';
+				$paper_size			= 'A4';
+				$html               = $this->output->get_output();
+			}
+			else
+			{
+				$this->load->view('admin/seminar/template_sertifikat/template_mahasiswa', $data);
+				$orientation		= 'landscape';
+				$paper_size			= 'A4';
+				$html               = $this->output->get_output();
+			}
 
 			$this->pdf->set_paper($paper_size, $orientation);
 			$this->pdf->load_html($html);
@@ -251,9 +261,7 @@ class Akun_mahasiswa extends CI_Controller
 			'total_dana'	=> $dana,
 			'terbilang'		=> $terbilang
 		];
-		// header('content-type: application/json');
-		// echo json_encode($npm);
-		// die;
+		
 		$this->load->view('akun/mahasiswa/format_ropmhsseminar', $data);
 		$this->load->library('pdf');
 

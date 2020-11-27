@@ -388,12 +388,22 @@ class Akun_umum extends CI_Controller
 				'ttd'	   => $this->seminar_model->get_ttd_narasumber($seminar)
 			];
 
-			$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);
-
 			$this->load->library('pdf');
-			$paper_size			= 'A4';
-			$orientation		= 'landscape';
-			$html               = $this->output->get_output();
+
+			if($row->ms_bentuk_sertifikat == 'portrait')
+			{
+				$this->load->view('admin/seminar/template_sertifikat/template_umum_portrait', $data);
+				$orientation		= 'portrait';
+				$paper_size			= 'A4';
+				$html               = $this->output->get_output();
+			}
+			else
+			{
+				$this->load->view('admin/seminar/template_sertifikat/template_umum', $data);
+				$orientation		= 'landscape';
+				$paper_size			= 'A4';
+				$html               = $this->output->get_output();
+			}
 
 			$this->pdf->set_paper($paper_size, $orientation);
 			$this->pdf->load_html($html);

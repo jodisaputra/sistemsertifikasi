@@ -65,29 +65,36 @@ class Model_sertifikat extends CI_Controller
 			// $uploadData = $this->upload->data();
 
 
-			if (!$this->upload->do_upload('gambar')) {
+			if (!$this->upload->do_upload('gambar')) 
+			{
 				$this->session->set_flashdata('message', $this->upload->display_errors('<p>', '</p>'));
 				$this->session->set_flashdata('tipe', 'warning');
 				$this->tambah();
-			} else {
-				$this->load->library('image_lib');
-				$image_data =   $this->upload->data();
-				$configer =  array(
-					'image_library'   => 'gd2',
-					'source_image'    =>  $image_data['full_path'],
-					'maintain_ratio'  =>  TRUE,
-					'width'           =>  748,
-					'height'          =>  489,
-				);
-				$this->image_lib->clear();
-				$this->image_lib->initialize($configer);
-				$this->image_lib->resize();
+			} 
+			else 
+			{
+				if($this->input->post('bentuk_sertifikat') == 'landscape')
+				{
+					$this->load->library('image_lib');
+					$image_data =   $this->upload->data();
+					$configer =  array(
+						'image_library'   => 'gd2',
+						'source_image'    =>  $image_data['full_path'],
+						'maintain_ratio'  =>  TRUE,
+						'width'           =>  748,
+						'height'          =>  489,
+					);
+					$this->image_lib->clear();
+					$this->image_lib->initialize($configer);
+					$this->image_lib->resize();
+				}
+				
 				$data = [
-					'ms_model'          => $this->input->post('nama_model'),
-					'ms_sertifikat'     => $filename,
-					'ms_linkmodel'      => 'model_sertifikat/template/' . $filename,
-					'ms_userupdate'     => $this->session->userdata('username'),
-					'ms_lastupdate'     => date('Y-m-d H:i:s')
+					'ms_model'          	=> $this->input->post('nama_model'),
+					'ms_sertifikat'     	=> $filename,
+					'ms_bentuk_sertifikat'  => $this->input->post('bentuk_sertifikat'),
+					'ms_userupdate'     	=> $this->session->userdata('username'),
+					'ms_lastupdate'     	=> date('Y-m-d H:i:s')
 				];
 
 				if ($this->modelsertifikat_model->insert($data)) {
@@ -151,22 +158,27 @@ class Model_sertifikat extends CI_Controller
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->ubah($this->input->post('model_id'));
 				} else {
-					$this->load->library('image_lib');
-					$image_data =   $this->upload->data();
-					$configer =  array(
-						'image_library'   => 'gd2',
-						'source_image'    =>  $image_data['full_path'],
-						'maintain_ratio'  =>  TRUE,
-						'width'           =>  748,
-						'height'          =>  489,
-					);
-					$this->image_lib->clear();
-					$this->image_lib->initialize($configer);
-					$this->image_lib->resize();
+
+					if($this->input->post('bentuk_sertifikat') == 'landscape')
+					{
+						$this->load->library('image_lib');
+						$image_data =   $this->upload->data();
+						$configer =  array(
+							'image_library'   => 'gd2',
+							'source_image'    =>  $image_data['full_path'],
+							'maintain_ratio'  =>  TRUE,
+							'width'           =>  748,
+							'height'          =>  489,
+						);
+						$this->image_lib->clear();
+						$this->image_lib->initialize($configer);
+						$this->image_lib->resize();
+					}
+					
 					$data = [
 						'ms_model'          => $this->input->post('nama_model'),
 						'ms_sertifikat'     => $this->upload->data('file_name'),
-						'ms_linkmodel'      => $this->input->post('link_model'),
+						'ms_bentuk_sertifikat'  => $this->input->post('bentuk_sertifikat'),
 						'ms_userupdate'     => $this->session->userdata('username'),
 						'ms_lastupdate'     => date('Y-m-d H:i:s')
 					];
@@ -185,7 +197,7 @@ class Model_sertifikat extends CI_Controller
 				$data = [
 					'ms_model'          => $this->input->post('nama_model'),
 					'ms_sertifikat'     => $this->input->post('gambar_old'),
-					'ms_linkmodel'      => $this->input->post('link_model'),
+					'ms_bentuk_sertifikat'  => $this->input->post('bentuk_sertifikat'),
 					'ms_userupdate'     => $this->session->userdata('email'),
 					'ms_lastupdate'     => date('Y-m-d H:i:s')
 				];
