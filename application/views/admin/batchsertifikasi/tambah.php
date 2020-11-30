@@ -21,7 +21,7 @@
                  <form action="<?php echo base_url('batch_sertifikasi/simpan'); ?>" method="post" enctype="multipart/form-data">
 
                    <div class="row">
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Nama Sub Sertifikasi *</label>
                          <select name="sub_sertifikasi" class="form-control">
@@ -34,7 +34,7 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Jumlah Pertemuan *</label>
                          <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo set_value('jumlah_pertemuan') ?>">
@@ -42,7 +42,7 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Tanggal Daftar *</label>
                          <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo set_value('tanggal_daftar') ?>">
@@ -50,15 +50,36 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Tanggal Terakhir Daftar *</label>
                          <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo set_value('tanggal_terakhir') ?>">
                          <?php echo form_error('tanggal_terakhir') ?>
                        </div>
                      </div>
+                     
+                     <div class="col-12">
+                        <div class="form-group">
+                          <label>Pendaftaran Untuk *</label>
+                          <br>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input mahasiswa" type="radio" name="pendaftaran_untuk" value="mahasiswa" <?php echo set_value('pendaftaran_untuk') == 'mahasiswa' ? "checked='checked'" : null ?>  id="mahasiswa" onchange="mahasiswa()">
+                            <label class="form-check-label">Mahasiswa</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input umum" type="radio" name="pendaftaran_untuk" value="umum" <?php echo set_value('pendaftaran_untuk') == 'umum' ? "checked='checked'" : null ?> id="umum" onchange="umum()">
+                            <label class="form-check-label">Umum</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input both" type="radio" name="pendaftaran_untuk" value="mahasiswa dan umum" <?php echo set_value('pendaftaran_untuk') == 'mahasiswa dan umum' ? "checked='checked'" : null ?> id="both" onchange="both()">
+                            <label class="form-check-label">Mahasiswa dan Umum</label>
+                          </div>
+                          <br>
+                          <?php echo form_error('pendaftaran_untuk') ?>
+                        </div>
+                     </div>
 
-                     <div class="col-4">
+                     <div class="col-6" id="mahasiswa" <?php if($this->input->post('pendaftaran_untuk') == 'mahasiswa') { echo 'style="display: inline;"'; } elseif($this->input->post('pendaftaran_untuk') == 'umum') { echo 'style="display: none;"'; } elseif($this->input->post('pendaftaran_untuk') == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
                        <div class="form-group">
                          <label>Biaya Mahasiswa *</label>
                          <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo set_value('biaya_mhs') ?>">
@@ -66,13 +87,16 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-6" id="umum" <?php if($this->input->post('pendaftaran_untuk') == 'umum') { echo 'style="display: inline;"'; } elseif($this->input->post('pendaftaran_untuk') == 'mahasiswa') { echo 'style="display: none;"'; } elseif($this->input->post('pendaftaran_untuk') == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
                        <div class="form-group">
                          <label>Biaya Umum *</label>
                          <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo set_value('biaya_umum') ?>">
                          <?php echo form_error('biaya_umum') ?>
                        </div>
                      </div>
+
+                     <div class="col-12"></div>
+                     <br>
 
                      <div class="col-4">
                        <div class="form-group">
@@ -234,3 +258,19 @@
            });
          }
        </script>
+       <script>
+        function mahasiswa() {
+          document.getElementById('mahasiswa').style.display = "inline";
+          document.getElementById('umum').style.display = "none";
+        }
+
+        function umum() {
+          document.getElementById('umum').style.display = "inline";
+          document.getElementById('mahasiswa').style.display = "none";
+        }
+
+        function both() {
+          document.getElementById('umum').style.display = "inline";
+          document.getElementById('mahasiswa').style.display = "inline";
+        }
+      </script>

@@ -25,7 +25,7 @@
 
                    <div class="row">
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Nama Sub Sertifikasi *</label>
                          <select name="sub_sertifikasi" class="form-control">
@@ -40,7 +40,7 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Jumlah Pertemuan *</label>
                          <input type="text" class="form-control" name="jumlah_pertemuan" value="<?php echo $list->bs_jumlahpertemuan ?>">
@@ -48,7 +48,7 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Tanggal Daftar *</label>
                          <input type="date" class="form-control" name="tanggal_daftar" value="<?php echo $list->bs_mulai_daftar ?>">
@@ -56,7 +56,7 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-3">
                        <div class="form-group">
                          <label>Tanggal Terakhir Daftar *</label>
                          <input type="date" class="form-control" name="tanggal_terakhir" value="<?php echo $list->bs_terakhir_daftar ?>">
@@ -64,21 +64,45 @@
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-12">
+                        <div class="form-group">
+                          <label>Pendaftaran Untuk *</label>
+                          <br>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input mahasiswa" type="radio" name="pendaftaran_untuk" value="mahasiswa" <?php echo $list->bs_pendaftaranuntuk == 'mahasiswa' ? "checked='checked'" : null ?>  id="mahasiswa" onchange="get_mahasiswa()">
+                            <label class="form-check-label">Mahasiswa</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input umum" type="radio" name="pendaftaran_untuk" value="umum" <?php echo $list->bs_pendaftaranuntuk == 'umum' ? "checked='checked'" : null ?> id="umum" onchange="get_umum()">
+                            <label class="form-check-label">Umum</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input both" type="radio" name="pendaftaran_untuk" value="mahasiswa dan umum" <?php echo $list->bs_pendaftaranuntuk == 'mahasiswa dan umum' ? "checked='checked'" : null ?> id="both" onchange="get_both()">
+                            <label class="form-check-label">Mahasiswa dan Umum</label>
+                          </div>
+                          <br>
+                          <?php echo form_error('pendaftaran_untuk') ?>
+                        </div>
+                     </div>
+
+                     <div class="col-6" id="mhs" <?php if($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
                        <div class="form-group">
                          <label>Biaya Mahasiswa *</label>
-                         <input type="number" class="form-control" name="biaya_mhs" value="<?php echo $list->bs_biaya_mhs ?>">
+                         <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo $list->bs_biaya_mhs ?>">
                          <?php echo form_error('biaya_mhs') ?>
                        </div>
                      </div>
 
-                     <div class="col-4">
+                     <div class="col-6" id="um" <?php if($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
                        <div class="form-group">
                          <label>Biaya Umum *</label>
-                         <input type="number" class="form-control" name="biaya_umum" value="<?php echo $list->bs_biaya_umum ?>">
+                         <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo $list->bs_biaya_umum ?>">
                          <?php echo form_error('biaya_umum') ?>
                        </div>
                      </div>
+
+                     <div class="col-12"></div>
+                     <br>
 
                      <div class="col-6">
                        <div class="form-group">
@@ -180,8 +204,24 @@
        </section>
        <!-- /.content -->
 
-       <script src="<?php echo base_url() ?>assets/backend/plugins/jquery/jquery.min.js"></script>
+       <script src="<?php echo base_url() ?>/assets/frontend/js/jquery-1.12.1.min.js"></script>
        <script src="<?php echo base_url(); ?>assets/js/summernote/summernote-bs4.js"></script>
+       <script>
+        function get_mahasiswa() {
+          document.getElementById('mhs').style.display = "inline";
+          document.getElementById('um').style.display = "none";
+        }
+
+        function get_umum() {
+          document.getElementById('um').style.display = "inline";
+          document.getElementById('mhs').style.display = "none";
+        }
+
+        function get_both() {
+          document.getElementById('um').style.display = "inline";
+          document.getElementById('mhs').style.display = "inline";
+        }
+      </script>
        <script>
          $(document).ready(function() {
            $('.cust_sumnote').summernote({
