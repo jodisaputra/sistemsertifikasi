@@ -100,7 +100,7 @@
                                         <h5 class="card-title"><?php echo $s->smr_acara ?></h5>
                                     </a>
                                     <p style="margin-bottom: 0px;" class="text-dark">Biaya:</p>
-
+                                    
                                     <p class="text-dark" style="margin-bottom: 0px;">Mahasiswa : <?php echo 'Rp.' . number_format($s->smr_biaya_mhs, 2, ',', '.') ?></p>
 
                                     <p class="text-dark">Umum : <?php echo 'Rp.' . number_format($s->smr_biaya_umum, 2, ',', '.') ?></p>

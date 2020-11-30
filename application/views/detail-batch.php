@@ -59,10 +59,34 @@
                      <?php
                         if (!$this->session->userdata('npm') && !$this->session->userdata('email')) {
                         ?>
-
+                        <?php 
+                            if($batch->bs_pendaftaranuntuk == 'mahasiswa')
+                            {
+                        ?>
+                         
                          <a href="<?php echo base_url('batch_sertifikasi/daftar_mahasiswa/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi) ?>" class="btn_1 d-block">Daftar Mahasiswa</a>
+                        
+                        <?php
+                            } 
+                            elseif($batch->bs_pendaftaranuntuk == 'umum')
+                            {
+                        ?>
+                        
+                        <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block">Daftar Umum</a>
+                        
+                        <?php  
+                            } 
+                            else
+                            {
+                        ?>
 
-                         <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block">Daftar Umum</a>
+                        <a href="<?php echo base_url('batch_sertifikasi/daftar_mahasiswa/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi) ?>" class="btn_1 d-block">Daftar Mahasiswa</a>
+                        
+                        <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block">Daftar Umum</a>
+
+                        <?php 
+                            }
+                        ?>
 
                      <?php
                         }

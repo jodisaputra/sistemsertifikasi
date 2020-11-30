@@ -48,6 +48,10 @@ class Home extends CI_Controller
 			'pelatih'	=> $this->batchsertifikasi_model->list_pelatih($id_batch),
 			'view'	=> 'detail-batch'
 		];
+
+		// header('content-type: application/json');
+		// echo json_encode($data);
+		// die;
 		$this->load->view('template/wrapper', $data);
 	}
 
