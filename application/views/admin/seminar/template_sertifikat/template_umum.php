@@ -49,7 +49,7 @@
   <div style="text-align: center; margin-top: 12px;">
     <img width="10%" height="10%" src="<?php echo base_url('assets/tanda_tangan/' . $ttd->ns_tandatangan) ?>" alt="">
   </div>
-  <p align="center" style="font-size: 13px; font-weight: bold; margin-bottom: 0px;"><?php echo $ttd->ns_narasumber ?> </p>
+  <p align="center" style="font-size: 13px; font-weight: bold; margin-bottom: 0px;"><?php echo $ttd->ns_gelardepan . ' ' . $ttd->ns_narasumber . ' ' .  $ttd->ns_gelarbelakang ?> </p>
 
 </body>
 

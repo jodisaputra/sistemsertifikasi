@@ -57,17 +57,38 @@
                      <?php echo form_error('nama_moderator') ?>
                    </div>
 
-                   <div class="form-group">
-                     <label>Biaya Mahasiswa *</label>
-                     <input type="text" class="form-control" name="biaya_mhs" value="<?php echo $seminar->smr_biaya_mhs ?>">
-                     <?php echo form_error('biaya_mhs') ?>
-                   </div>
+                   <div class="col-12">
+                        <div class="form-group">
+                          <label>Status Seminar *</label>
+                          <br>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input gratis" type="radio" name="status_seminar" value="gratis" <?php echo $seminar->smr_status_seminar == 'gratis' ? "checked='checked'" : null ?>  id="gratis" onchange="get_gratis()">
+                            <label class="form-check-label">Gratis</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input bayar" type="radio" name="status_seminar" value="bayar" <?php echo $seminar->smr_status_seminar == 'bayar' ? "checked='checked'" : null ?> id="bayar" onchange="get_bayar()">
+                            <label class="form-check-label">Bayar</label>
+                          </div>
+                          <br>
+                          <?php echo form_error('status_seminar') ?>
+                        </div>
+                     </div>
+        
+                     <div class="col-6" id="mahasiswa" <?php if($seminar->smr_status_seminar == 'bayar') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?> >
+                       <div class="form-group">
+                         <label>Biaya Mahasiswa *</label>
+                         <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo $seminar->smr_biaya_mhs ?>">
+                         <?php echo form_error('biaya_mhs') ?>
+                       </div>
+                     </div>
 
-                   <div class="form-group">
-                     <label>Biaya Umum *</label>
-                     <input type="text" class="form-control" name="biaya_umum" value="<?php echo $seminar->smr_biaya_umum ?>">
-                     <?php echo form_error('biaya_umum') ?>
-                   </div>
+                     <div class="col-6" id="umum" <?php if($seminar->smr_status_seminar == 'bayar') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>>
+                       <div class="form-group">
+                         <label>Biaya Umum *</label>
+                         <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo $seminar->smr_biaya_umum ?>">
+                         <?php echo form_error('biaya_umum') ?>
+                       </div>
+                     </div>
 
                    <div class="form-group">
                      <label>Link Online</label>
@@ -191,5 +212,17 @@
                console.log(response);
              }
            });
+         }
+       </script>
+       <script>
+         
+         function get_gratis() {
+           document.getElementById('mahasiswa').style.display = "none";
+           document.getElementById('umum').style.display = "none";
+         }
+ 
+         function get_bayar() {
+           document.getElementById('umum').style.display = "inline";
+           document.getElementById('mahasiswa').style.display = "inline";
          }
        </script>

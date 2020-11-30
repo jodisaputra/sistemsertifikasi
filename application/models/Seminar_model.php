@@ -239,6 +239,13 @@ class Seminar_model extends CI_Model
 		$this->db->where('smhs_seminar', $seminar);
 		return $this->db->get('ssc_seminar_mahasiswa')->row_array();
 	}
+
+	function cek_jika_seminar_gratis($seminar)
+	{
+		$this->db->where('smr_id', $seminar);
+		$this->db->where('smr_status_seminar', 'gratis');
+		return $this->db->get('ssc_seminar')->row();
+	}
 }
 
 /* End of file Seminar_model.php */

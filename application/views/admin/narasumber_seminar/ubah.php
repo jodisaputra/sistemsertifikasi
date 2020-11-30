@@ -29,6 +29,18 @@
                    </div>
 
                    <div class="form-group">
+                    <label>Gelar Depan</label>
+                    <input type="text" class="form-control" name="gelar_depan" value="<?php echo $list->ns_gelardepan ?>">
+                    <?php echo form_error('gelar_depan') ?>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Gelar Belakang</label>
+                    <input type="text" class="form-control" name="gelar_belakang" value="<?php echo $list->ns_gelarbelakang ?>">
+                    <?php echo form_error('gelar_belakang') ?>
+                  </div>
+
+                   <div class="form-group">
                      <label>Asal Institusi *</label>
                      <input type="text" class="form-control" name="asal_institusi" value="<?php echo $list->ns_institusi ?>">
                      <?php echo form_error('asal_institusi') ?>

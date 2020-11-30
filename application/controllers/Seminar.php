@@ -51,8 +51,14 @@ class Seminar extends CI_Controller
 		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required');
 		$this->form_validation->set_rules('jam_selesai', 'Jam Selesai', 'required');
 		$this->form_validation->set_rules('nama_moderator', 'Nama Moderator', 'required');
-		$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required');
-		$this->form_validation->set_rules('biaya_umum', 'Biaya umum', 'required');
+		$this->form_validation->set_rules('status_seminar', 'Status Seminar', 'required');
+
+		if($this->input->post('status_seminar') == 'bayar')
+		{
+			$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required');
+			$this->form_validation->set_rules('biaya_umum', 'Biaya umum', 'required');
+		}
+
 		$this->form_validation->set_rules('model_sertifikat', 'Model sertifikat', 'required');
 		$this->form_validation->set_rules('jumlah_max_peserta', 'Jumlah Max Peserta', 'required|trim');
 
@@ -86,23 +92,47 @@ class Seminar extends CI_Controller
 				$this->tambah();
 			} else {
 
-				$data = [
-					'smr_acara'                => $this->input->post('nama_seminar'),
-					'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
-					'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
-					'smr_jam_mulai'            => $this->input->post('jam_mulai'),
-					'smr_jam_selesai'          => $this->input->post('jam_selesai'),
-					'smr_moderator'            => $this->input->post('nama_moderator'),
-					'smr_biaya_mhs'            => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_mhs', TRUE), 2)),
-					'smr_biaya_umum'           => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_umum', TRUE), 2)),
-					'smr_link_online'          => $this->input->post('link'),
-					'smr_banner'               => $this->upload->data('file_name'),
-					'smr_keterangan'           => $this->input->post('keterangan'),
-					'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
-					'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
-					'smr_userupdate'           => $this->session->userdata('username'),
-					'smr_lastupdate'           => date('Y-m-d H:i:s')
-				];
+				if($this->input->post('status_seminar') == 'bayar')
+				{
+					$data = [
+						'smr_acara'                => $this->input->post('nama_seminar'),
+						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+						'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+						'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+						'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+						'smr_moderator'            => $this->input->post('nama_moderator'),
+						'smr_status_seminar'       => $this->input->post('status_seminar'),
+						'smr_biaya_mhs'            => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_mhs', TRUE), 2)),
+						'smr_biaya_umum'           => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_umum', TRUE), 2)),
+						'smr_link_online'          => $this->input->post('link'),
+						'smr_banner'               => $this->upload->data('file_name'),
+						'smr_keterangan'           => $this->input->post('keterangan'),
+						'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+						'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+						'smr_userupdate'           => $this->session->userdata('username'),
+						'smr_lastupdate'           => date('Y-m-d H:i:s')
+					];
+				}
+				else
+				{
+					$data = [
+						'smr_acara'                => $this->input->post('nama_seminar'),
+						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+						'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+						'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+						'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+						'smr_moderator'            => $this->input->post('nama_moderator'),
+						'smr_status_seminar'       => $this->input->post('status_seminar'),
+						'smr_link_online'          => $this->input->post('link'),
+						'smr_banner'               => $this->upload->data('file_name'),
+						'smr_keterangan'           => $this->input->post('keterangan'),
+						'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+						'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+						'smr_userupdate'           => $this->session->userdata('username'),
+						'smr_lastupdate'           => date('Y-m-d H:i:s')
+					];
+				}
+
 
 				if ($this->seminar_model->insert($data)) {
 					$this->session->set_flashdata('message', 'Data berhasil ditambah');
@@ -169,8 +199,15 @@ class Seminar extends CI_Controller
 		$this->form_validation->set_rules('jam_mulai', 'Jam Mulai', 'required');
 		$this->form_validation->set_rules('jam_selesai', 'Jam Selesai', 'required');
 		$this->form_validation->set_rules('nama_moderator', 'Nama Moderator', 'required|trim');
-		$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required|trim');
-		$this->form_validation->set_rules('biaya_umum', 'Biaya umum', 'required|trim');
+		
+		$this->form_validation->set_rules('status_seminar', 'Status Seminar', 'required');
+
+		if($this->input->post('status_seminar') == 'bayar')
+		{
+			$this->form_validation->set_rules('biaya_mhs', 'Biaya Mahasiswa', 'required');
+			$this->form_validation->set_rules('biaya_umum', 'Biaya umum', 'required');
+		}
+
 		$this->form_validation->set_rules('jumlah_max_peserta', 'Jumlah Max Peserta', 'required|trim');
 		$this->form_validation->set_rules('model_sertifikat', 'Model sertifikat', 'required');
 
@@ -201,23 +238,49 @@ class Seminar extends CI_Controller
 					$this->session->set_flashdata('tipe', 'warning');
 					$this->ubah($this->input->post('model_id'));
 				} else {
-					$data = [
-						'smr_acara'                => $this->input->post('nama_seminar'),
-						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
-						'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
-						'smr_jam_mulai'            => $this->input->post('jam_mulai'),
-						'smr_jam_selesai'          => $this->input->post('jam_selesai'),
-						'smr_moderator'            => $this->input->post('nama_moderator'),
-						'smr_biaya_mhs'            => $this->input->post('biaya_mhs'),
-						'smr_biaya_umum'           => $this->input->post('biaya_umum'),
-						'smr_link_online'          => $this->input->post('link'),
-						'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
-						'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
-						'smr_banner'               => $this->upload->data('file_name'),
-						'smr_keterangan'           => $this->input->post('keterangan'),
-						'smr_userupdate'           => $this->session->userdata('username'),
-						'smr_lastupdate'           => date('Y-m-d H:i:s')
-					];
+
+					if($this->input->post('status_seminar') == 'bayar')
+					{
+						$data = [
+							'smr_acara'                => $this->input->post('nama_seminar'),
+							'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+							'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+							'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+							'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+							'smr_moderator'            => $this->input->post('nama_moderator'),
+							'smr_status_seminar'       => $this->input->post('status_seminar'),
+							'smr_biaya_mhs'            => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_mhs', TRUE), 2)),
+							'smr_biaya_umum'           => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_umum', TRUE), 2)),
+							'smr_link_online'          => $this->input->post('link'),
+							'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+							'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+							'smr_banner'               => $this->upload->data('file_name'),
+							'smr_keterangan'           => $this->input->post('keterangan'),
+							'smr_userupdate'           => $this->session->userdata('username'),
+							'smr_lastupdate'           => date('Y-m-d H:i:s')
+						];
+					}
+					else
+					{
+						$data = [
+							'smr_acara'                => $this->input->post('nama_seminar'),
+							'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+							'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+							'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+							'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+							'smr_moderator'            => $this->input->post('nama_moderator'),
+							'smr_status_seminar'       => $this->input->post('status_seminar'),
+							'smr_biaya_mhs'            => NULL,
+							'smr_biaya_umum'           => NULL,
+							'smr_link_online'          => $this->input->post('link'),
+							'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+							'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+							'smr_banner'               => $this->upload->data('file_name'),
+							'smr_keterangan'           => $this->input->post('keterangan'),
+							'smr_userupdate'           => $this->session->userdata('username'),
+							'smr_lastupdate'           => date('Y-m-d H:i:s')
+						];
+					}
 
 					if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) {
 						$this->session->set_flashdata('message', 'Data berhasil diubah');
@@ -230,23 +293,49 @@ class Seminar extends CI_Controller
 					}
 				}
 			} else {
-				$data = [
-					'smr_acara'                => $this->input->post('nama_seminar'),
-					'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
-					'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
-					'smr_jam_mulai'            => $this->input->post('jam_mulai'),
-					'smr_jam_selesai'          => $this->input->post('jam_selesai'),
-					'smr_moderator'            => $this->input->post('nama_moderator'),
-					'smr_biaya_mhs'            => $this->input->post('biaya_mhs'),
-					'smr_biaya_umum'           => $this->input->post('biaya_umum'),
-					'smr_link_online'          => $this->input->post('link'),
-					'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
-					'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
-					'smr_banner'               => $this->input->post('oldfile'),
-					'smr_keterangan'           => $this->input->post('keterangan'),
-					'smr_userupdate'           => $this->session->userdata('username'),
-					'smr_lastupdate'           => date('Y-m-d H:i:s')
-				];
+
+				if($this->input->post('status_seminar') == 'bayar')
+				{
+					$data = [
+						'smr_acara'                => $this->input->post('nama_seminar'),
+						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+						'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+						'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+						'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+						'smr_moderator'            => $this->input->post('nama_moderator'),
+						'smr_status_seminar'       => $this->input->post('status_seminar'),
+						'smr_biaya_mhs'            => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_mhs', TRUE), 2)),
+						'smr_biaya_umum'           => preg_replace("/[^0-9]/", '', substr($this->input->post('biaya_umum', TRUE), 2)),
+						'smr_link_online'          => $this->input->post('link'),
+						'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+						'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+						'smr_banner'               => $this->input->post('oldfile'),
+						'smr_keterangan'           => $this->input->post('keterangan'),
+						'smr_userupdate'           => $this->session->userdata('username'),
+						'smr_lastupdate'           => date('Y-m-d H:i:s')
+					];
+				}
+				else
+				{
+					$data = [
+						'smr_acara'                => $this->input->post('nama_seminar'),
+						'smr_tanggal'              => $this->input->post('tanggal_pelaksanaan'),
+						'smr_tempat'               => $this->input->post('tempat_pelaksanaan'),
+						'smr_jam_mulai'            => $this->input->post('jam_mulai'),
+						'smr_jam_selesai'          => $this->input->post('jam_selesai'),
+						'smr_moderator'            => $this->input->post('nama_moderator'),
+						'smr_status_seminar'       => $this->input->post('status_seminar'),
+						'smr_biaya_mhs'            => NULL,
+						'smr_biaya_umum'           => NULL,
+						'smr_link_online'          => $this->input->post('link'),
+						'smr_model_sertifikat'     => $this->input->post('model_sertifikat'),
+						'smr_jumlahmax'            => $this->input->post('jumlah_max_peserta'),
+						'smr_banner'               => $this->input->post('oldfile'),
+						'smr_keterangan'           => $this->input->post('keterangan'),
+						'smr_userupdate'           => $this->session->userdata('username'),
+						'smr_lastupdate'           => date('Y-m-d H:i:s')
+					];
+				}
 
 				if ($this->seminar_model->update($this->input->post('seminar_id'), $data)) {
 					$this->session->set_flashdata('message', 'Data berhasil diubah');
@@ -307,14 +396,34 @@ class Seminar extends CI_Controller
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('home/detail_seminar/' . $id));
 				} else {
-					$data = [
-						'su_seminar'        => $id,
-						'su_peserta'        => $this->session->userdata['email'],
-						'su_tanggaldaftar'  => date('Y-m-d H:i:s'),
-						'su_status'         => "Menunggu Pembayaran",
-						'su_userupdate'     => $this->session->userdata('email'),
-						'su_lastupdate'     => date('Y-m-d H:i:s')
-					];
+
+					// cek jika Gratis
+					$cek = $this->seminar_model->cek_jika_seminar_gratis($id);
+
+					if($cek)
+					{
+						// jika gratis set pembayaran lunas
+						$data = [
+							'su_seminar'        => $id,
+							'su_peserta'        => $this->session->userdata['email'],
+							'su_tanggaldaftar'  => date('Y-m-d H:i:s'),
+							'su_status'         => "Lunas",
+							'su_keteranganpembayaran' => 'Lunas',
+							'su_userupdate'     => $this->session->userdata('email'),
+							'su_lastupdate'     => date('Y-m-d H:i:s')
+						];
+					}
+					else
+					{
+						$data = [
+							'su_seminar'        => $id,
+							'su_peserta'        => $this->session->userdata['email'],
+							'su_tanggaldaftar'  => date('Y-m-d H:i:s'),
+							'su_status'         => "Menunggu Pembayaran",
+							'su_userupdate'     => $this->session->userdata('email'),
+							'su_lastupdate'     => date('Y-m-d H:i:s')
+						];
+					}
 
 					if ($this->seminar_model->daftar_seminar_umum($data)) {
 						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');
@@ -356,14 +465,35 @@ class Seminar extends CI_Controller
 					$this->session->set_flashdata('tipe', 'error');
 					redirect(base_url('home/detail_seminar/' . $id));
 				} else {
-					$data = [
-						'smhs_seminar'        => $id,
-						'smhs_mahasiswa'      => $this->session->userdata['npm'],
-						'smhs_tanggaldaftar'  => date('Y-m-d H:i:s'),
-						'smhs_status'         => "Menunggu Pembayaran",
-						'smhs_userupdate'     => $this->session->userdata('npm'),
-						'smhs_lastupdate'     => date('Y-m-d H:i:s')
-					];
+
+					// cek jika Gratis
+					$cek = $this->seminar_model->cek_jika_seminar_gratis($id);
+
+					if($cek)
+					{
+						// jika gratis set pembayaran lunas
+						$data = [
+							'smhs_seminar'        => $id,
+							'smhs_mahasiswa'      => $this->session->userdata['npm'],
+							'smhs_tanggaldaftar'  => date('Y-m-d H:i:s'),
+							'smhs_status'         => "Lunas",
+							'smhs_keteranganpembayaran' => 'Lunas',
+							'smhs_userupdate'     => $this->session->userdata('npm'),
+							'smhs_lastupdate'     => date('Y-m-d H:i:s')
+						];
+					}
+					else
+					{
+						// jika bayar set pembayaran menunggu pembayaran
+						$data = [
+							'smhs_seminar'        => $id,
+							'smhs_mahasiswa'      => $this->session->userdata['npm'],
+							'smhs_tanggaldaftar'  => date('Y-m-d H:i:s'),
+							'smhs_status'         => "Menunggu Pembayaran",
+							'smhs_userupdate'     => $this->session->userdata('npm'),
+							'smhs_lastupdate'     => date('Y-m-d H:i:s')
+						];
+					}
 
 					if ($this->seminar_model->daftar_seminar_mahasiswa($data)) {
 						$this->session->set_flashdata('message', 'Anda Berhasil mendaftar');

@@ -37,7 +37,7 @@
                       foreach ($list as $l) { ?>
                        <tr>
                          <td><?php echo $no++ ?></td>
-                         <td><?php echo $l->smr_acara ?></td>
+                         <td><?php echo  $l->ns_gelardepan . $l->ns_narasumber . ', ' . $l->ns_gelarbelakang ?></td>
                          <td><?php echo $l->ns_institusi ?></td>
                          <td><?php echo $l->ns_sebagai ?></td>
                          <td style="text-align: center;">

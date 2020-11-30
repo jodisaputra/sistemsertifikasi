@@ -50,7 +50,7 @@
   <div style="text-align: center; margin-top: 12px;">
     <img width="15%" height="10%" src="<?php echo base_url('assets/tanda_tangan/' . $ttd->ns_tandatangan) ?>" alt="">
   </div>
-  <p align="center" style="font-size: 15px; font-weight: bold; margin-bottom: 0px;"><?php echo $ttd->ns_narasumber ?> </p>
+  <p align="center" style="font-size: 15px; font-weight: bold; margin-bottom: 0px;"><?php echo $ttd->ns_gelardepan . ' ' . $ttd->ns_narasumber . ' ' .  $ttd->ns_gelarbelakang ?> </p>
   <hr align="center" width="30%" style="margin-top: 8px;">
   <p align="center" style="font-size: 15px; font-weight: bold; margin-bottom: 0px;"><?php echo $ttd->ns_sebagai ?> </p>
 

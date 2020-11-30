@@ -28,6 +28,18 @@
                </div>
 
                <div class="form-group">
+                 <label>Gelar Depan</label>
+                 <input type="text" class="form-control" name="gelar_depan" value="<?php echo set_value('gelar_depan') ?>">
+                 <?php echo form_error('gelar_depan') ?>
+               </div>
+
+               <div class="form-group">
+                 <label>Gelar Belakang</label>
+                 <input type="text" class="form-control" name="gelar_belakang" value="<?php echo set_value('gelar_belakang') ?>">
+                 <?php echo form_error('gelar_belakang') ?>
+               </div>
+
+               <div class="form-group">
                  <label>Asal Institusi *</label>
                  <input type="text" class="form-control" name="asal_institusi" value="<?php echo set_value('asal_institusi') ?>">
                  <?php echo form_error('asal_institusi') ?>

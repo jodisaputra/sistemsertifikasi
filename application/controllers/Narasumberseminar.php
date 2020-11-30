@@ -81,6 +81,8 @@ class Narasumberseminar extends CI_Controller
 					} else {
 						$data = [
 							'ns_seminar'            => $this->input->post('seminar'),
+							'ns_gelardepan'         => $this->input->post('gelar_depan'),
+							'ns_gelarbelakang'      => $this->input->post('gelar_belakang'),
 							'ns_narasumber'         => $this->input->post('nama_narasumber'),
 							'ns_institusi'          => $this->input->post('asal_institusi'),
 							'ns_sebagai'            => $this->input->post('sebagai'),
@@ -103,6 +105,8 @@ class Narasumberseminar extends CI_Controller
 				} else {
 					$data = [
 						'ns_seminar'            => $this->input->post('seminar'),
+						'ns_gelardepan'         => $this->input->post('gelar_depan'),
+						'ns_gelarbelakang'      => $this->input->post('gelar_belakang'),
 						'ns_narasumber'         => $this->input->post('nama_narasumber'),
 						'ns_institusi'          => $this->input->post('asal_institusi'),
 						'ns_sebagai'            => $this->input->post('sebagai'),
@@ -185,6 +189,8 @@ class Narasumberseminar extends CI_Controller
 					} else {
 						$data = [
 							'ns_seminar'            => $this->input->post('seminar'),
+							'ns_gelardepan'         => $this->input->post('gelar_depan'),
+							'ns_gelarbelakang'      => $this->input->post('gelar_belakang'),
 							'ns_narasumber'         => $this->input->post('nama_narasumber'),
 							'ns_institusi'          => $this->input->post('asal_institusi'),
 							'ns_sebagai'            => $this->input->post('sebagai'),
@@ -207,6 +213,8 @@ class Narasumberseminar extends CI_Controller
 				} elseif (empty($_FILES['gambar']['name']) && $this->input->post('set_ttd') == 'y') {
 					$data = [
 						'ns_seminar'            => $this->input->post('seminar'),
+						'ns_gelardepan'         => $this->input->post('gelar_depan'),
+						'ns_gelarbelakang'      => $this->input->post('gelar_belakang'),
 						'ns_narasumber'         => $this->input->post('nama_narasumber'),
 						'ns_institusi'          => $this->input->post('asal_institusi'),
 						'ns_sebagai'            => $this->input->post('sebagai'),
@@ -233,6 +241,8 @@ class Narasumberseminar extends CI_Controller
 
 					$data = [
 						'ns_seminar'            => $this->input->post('seminar'),
+						'ns_gelardepan'         => $this->input->post('gelar_depan'),
+						'ns_gelarbelakang'      => $this->input->post('gelar_belakang'),
 						'ns_narasumber'         => $this->input->post('nama_narasumber'),
 						'ns_institusi'          => $this->input->post('asal_institusi'),
 						'ns_sebagai'            => $this->input->post('sebagai'),
