@@ -48,4 +48,10 @@ class Panitiaseminar_model extends CI_Model
 		return $this->db->get($this->table)->row();
 	}
 
+	public function cek_narasumber($seminar)
+	{
+		$this->db->where('ns_seminar', $seminar);
+		return $this->db->get('ssc_narasumber_seminar')->row();
+	}
+
 }

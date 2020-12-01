@@ -19,14 +19,28 @@ class Panitiaseminar extends CI_Controller
 
 	public function list_panitia($seminar)
 	{
-		$data = [
-			'title'	=> 'Panitia',
-			'seminar'	=> $seminar,
-			'list'      => $this->panitiaseminar_model->list($seminar),
-			'view'	=> 'admin/panitia_seminar/index'
-		];
+		// cek jika narasumber belum ada
+		$cek_narasumber = $this->panitiaseminar_model->cek_narasumber($seminar);
 
-		$this->load->view('admin/template/wrapper', $data);
+		if($cek_narasumber)
+		{
+			$data = [
+				'title'	=> 'Panitia',
+				'seminar'	=> $seminar,
+				'list'      => $this->panitiaseminar_model->list($seminar),
+				'view'	=> 'admin/panitia_seminar/index'
+			];
+
+			$this->load->view('admin/template/wrapper', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('message', 'Data Narasumber belum ada!');
+			$this->session->set_flashdata('tipe', 'error');
+			redirect(base_url('seminar'));
+		}
+
+		
 	}
 
 	public function tambah($seminar)
@@ -180,13 +194,15 @@ class Panitiaseminar extends CI_Controller
 
 
 		// simpan hasil export pdf
-		file_put_contents($filename, $file);
+		// file_put_contents($filename, $file);
+
+		file_put_contents('assets/panitia_sertifikat/' . $filename, $file);
 
 		$this->load->library('phpmailer_lib');
 		$mail = $this->phpmailer_lib->load();
 
 		$mail->setFrom('noreply.uib.ac.id@gmail.com', 'Universitas Internasional Batam');
-		$mail->AddAttachment($filename); 
+		$mail->AddAttachment('assets/panitia_sertifikat/' . $filename); 
 		$mail->addAddress($row->pan_email, ucfirst($row->pan_nama));
 		$mail->Subject = 'Sertifikat Seminar Untuk Panitia ' . $row->pan_nama;
 		$mail->Body = 'Berikut ini kami kirimkan sertifikat seminar atas nama ' . $row->pan_nama;
@@ -195,13 +211,14 @@ class Panitiaseminar extends CI_Controller
 
 		if($mail->send())
 		{
+			// hapus file setelah dikirim
+			unlink('assets/panitia_sertifikat/' . $filename);
 			$this->session->set_flashdata('message', 'Sertifikat berhasil dikirim');
 			$this->session->set_flashdata('tipe', 'success');
 			redirect(base_url('panitiaseminar/list_panitia/' . $row->pan_seminar));
 		}
 		// agar hasil sertifikat tidak ditampilkan
 		unlink($filename);
-
 	}
 }
 
