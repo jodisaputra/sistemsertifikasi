@@ -56,28 +56,9 @@
                      </ul>
 
 
-                     <?php
-                        if (!$this->session->userdata('npm') && !$this->session->userdata('email')) {
-                        ?>
-                        <?php 
-                            if($batch->bs_pendaftaranuntuk == 'mahasiswa')
-                            {
-                        ?>
-                         
-                         <a href="<?php echo base_url('batch_sertifikasi/daftar_mahasiswa/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi) ?>" class="btn_1 d-block">Daftar Mahasiswa</a>
-                        
                         <?php
-                            } 
-                            elseif($batch->bs_pendaftaranuntuk == 'umum')
-                            {
-                        ?>
-                        
-                        <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block">Daftar Umum</a>
-                        
-                        <?php  
-                            } 
-                            else
-                            {
+                        if (!$this->session->userdata('npm') && !$this->session->userdata('email')) 
+                        {
                         ?>
 
                         <a href="<?php echo base_url('batch_sertifikasi/daftar_mahasiswa/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi) ?>" class="btn_1 d-block">Daftar Mahasiswa</a>
@@ -85,26 +66,22 @@
                         <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block">Daftar Umum</a>
 
                         <?php 
-                            }
-                        ?>
-
-                     <?php
                         }
                         ?>
 
-                     <?php
-                        if ($this->session->userdata('npm')) {
+                        <?php
+                        if ($this->session->userdata('npm') && $batch->bs_pendaftaranuntuk == 'mahasiswa' || $batch->bs_pendaftaranuntuk == 'mahasiswa dan umum' && $this->session->userdata('npm')) {
                         ?>
 
                          <a href="<?php echo base_url('batch_sertifikasi/daftar_mahasiswa/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi) ?>" class="btn_1 d-block" onclick="return confirm('Apakah anda yakin ingin mendaftar sebagai Peserta Mahasiswa ?')">Daftar Mahasiswa</a>
 
-                     <?php
+                        <?php
                         }
                         ?>
 
 
                      <?php
-                        if ($this->session->userdata('email')) {
+                        if ($this->session->userdata('email') && $batch->bs_pendaftaranuntuk == 'umum' || $batch->bs_pendaftaranuntuk == 'mahasiswa dan umum' && $this->session->userdata('email')) {
                         ?>
 
                          <a href="<?php echo base_url('batch_sertifikasi/daftar_umum/' . $batch->bs_id . '/' . $batch->bs_subsertifikasi . '/' . $batch->scert_sertifikasi); ?>" class="btn_1 d-block" onclick="return confirm('Apakah anda yakin ingin mendaftar sebagai Peserta Umum ?')">Daftar Umum</a>
