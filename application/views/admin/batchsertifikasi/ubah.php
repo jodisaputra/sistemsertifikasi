@@ -85,7 +85,7 @@
                         </div>
                      </div>
 
-                     <div class="col-6" id="mhs" <?php if($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
+                     <div class="col-6" id="mhs" <?php if($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>>
                        <div class="form-group">
                          <label>Biaya Mahasiswa *</label>
                          <input type="text" class="form-control uang" name="biaya_mhs" value="<?php echo $list->bs_biaya_mhs ?>">
@@ -93,7 +93,7 @@
                        </div>
                      </div>
 
-                     <div class="col-6" id="um" <?php if($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>">
+                     <div class="col-6" id="um" <?php if($list->bs_pendaftaranuntuk == 'umum') { echo 'style="display: inline;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa') { echo 'style="display: none;"'; } elseif($list->bs_pendaftaranuntuk == 'mahasiswa dan umum') { echo 'style="display: inline;"'; } else { echo 'style="display: none;"'; } ?>>
                        <div class="form-group">
                          <label>Biaya Umum *</label>
                          <input type="text" class="form-control uang" name="biaya_umum" value="<?php echo $list->bs_biaya_umum ?>">
