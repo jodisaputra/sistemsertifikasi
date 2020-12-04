@@ -12,6 +12,21 @@ class Validasipembayaranseminarumum_model extends CI_Model
 		return $this->db->get($this->table);
 	}
 
+	function filter($seminar, $bayar)
+	{
+		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_seminar_umum.su_seminar');
+		if($seminar)
+		{
+			$this->db->where('su_seminar', $seminar);
+		}
+
+		if($bayar)
+		{
+			$this->db->where('su_status', $bayar);
+		}
+		return $this->db->get($this->table);
+	}
+
 	function listbyid($seminar, $email)
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_seminar_umum.su_seminar');

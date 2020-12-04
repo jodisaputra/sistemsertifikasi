@@ -8,6 +8,7 @@ class Validasipembayaranseminarumum extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('validasipembayaranseminarumum_model');
+		$this->load->model('seminar_model');
 		$this->load->helper('my_function_helper');
 		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
@@ -22,6 +23,7 @@ class Validasipembayaranseminarumum extends CI_Controller
 		$data = [
 			'title'	=> 'Validasi Pembayaran Seminar Umum',
 			'list'          => $this->validasipembayaranseminarumum_model->list()->result(),
+			'seminar'		=> $this->seminar_model->listseminar(),
 			// 'listbyid'      => $this->validasipembayaranseminarumum_model->listbyid($query['su_seminar'], $query['su_peserta']),
 			'view'	=> 'admin/validasipembayaran/pembayaranseminarumum/index'
 		];
@@ -34,8 +36,15 @@ class Validasipembayaranseminarumum extends CI_Controller
 		$seminar = $this->input->post('nama_seminar');
 		$bayar = $this->input->post('status_pembayaran');
 
-		header('content-type: application/json');
-		echo json_encode($seminar);
+		$data = [
+			'title'	=> 'Validasi Pembayaran Seminar Umum',
+			'list'          => $this->validasipembayaranseminarumum_model->filter($seminar, $bayar)->result(),
+			'seminar'		=> $this->seminar_model->listseminar(),
+			'view'	=> 'admin/validasipembayaran/pembayaranseminarumum/index'
+		];
+		
+		$this->load->view('admin/template/wrapper', $data);
+
 	}
 
 	public function detail($seminar, $email)
