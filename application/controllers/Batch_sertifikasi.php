@@ -10,6 +10,7 @@ class Batch_sertifikasi extends CI_Controller
 		$this->load->model('batchsertifikasi_model');
 		$this->load->model('sertifikasi_model');
 		$this->load->model('jadwalsubsertifikasi_model');
+		$this->load->helper('my_function_helper');
 	}
 
 	public function index()

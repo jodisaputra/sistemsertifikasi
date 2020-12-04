@@ -29,14 +29,14 @@
                    <div class="col-4">
                      <div class="form-group">
                        <label>Tanggal Daftar </label>
-                       <input type="text" class="form-control" value="<?php echo date('d M Y', strtotime($batch->bs_mulai_daftar)) ?>" readonly>
+                       <input type="text" class="form-control" value="<?php echo tgl_indo($batch->bs_mulai_daftar) ?>" readonly>
                      </div>
                    </div>
 
                    <div class="col-4">
                      <div class="form-group">
                        <label>Tanggal Terakhir Daftar </label>
-                       <input type="text" class="form-control" value="<?php echo date('d M Y', strtotime($batch->bs_terakhir_daftar)) ?>" readonly>
+                       <input type="text" class="form-control" value="<?php echo tgl_indo($batch->bs_terakhir_daftar) ?>" readonly>
                      </div>
                    </div>
 

@@ -110,7 +110,7 @@
                            <td><?php echo $no++ ?></td>
                            <td><?php echo $l->su_peserta ?></td>
                            <td><?php echo $l->smr_acara ?></td>
-                           <td><?php echo date('d M Y', strtotime($l->su_tanggaldaftar)) ?></td>
+                           <td><?php echo tgl_indo($l->su_tanggaldaftar) ?></td>
 
                            <td>
                              <?php

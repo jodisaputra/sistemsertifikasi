@@ -29,7 +29,7 @@
 
                  <div class="form-group">
                    <label>Tanggal Daftar</label>
-                   <input type="text" class="form-control" value="<?php echo date('d M Y H:i:s', strtotime($list->smhs_tanggaldaftar)) ?>" readonly>
+                   <input type="text" class="form-control" value="<?php echo tgl_indo($list->smhs_tanggaldaftar) ?>" readonly>
                  </div>
 
                  <div class="form-group">

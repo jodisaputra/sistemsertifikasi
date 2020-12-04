@@ -112,8 +112,7 @@
                            <td><?php echo $no++ ?></td>
                            <td><?php echo $nama_mhs[$l['smhs_mahasiswa']] ?></td>
                            <td><?php echo $l['smr_acara'] ?></td>
-                           <td><?php echo date('d M Y', strtotime($l['smhs_tanggaldaftar'])) ?></td>
-
+                           <td><?php echo tgl_indo($l['smhs_tanggaldaftar']) ?></td>
                            <td>
                              <?php
                               if ($l['smhs_status'] == 'Menunggu Pembayaran') {

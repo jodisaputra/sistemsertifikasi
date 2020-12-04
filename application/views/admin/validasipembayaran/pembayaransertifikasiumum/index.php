@@ -109,7 +109,7 @@
                            <td><?php echo $no++ ?></td>
                            <td><?php echo $l->pu_nama ?></td>
                            <td><?php echo $l->scert_subsertifikasi ?></td>
-                           <td><?php echo date('d M Y', strtotime($l->ssu_tanggaldaftar)) ?></td>
+                           <td><?php echo tgl_indo($l->ssu_tanggaldaftar) ?></td>
 
                            <td>
                              <?php

@@ -110,7 +110,7 @@
                            <td><?php echo $no++ ?></td>
                            <td><?php echo $nama_mhs[$l['sm_mahasiswa']] ?></td>
                            <td><?php echo $l['scert_subsertifikasi'] ?></td>
-                           <td><?php echo date('d M Y', strtotime($l['ssm_tanggaldaftar'])) ?></td>
+                           <td><?php echo tgl_indo($l['ssm_tanggaldaftar']) ?></td>
 
                            <td>
                              <?php

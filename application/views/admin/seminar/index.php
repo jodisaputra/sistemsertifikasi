@@ -37,6 +37,7 @@
                          <td><?php echo $s->smr_acara ?></td>
                          <td><?php echo $s->smr_tempat ?></td>
                          <td>
+
                            <a title="Ubah Seminar" href="<?php echo base_url('seminar/detail/' . $s->smr_id) ?>" class="btn btn-info btn-sm mb-4"><i class="fas fa-eye"></i>&nbsp; Detail</a>
 
                            <a title="Ubah Seminar" href="<?php echo base_url('seminar/ubah/' . $s->smr_id) ?>" class="btn btn-warning btn-sm mb-4"><i class="fas fa-edit"></i>&nbsp; Ubah</a>

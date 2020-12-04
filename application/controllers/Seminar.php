@@ -9,6 +9,7 @@ class Seminar extends CI_Controller
 		parent::__construct();
 		$this->load->model('seminar_model');
 		$this->load->model('modelsertifikat_model');
+		$this->load->helper('my_function_helper');
 	}
 
 	public function index()
