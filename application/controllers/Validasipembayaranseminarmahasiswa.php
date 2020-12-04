@@ -7,6 +7,7 @@ class Validasipembayaranseminarmahasiswa extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('validasipembayaranseminarmahasiswa_model');
+		$this->load->model('seminar_model');
 		$this->load->helper('my_function_helper');
 		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
@@ -32,7 +33,35 @@ class Validasipembayaranseminarmahasiswa extends CI_Controller
 			'title'	=> 'Validasi Pembayaran Seminar Mahasiswa',
 			'list'          => $query,
 			'nama_mhs'		=> $nama_mhs,
+			'seminar'		=> $this->seminar_model->listseminar(),
 			// 'listbyid'      => $this->validasipembayaranseminarmahasiswa_model->listbyid($listmhs['smhs_mahasiswa'], $listmhs['smhs_seminar']),
+			'view'	=> 'admin/validasipembayaran/pembayaranseminarmahasiswa/index'
+		];
+
+		$this->load->view('admin/template/wrapper', $data);
+	}
+
+	public function cari()
+	{
+		$seminar = $this->input->post('nama_seminar');
+		$bayar = $this->input->post('status_pembayaran');
+
+		$nama_mhs = array();
+
+		$query = $this->validasipembayaranseminarmahasiswa_model->filter($seminar, $bayar)->result_array();
+
+		// $listmhs = $this->validasipembayaranseminarmahasiswa_model->list()->row_array();
+
+		foreach ($query as $q) {
+			$data_mhs = $this->validasipembayaranseminarmahasiswa_model->getnama($q['smhs_mahasiswa']);
+			$nama_mhs[$q['smhs_mahasiswa']] = $data_mhs->name;
+		}
+
+		$data = [
+			'title'	=> 'Validasi Pembayaran Seminar Mahasiswa',
+			'nama_mhs'		=> $nama_mhs,
+			'list' => $query,
+			'seminar'		=> $this->seminar_model->listseminar(),
 			'view'	=> 'admin/validasipembayaran/pembayaranseminarmahasiswa/index'
 		];
 

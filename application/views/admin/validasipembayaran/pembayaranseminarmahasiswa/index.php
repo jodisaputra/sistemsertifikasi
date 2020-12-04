@@ -1,3 +1,4 @@
+       
        <div class="row mb-2">
          <div class="col-sm-6">
            <h1 class="m-0 text-dark"><?php echo $title ?></h1>
@@ -11,6 +12,50 @@
        </div><!-- /.row -->
 
        <section class="content">
+          <div class="row">
+           <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <form method="post" action="<?php echo base_url('validasipembayaranseminarmahasiswa/cari') ?>">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Nama Seminar</label>
+                        <select class="form-control" name="nama_seminar">
+                          <option value="">Pilih Salah Satu</option>
+                          <?php  
+                          foreach($seminar as $s)
+                          {
+                          ?>
+                          <option value="<?php echo $s->smr_id ?>" <?php echo set_value('nama_seminar') == $s->smr_id ? 'selected' : null ?>><?php echo $s->smr_acara ?></option>
+                          <?php  
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label>Status Pembayaran</label>
+                        <select class="form-control" name="status_pembayaran">
+                          <option value="">Pilih Salah Satu</option>
+                          <option value="Menunggu Pembayaran" <?php echo set_value('status_pembayaran') == 'Menunggu Pembayaran' ? 'selected' : null ?>>Menunggu Pembayaran</option>
+                          <option value="Validasi Pembayaran" <?php echo set_value('status_pembayaran') == 'Validasi Pembayaran' ? 'selected' : null ?>>Validasi Pembayaran</option>
+                          <option value="Lunas" <?php echo set_value('status_pembayaran') == 'Lunas' ? 'selected' : null ?>>Lunas</option>
+                          <option value="Tolak" <?php echo set_value('status_pembayaran') == 'Tolak' ? 'selected' : null ?>>Tolak</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> &nbsp;Cari</button>
+                      <a href="<?php echo base_url('validasipembayaranseminarmahasiswa') ?>" class="btn btn-danger"><i class="fas fa-times"></i> &nbsp;Reset Filter</a>
+                    </div>  
+                  </div>
+                </form>
+              </div>
+            </div>
+           </div>
+         </div>
          <div class="row">
            <div class="col-12">
              <div class="card">

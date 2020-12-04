@@ -12,6 +12,22 @@ class Validasipembayaranseminarmahasiswa_model extends CI_Model
 		return $this->db->get($this->table);
 	}
 
+	function filter($seminar, $bayar)
+	{
+		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_seminar_mahasiswa.smhs_seminar');
+		if($seminar)
+		{
+			$this->db->where('smhs_seminar', $seminar);
+		}
+
+		if($bayar)
+		{
+			$this->db->where('smhs_status', $bayar);
+		}
+
+		return $this->db->get('ssc_seminar_mahasiswa');
+	}
+
 	function listbyid($npm, $seminar)
 	{
 		$this->db->join('ssc_seminar', 'ssc_seminar.smr_id = ssc_seminar_mahasiswa.smhs_seminar');

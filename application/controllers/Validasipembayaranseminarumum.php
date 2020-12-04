@@ -29,6 +29,15 @@ class Validasipembayaranseminarumum extends CI_Controller
 		$this->load->view('admin/template/wrapper', $data);
 	}
 
+	public function cari()
+	{
+		$seminar = $this->input->post('nama_seminar');
+		$bayar = $this->input->post('status_pembayaran');
+
+		header('content-type: application/json');
+		echo json_encode($seminar);
+	}
+
 	public function detail($seminar, $email)
 	{
 		$data = [
