@@ -8,6 +8,7 @@ class Validasipembayaransertifikasimahasiswa extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('validasipembayaransertifikasimahasiswa_model');
+		$this->load->model('sertifikasi_model');
 		$this->load->helper('my_function_helper');
 		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
@@ -33,10 +34,40 @@ class Validasipembayaransertifikasimahasiswa extends CI_Controller
 			'title'	=> 'Validasi Pembayaran Sertifikasi Mahasiswa',
 			'list'      => $query,
 			'nama_mhs'	=> $nama_mhs,
+			'sertifikasi' => $this->sertifikasi_model->get_all_sub_sertifikasi(),
 			'view'	=> 'admin/validasipembayaran/pembayaransertifikasimahasiswa/index'
 		];
 
 		$this->load->view('admin/template/wrapper', $data);
+	}
+
+	public function cari()
+	{
+		$sertifikasi = $this->input->post('nama_sertifikasi');
+		$bayar = $this->input->post('status_pembayaran');
+
+		$nama_mhs = array();
+
+		$query =  $this->validasipembayaransertifikasimahasiswa_model->filter($sertifikasi, $bayar)->result_array();
+
+		foreach ($query as $q) {
+			$data_mhs = $this->validasipembayaransertifikasimahasiswa_model->getnama($q['sm_mahasiswa']);
+			$nama_mhs[$q['sm_mahasiswa']] = $data_mhs->name;
+		}
+
+		$listmhs = $this->validasipembayaransertifikasimahasiswa_model->list()->row_array();
+
+		$data = [
+			'title'	=> 'Validasi Pembayaran Sertifikasi Mahasiswa',
+			'list'      => $query,
+			'nama_mhs'	=> $nama_mhs,
+			'sertifikasi' => $this->sertifikasi_model->get_all_sub_sertifikasi(),
+			'view'	=> 'admin/validasipembayaran/pembayaransertifikasimahasiswa/index'
+		];
+
+		$this->load->view('admin/template/wrapper', $data);
+
+
 	}
 
 	public function detail($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa)

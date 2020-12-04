@@ -13,6 +13,24 @@ class Validasipembayaransertifikasimahasiswa_model extends CI_Model
 		return $this->db->get($this->table);
 	}
 
+	public function filter($sertifikasi, $bayar)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+
+		if($sertifikasi)
+		{
+			$this->db->where('ssm_subsertifikasi', $sertifikasi);
+		}
+
+		if($bayar)
+		{
+			$this->db->where('ssm_status', $bayar);
+		}
+		
+		return $this->db->get($this->table);
+	}
+
 	function listbyid($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa)
 	{
 		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
