@@ -4,11 +4,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Liststatusbayar_model extends CI_Model {
 
 	public $table = 'ssc_subsertifikasi_mahasiswa';
+	public $table_2 = 'ssc_subsertifikasi_umum';
 
 	function list()
 	{
 		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
 		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+		return $this->db->get($this->table);
+	}
+
+	public function filter($sertifikasi, $bayar)
+	{
+		$this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_mahasiswa.ssm_subsertifikasi');
+		$this->db->join('ssc_sertifikasi_mahasiswa', 'ssc_sertifikasi_mahasiswa.sm_id = ssc_subsertifikasi_mahasiswa.ssm_sertifikasi_mahasiswa');
+
+		if($sertifikasi)
+		{
+			$this->db->where('ssm_subsertifikasi', $sertifikasi);
+		}
+
+		if($bayar)
+		{
+			$this->db->where('ssm_status', $bayar);
+		}
+		
 		return $this->db->get($this->table);
 	}
 
@@ -44,6 +63,25 @@ class Liststatusbayar_model extends CI_Model {
         $this->db->join('ssc_sertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
         $this->db->join('ssc_peserta_umum', 'ssc_peserta_umum.pu_email = ssc_sertifikasi_umum.srtu_peserta');
         return $this->db->get('ssc_subsertifikasi_umum');
+    }
+
+    function filter_umum($sertifikasi, $bayar)
+    {
+        $this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_umum.ssu_subsertifikasi');
+        $this->db->join('ssc_sertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
+        $this->db->join('ssc_peserta_umum', 'ssc_peserta_umum.pu_email = ssc_sertifikasi_umum.srtu_peserta');
+
+        if($sertifikasi)
+        {
+            $this->db->where('ssu_subsertifikasi', $sertifikasi);
+        }
+
+        if($bayar)
+        {
+            $this->db->where('ssu_status', $bayar);
+        }
+
+        return $this->db->get($this->table_2);
     }
 
 }
