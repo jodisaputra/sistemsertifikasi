@@ -9,6 +9,7 @@ class Validasipembayaransertifikasiumum extends CI_Controller
 		parent::__construct();
 		$this->load->helper('my_function_helper');
 		$this->load->model('validasipembayaransertifikasiumum_model');
+		$this->load->model('sertifikasi_model');
 		if (!isset($this->session->userdata['username'])) {
 			$this->session->set_flashdata('message', 'Anda Belum Login!');
 			$this->session->set_flashdata('tipe', 'error');
@@ -23,7 +24,23 @@ class Validasipembayaransertifikasiumum extends CI_Controller
 		$data = [
 			'title'	=> 'Validasi Pembayaran Sertifikasi Umum',
 			'list'      => $this->validasipembayaransertifikasiumum_model->list()->result(),
+			'sertifikasi' => $this->sertifikasi_model->get_all_sub_sertifikasi(),
 			// 'listbyid'  => $this->validasipembayaransertifikasiumum_model->listbyid($query['ssu_id'], $query['ssu_subsertifikasi'], $query['ssu_sertifikasi_umum']),
+			'view'	=> 'admin/validasipembayaran/pembayaransertifikasiumum/index'
+		];
+
+		$this->load->view('admin/template/wrapper', $data);
+	}
+
+	public function cari()
+	{
+		$sertifikasi = $this->input->post('nama_sertifikasi');
+		$bayar = $this->input->post('status_pembayaran');
+
+		$data = [
+			'title'	=> 'Validasi Pembayaran Sertifikasi Umum',
+			'list'      => $this->validasipembayaransertifikasiumum_model->filter($sertifikasi, $bayar)->result(),
+			'sertifikasi' => $this->sertifikasi_model->get_all_sub_sertifikasi(),
 			'view'	=> 'admin/validasipembayaran/pembayaransertifikasiumum/index'
 		];
 
@@ -33,7 +50,7 @@ class Validasipembayaransertifikasiumum extends CI_Controller
 	public function detail($id_subsertifikasiumum, $subsertifikasi, $peserta)
 	{
 		$data = [
-			'title'	=> 'Validasi Pembayaran Seminar Mahasiswa',
+			'title'	=> 'Validasi Pembayaran Sertifikasi Umum',
 			'list'      => $this->validasipembayaransertifikasiumum_model->listbyid($id_subsertifikasiumum, $subsertifikasi, $peserta),
 			'view'	=> 'admin/validasipembayaran/pembayaransertifikasiumum/detail'
 		];

@@ -14,6 +14,25 @@ class Validasipembayaransertifikasiumum_model extends CI_Model
         return $this->db->get($this->table);
     }
 
+    function filter($sertifikasi, $bayar)
+    {
+        $this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_umum.ssu_subsertifikasi');
+        $this->db->join('ssc_sertifikasi_umum', 'ssc_sertifikasi_umum.srtu_id = ssc_subsertifikasi_umum.ssu_sertifikasi_umum');
+        $this->db->join('ssc_peserta_umum', 'ssc_peserta_umum.pu_email = ssc_sertifikasi_umum.srtu_peserta');
+
+        if($sertifikasi)
+        {
+            $this->db->where('ssu_subsertifikasi', $sertifikasi);
+        }
+
+        if($bayar)
+        {
+            $this->db->where('ssu_status', $bayar);
+        }
+
+        return $this->db->get($this->table);
+    }
+
     function listbyid($id_subsertifikasiumum, $subsertifikasi, $peserta)
     {
         $this->db->join('ssc_subsertifikasi', 'ssc_subsertifikasi.scert_id = ssc_subsertifikasi_umum.ssu_subsertifikasi');

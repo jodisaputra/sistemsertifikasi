@@ -66,8 +66,6 @@ class Validasipembayaransertifikasimahasiswa extends CI_Controller
 		];
 
 		$this->load->view('admin/template/wrapper', $data);
-
-
 	}
 
 	public function detail($id_subsertifikasimahasiswa, $subsertifikasi, $mahasiswa)
